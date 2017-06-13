@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/marginMin"
+    android:background="@android:drawable/screen_background_light_transparent">
+
+    <EditText
+        android:id="@+id/login_username"
+        android:layout_width="@dimen/input1_width"
+        android:layout_height="@dimen/input1_height"
+        android:layout_marginLeft="@dimen/marginMax"
+        android:layout_marginRight="@dimen/marginMax"
+        android:layout_marginTop="@dimen/marginMiddle"
+        android:hint="@string/username"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/input1_textSize"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="@dimen/input1_width"
+        android:layout_height="@dimen/input1_height"
+        android:layout_marginLeft="@dimen/marginMax"
+        android:layout_marginRight="@dimen/marginMax"
+        android:layout_marginTop="@dimen/marginMin"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/input1_textSize"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_username" />
+
+    <Button
+        android:id="@+id/login_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/marginMiddle"
+        android:layout_marginRight="@dimen/marginMiddle"
+        android:layout_marginTop="@dimen/marginMiddle"
+        android:background="@color/colorPrimary"
+        android:text="@string/login"
+        android:textSize="@dimen/button2_textSize"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_password" />
+
+    <CheckBox
+        android:id="@+id/login_rememberMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/marginMin"
+        android:layout_marginRight="@dimen/marginMin"
+        android:layout_marginTop="@dimen/marginMin"
+        android:color ="@color/colorPrimary"
+        android:text="@string/rememberMe"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/button2_textSize"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_login" />
+
+    <TextView
+        android:id="@+id/login_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/marginMin"
+        android:layout_marginLeft="@dimen/marginMin"
+        android:layout_marginRight="@dimen/marginMin"
+        android:layout_marginTop="@dimen/marginMiddle"
+        android:text="@string/register"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/link_textSize"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_rememberMe"/>
+
+</android.support.constraint.ConstraintLayout>
