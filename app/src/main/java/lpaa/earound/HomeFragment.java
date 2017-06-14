@@ -36,7 +36,6 @@ public class HomeFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.home_fragment, container, false);
 
-
         mapView = (MapView) view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
@@ -71,12 +70,11 @@ public class HomeFragment extends Fragment{
                 eventsView.add(i, new TextView(this.getActivity()));
                 eventsView.get(i).setText(events.get(i).getName());
                 eventsView.get(i).setTextSize(50);
-                try{
+                try {
                     eventList.addView(eventsView.get(i));
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-
     }
 }

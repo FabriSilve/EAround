@@ -51,7 +51,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
     private void startSearch() {
         EventSearcher searcher = new EventSearcher(parent, this, null);
-        searcher.execute();
+        parent.setEvents(searcher.search());
     }
 
     public void searchDone() {

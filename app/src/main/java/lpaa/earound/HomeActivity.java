@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +30,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     private SearchFragment searchFragment;
     private PersonalFragment personalFragment;
 
-    private ArrayList<Event> events;
+    private ArrayList<Event> events = null;
 
 
     @Override
@@ -95,6 +96,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     public void setEvents(ArrayList<Event> events) {
         this.events = events;
+        homeFragment.eventDrawer();
     }
 
     public ArrayList<Event> getEvents() {
@@ -103,6 +105,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     public void searchEvent() {
         EventSearcher eventSearcher = new EventSearcher(this,null, null);
-        eventSearcher.execute();
+        events = eventSearcher.search();
     }
 }

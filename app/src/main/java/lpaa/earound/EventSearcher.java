@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.sql.Date;
 
 
-public class EventSearcher extends AsyncTask<Object, ArrayList<Event>, ArrayList<Event>>{
+public class EventSearcher{
 
     private final String TAG = "EventSearcher";
 
@@ -30,12 +30,12 @@ public class EventSearcher extends AsyncTask<Object, ArrayList<Event>, ArrayList
         this.search = search;
     }
 
-    @Override
-    public ArrayList<Event> doInBackground(Object... params) {
+    public ArrayList<Event> search() {
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
         try {
+            /* TODO test offline
             //TODO Strutturare ricerca con filtri del search
             URL url = new URL(eventsSearcherUrl);
             connection = url.openConnection();
@@ -53,18 +53,25 @@ public class EventSearcher extends AsyncTask<Object, ArrayList<Event>, ArrayList
                 stringBuilder.append(nextLine);
             }
             line = stringBuilder.toString();
-            wr.close();
+            wr.close();*/
+
+            //TODO rimuobere line inizializzata qui sotto per test offline
+            String line =
+                    "[" +
+                    "   {\"id\":\"1\",\"name\":\"n1\",\"description\":'d1',\"date\":\"2017-06-30\",\"lat\":\"44.425704\",\"lon\":\"8.848104\",\"image\":\"http://montenisa.com/GALLERIE/flyersE/calici_sotto_le_stelle.jpg\"}," +
+                    "   {\"id\":\"2\",\"name\":\"n2\",\"description\":\"d2\",\"date\":\"2017-06-30\",\"lat\":\"44.423704\",\"lon\":\"8.847104\",\"image\":\"http://montenisa.com/GALLERIE/flyersE/calici_sotto_le_stelle.jpg\"}" +
+                    "]";
 
             ArrayList<Event> result = new ArrayList<>();
-            JSONObject json = new JSONObject(line);
-            JSONArray events = json.getJSONArray("events");
+            //JSONObject json = new JSONObject(line);
+            JSONArray events = new JSONArray(line);
             for(int i = 0; i<events.length(); i++) {
                 JSONObject event = events.getJSONObject(i);
                 result.add(new Event(
                         event.getInt("id"),
                         event.getString("name"),
                         event.getString("description"),
-                        new Date(event.getLong("date")),
+                        null, //new Date(event.getString("date")),
                         event.getDouble("lat"),
                         event.getDouble("lon"),
                         event.getString("image")
@@ -73,17 +80,8 @@ public class EventSearcher extends AsyncTask<Object, ArrayList<Event>, ArrayList
             return result;
         } catch (Exception e) {
             //result = false;
-            Log.e(TAG, "doInBackground: Exception: " + e.getMessage());
+            Log.e(TAG, "search: Exception: " + e.getMessage());
             return new ArrayList<Event>();
         }
-    }
-
-    @Override
-    protected void onPostExecute(ArrayList<Event> events) {
-        main.setEvents(events);
-        if(searchFragment != null)
-            searchFragment.searchDone();
-
-
     }
 }
