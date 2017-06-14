@@ -44,11 +44,11 @@ public class HomeFragment extends Fragment{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        MapDrawer mapDrawer = new MapDrawer(view, map);
-        mapView.getMapAsync(mapDrawer);
 
         eventList = (LinearLayout) view.findViewById(R.id.eventList);
         eventDrawer();
+        MapDrawer mapDrawer = new MapDrawer(this, view, map);
+        mapView.getMapAsync(mapDrawer);
         return view;
     }
 
@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment{
         ArrayList<TextView> eventsView = new ArrayList<>();
         if(events != null && events.size() > 0 )
             for(int i = 0; i<events.size(); i++) {
-                eventsView.add(i, new TextView(this.getActivity()));
+                eventsView.add(i, new TextView(parent));
                 eventsView.get(i).setText(events.get(i).getName());
                 eventsView.get(i).setTextSize(50);
                 try {
@@ -76,5 +76,13 @@ public class HomeFragment extends Fragment{
                     e.printStackTrace();
                 }
             }
+    }
+
+    public ArrayList<Event> getParentEvents() {
+        return parent.getEvents();
+    }
+
+    public HomeActivity getParent() {
+        return parent;
     }
 }

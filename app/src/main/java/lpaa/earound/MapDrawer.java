@@ -9,13 +9,17 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 
 public class MapDrawer implements OnMapReadyCallback {
 
     private View view;
     private GoogleMap map;
+    private HomeFragment homeFragment;
 
-    public MapDrawer(View view, GoogleMap map) {
+    public MapDrawer(HomeFragment homeFragment, View view, GoogleMap map) {
+        this.homeFragment = homeFragment;
         this.view = view;
         this.map = map;
     }
@@ -30,7 +34,14 @@ public class MapDrawer implements OnMapReadyCallback {
         //LocationManager locationManager = (LocationManager) view.getContext().getSystemService(Context.LOCATION_SERVICE);
 
         // For dropping a marker at a point on the Map
-        LatLng center = new LatLng(44.424704,8.849104);
+        LatLng center;
+        if(homeFragment.getParent().getLocation() == null)
+            center = new LatLng(44.424704,8.849104);
+        else
+            center = new LatLng(homeFragment.getParent().getLocation().getLatitude(),homeFragment.getParent().getLocation().getLongitude());
+
+
+
         map.addMarker(new MarkerOptions().position(center).title(view.getContext().getString(R.string.youAreHere)));
 
         // For zooming automatically to the location of the marker
@@ -40,6 +51,12 @@ public class MapDrawer implements OnMapReadyCallback {
         /* animazione zoom camera
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
          */
-
+        ArrayList<Event> events = homeFragment.getParentEvents();
+        for(int i = 0; i<events.size(); i++) {
+            map.addMarker(
+                    new MarkerOptions()
+                            .position(events.get(i).getPosition())
+                            .title(events.get(i).getName()));
+        }
     }
 }

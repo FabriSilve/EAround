@@ -31,12 +31,10 @@
 
         <meta-data
             android:name="com.google.android.maps.v3.API_KEY"
-            android:value="AIzaSyA0ID6pHXih7zDjTM9O_35S-5FPyzufVRQ"/>
-        <!-- TODO Sostituire chiamate apikey con id stringa-->
-
+            android:value="@string/API_KEY"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA0ID6pHXih7zDjTM9O_35S-5FPyzufVRQ"/>
+            android:value="@string/API_KEY"/>
 
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="stateHidden">

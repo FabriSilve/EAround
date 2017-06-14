@@ -6,8 +6,15 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -16,6 +23,7 @@ import java.util.ArrayList;
 
 public class HomeActivity  extends Activity implements View.OnClickListener {
 
+    private final String TAG = "HomeActivity";
     //TODO aggiungere carica degli eventi nella zona e aggiunta in locale prima di inizializzare tutto
 
     private Button search;
@@ -30,13 +38,20 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     private SearchFragment searchFragment;
     private PersonalFragment personalFragment;
 
-    private ArrayList<Event> events = null;
+    private LocationFinder locationFinder;
+    private Location location;
+    private ArrayList<Event> events = new ArrayList<>();
+
+    public HomeActivity() {
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
+
+        initLocationFinder();
         searchEvent();
 
         search = (Button) findViewById(R.id.home_searchButton);
@@ -105,6 +120,33 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     public void searchEvent() {
         EventSearcher eventSearcher = new EventSearcher(this,null, null);
-        events = eventSearcher.search();
+        eventSearcher.execute();
+    }
+
+    private void initLocationFinder() {
+        locationFinder = new LocationFinder(this, (LocationManager) getSystemService(LOCATION_SERVICE));
+        if(!locationFinder.isEable()) {
+            Log.d(TAG, "initLocationFinder: internet disable");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initLocationFinder();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        locationFinder.removeUpdate();
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Location getLocation() {
+        return location;
     }
 }

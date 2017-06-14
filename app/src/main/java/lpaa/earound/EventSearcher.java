@@ -11,11 +11,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.util.Objects;
 
 
-public class EventSearcher{
+public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
 
     private final String TAG = "EventSearcher";
 
@@ -30,19 +32,19 @@ public class EventSearcher{
         this.search = search;
     }
 
-    public ArrayList<Event> search() {
+    @Override
+    public ArrayList<Event> doInBackground(Object... params) {
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
         try {
-            /* TODO test offline
             //TODO Strutturare ricerca con filtri del search
             URL url = new URL(eventsSearcherUrl);
             connection = url.openConnection();
-            //dat = URLEncoder.encode("posizione", "UTF-8") + "=" + URLEncoder.encode(search.getPosition(), "UTF-8"); //Posizione fittizia
+            dat = URLEncoder.encode("posizione", "UTF-8") + "=" + URLEncoder.encode("pippo", "UTF-8"); //Posizione fittizia
             connection.setDoOutput(true);
             wr = new OutputStreamWriter(connection.getOutputStream());
-            //wr.write(dat);
+            wr.write(dat);
             wr.flush();
             String line;
             StringBuilder stringBuilder = new StringBuilder();
@@ -53,17 +55,9 @@ public class EventSearcher{
                 stringBuilder.append(nextLine);
             }
             line = stringBuilder.toString();
-            wr.close();*/
-
-            //TODO rimuobere line inizializzata qui sotto per test offline
-            String line =
-                    "[" +
-                    "   {\"id\":\"1\",\"name\":\"n1\",\"description\":'d1',\"date\":\"2017-06-30\",\"lat\":\"44.425704\",\"lon\":\"8.848104\",\"image\":\"http://montenisa.com/GALLERIE/flyersE/calici_sotto_le_stelle.jpg\"}," +
-                    "   {\"id\":\"2\",\"name\":\"n2\",\"description\":\"d2\",\"date\":\"2017-06-30\",\"lat\":\"44.423704\",\"lon\":\"8.847104\",\"image\":\"http://montenisa.com/GALLERIE/flyersE/calici_sotto_le_stelle.jpg\"}" +
-                    "]";
+            //wr.close();
 
             ArrayList<Event> result = new ArrayList<>();
-            //JSONObject json = new JSONObject(line);
             JSONArray events = new JSONArray(line);
             for(int i = 0; i<events.length(); i++) {
                 JSONObject event = events.getJSONObject(i);
@@ -83,5 +77,12 @@ public class EventSearcher{
             Log.e(TAG, "search: Exception: " + e.getMessage());
             return new ArrayList<Event>();
         }
+    }
+
+    @Override
+    protected void onPostExecute(ArrayList<Event> events) {
+        main.setEvents(events);
+        if(searchFragment != null)
+            searchFragment.searchDone();
     }
 }
