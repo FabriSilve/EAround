@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -14,7 +15,7 @@ public class MainActivity extends Activity{
 
     //TODO quando ruoto il dispositivi che resti sullo stesso fragment
 
-    private static String TAG = "MainActivity";
+    private final String TAG = "MainActivity";
 
     private LoginFragment loginFragment;
     private RegisterFragment registerFragment;
@@ -25,19 +26,19 @@ public class MainActivity extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: start");
         super.onCreate(savedInstanceState);
 
+        Log.d(TAG, "onCreate: user access control");
         dbTask = new DBTask(getApplicationContext());
-        Log.d(TAG, "onCreate: check user keep");
         UserData user = dbTask.getUser();
         if(user != null) {
-            Log.d(TAG, "onCreateView: keep" + user.getKeep());
-            Log.d(TAG, "onCreateView: username" + user.getUsername());
             if (user.getKeep() == 1 && user.getUsername() != null) {
                 goToHomeActivity();
             }
         }
 
+        Log.d(TAG, "onCreate: init UI");
         setContentView(R.layout.main_activity);
 
         loginFragment = new LoginFragment();
@@ -55,18 +56,21 @@ public class MainActivity extends Activity{
 
     //TODO Ragrupare in un unico metodo
     public void goToRegister() {
+        Log.d(TAG, "goToRegister: start");
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(container, registerFragment);
         fragmentTransaction.commit();
     }
 
     public void goToLogin() {
+        Log.d(TAG, "goToLogin: start");
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(container, loginFragment);
         fragmentTransaction.commit();
     }
 
     public void correctlyLogged(boolean keep, String username) {
+        Log.d(TAG, "correctlyLogged: start");
         if(keep) {
             dbTask.deleteUser();
             dbTask.insertUser(new UserData(1, username, null));
@@ -75,6 +79,13 @@ public class MainActivity extends Activity{
     }
 
     private void goToHomeActivity() {
+        Log.d(TAG, "goToHomeActivity: start");
         startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        Log.d(TAG, "onConfigurationChanged: start");
+        super.onConfigurationChanged(newConfig);
     }
 }

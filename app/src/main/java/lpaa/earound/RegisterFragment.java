@@ -1,6 +1,7 @@
 package lpaa.earound;
 
 import android.app.Fragment;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -19,6 +20,8 @@ import java.util.regex.Pattern;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener {
 
+    private final String TAG = "RegisterFragment";
+
     private View view;
     private MainActivity main;
 
@@ -33,12 +36,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
     private String user;
 
     public void setActivity(MainActivity main) {
+        Log.d(TAG, "setActivity: start");
         this.main = main;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: init UI");
         view = inflater.inflate(R.layout.register_fragment, container, false);
 
         back = (Button) view.findViewById(R.id.register_back);
@@ -52,6 +57,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
         back.setOnClickListener(this);
         register.setOnClickListener(this);
 
+        //TODO estrarre listener
         username.getOnFocusChangeListener();
         email1.getOnFocusChangeListener();
 
@@ -60,6 +66,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onClick(View v) {
+        Log.d(TAG, "onClick: start");
         switch(v.getId()) {
             case R.id.register_back:
                 backClick();
@@ -71,11 +78,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void backClick() {
+        Log.d(TAG, "backClick: start");
         main.goToLogin();
     }
 
     private void registerClick() {
-        Log.d("REG", "registration click");
+        Log.d(TAG, "registerClick: start");
 
         if(username.getText().toString().trim().isEmpty()) {
             username.setError(getText(R.string.empty_field));
@@ -131,7 +139,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
     }
 
     private boolean mailChecker(EditText email) {
-        Log.d("Registration", "mailChecker()");
+        Log.d(TAG, "mailChecker: start");
         if(!Pattern.matches("[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}",email.getText().toString())) {
             email.setError(getText(R.string.not_valid));
             email.requestFocus();
@@ -142,37 +150,42 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
+        Log.d(TAG, "onFocusChange: start");
         /*TODO su username e email per controllare se gia presenti nel sistema*/
         switch(v.getId()) {
             case R.id.register_username:
-                if(!hasFocus)
-                    usernameCheck(username);
+                usernameCheck(username);
                 break;
             case R.id.register_email1:
-                if(!hasFocus)
-                    mailChecker(email1);
+                mailChecker(email1);
                 break;
         }
     }
 
     private void usernameCheck(EditText username) {
+        Log.d(TAG, "usernameCheck: start");
         //TODO controllo presenza username nel sistema
     }
 
 
 
     public void checkResult(boolean result) {
+        Log.d(TAG, "checkResult: start");
         if(result) {
-            Log.d("Registration", "registred");
+            Log.d(TAG, "checkResult: registred and logged");
             Toast toast = Toast.makeText(view.getContext(), getText(R.string.logged), Toast.LENGTH_SHORT);
             toast.show();
-
             main.correctlyLogged(false, user);
-
         } else {
-            Log.d("Registration", "not registred");
+            Log.d(TAG, "checkResult: not registred");
             Toast toast = Toast.makeText(view.getContext(), getText(R.string.error), Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        Log.d(TAG, "onConfigurationChanged: start");
+        super.onConfigurationChanged(newConfig);
     }
 }

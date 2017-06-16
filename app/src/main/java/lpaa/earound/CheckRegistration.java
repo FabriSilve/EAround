@@ -17,6 +17,8 @@ import java.net.URLEncoder;
 
 public class CheckRegistration extends AsyncTask<Object, Object, Boolean> {
 
+    private final String TAG = "CheckRegistration";
+
     private RegisterFragment fragment;
     protected String username;
     private String password;
@@ -27,6 +29,7 @@ public class CheckRegistration extends AsyncTask<Object, Object, Boolean> {
 
     public CheckRegistration(RegisterFragment fragment, String username, String password, String email)
     {
+        Log.d(TAG, "CheckRegistration: costructor");
         this.fragment = fragment;
         this.username = username;
         this.password = password;
@@ -41,10 +44,12 @@ public class CheckRegistration extends AsyncTask<Object, Object, Boolean> {
         return email.equals("fabri@mail.it");*/
 
         /*CORRETTO*/
+        Log.d(TAG, "doInBackground: start");
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
         try{
+            Log.d(TAG, "doInBackground: connection out");
             URL url = new URL(checkRegistrationUrl);
             connection = url.openConnection();
             Log.d("RegistrationCheck", username + "; " + email + "; " + password);
@@ -58,6 +63,7 @@ public class CheckRegistration extends AsyncTask<Object, Object, Boolean> {
             String line;
             StringBuilder stringBuilder = new StringBuilder();
 
+            Log.d(TAG, "doInBackground: connection in");
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String nextLine;
             while ((nextLine = reader.readLine()) != null) {
@@ -66,19 +72,17 @@ public class CheckRegistration extends AsyncTask<Object, Object, Boolean> {
             line = stringBuilder.toString();
             wr.close();
 
-            //result = true;
-            Log.d("CheckLogin", "doInBackground: "+line);
             return line.equals("true");
 
         } catch (Exception e) {
             //result = false;
-            Log.e("CheckLogin", "doInBackground: Exception: " + e.getMessage());
+            Log.e(TAG, "doInBackground: Exception: " + e.getMessage());
             return false;
         }
     }
 
     protected void onPostExecute(Boolean result) {
-        Log.d("CheckRegistration", "onPostExecute");
+        Log.d(TAG, "onPostExecute: start");
         fragment.checkResult(result);
     }
 }

@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -50,6 +51,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: start");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
 
@@ -57,6 +59,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         //initLocationFinder();
         searchEvent();
 
+        Log.d(TAG, "onCreate: init UI");
         search = (Button) findViewById(R.id.home_searchButton);
         home = (Button) findViewById(R.id.home_homeButton);
         personal = (Button) findViewById(R.id.home_personalButton);
@@ -83,6 +86,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Log.d(TAG, "onClick: start");
         switch(v.getId()) {
             case R.id.home_searchButton:
                 goTo(searchFragment);
@@ -97,22 +101,26 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     }
 
     public void goToHome() {
+        Log.d(TAG, "goToHome: start");
         goTo(homeFragment);
     }
 
     private void goTo(Fragment fragment) {
+        Log.d(TAG, "goTo: start");
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(container, fragment);
         fragmentTransaction.commit();
     }
 
     public void logoutUser() {
+        Log.d(TAG, "logoutUser: start");
         DBTask dbTask = new DBTask(getApplicationContext());
         dbTask.deleteUser();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 
     public void setEvents(ArrayList<Event> events) {
+        Log.d(TAG, "setEvents: start");
         if(events.size() == 0) {
             Toast toast = Toast.makeText(this, getText(R.string.eventsNotFound), Toast.LENGTH_LONG);
             toast.show();
@@ -126,6 +134,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     }
 
     public void searchEvent() {
+        Log.d(TAG, "searchEvent: start");
         EventSearcher eventSearcher = new EventSearcher(this,null, null);
         eventSearcher.execute();
     }
@@ -145,4 +154,10 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     public Location getLocation() {
         return location;
     }*/
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        Log.d(TAG, "onConfigurationChanged: start");
+        super.onConfigurationChanged(newConfig);
+    }
 }

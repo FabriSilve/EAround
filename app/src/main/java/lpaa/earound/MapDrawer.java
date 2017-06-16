@@ -1,6 +1,7 @@
 package lpaa.earound;
 
 
+import android.util.Log;
 import android.view.View;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -14,11 +15,14 @@ import java.util.ArrayList;
 
 public class MapDrawer implements OnMapReadyCallback {
 
+    private final String TAG = "MapDrawer";
+
     private View view;
     private GoogleMap map;
     private HomeFragment homeFragment;
 
     public MapDrawer(HomeFragment homeFragment, View view, GoogleMap map) {
+        Log.d(TAG, "MapDrawer: costructor");
         this.homeFragment = homeFragment;
         this.view = view;
         this.map = map;
@@ -26,6 +30,7 @@ public class MapDrawer implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Log.d(TAG, "onMapReady: start");
         //TODO utilizzare posizione dispositivo
         //TODO disegnare gli eventi salvati in locale
 

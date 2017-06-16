@@ -12,10 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -24,9 +25,8 @@ import com.google.android.gms.maps.MapsInitializer;
 import java.util.ArrayList;
 
 
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment {
 
-    //TODO inizializzare valori della classe e la vista
     private final String TAG = "HomeFragment";
 
     private View view;
@@ -39,8 +39,10 @@ public class HomeFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: start");
         view = inflater.inflate(R.layout.home_fragment, container, false);
 
+        Log.d(TAG, "onCreateView: init UI");
         mapView = (MapView) view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
@@ -57,66 +59,82 @@ public class HomeFragment extends Fragment{
         return view;
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
-
     public void setParent(HomeActivity parent) {
+        Log.d(TAG, "setParent: start");
         this.parent = parent;
     }
 
     public void eventDrawer() {
-        Log.d(TAG, "eventDrawer: events stamp");
-        Context context = parent.getBaseContext();
+        Log.d(TAG, "eventDrawer: start");
         ArrayList<Event> events = parent.getEvents();
         //ArrayList<LinearLayout> eventsLayout = new ArrayList<>();
-        if(events != null && events.size() > 0 )
-            for(int i = 0; i<events.size(); i++) {
-
-                LinearLayout eventLayout = new LinearLayout(parent);
-                eventLayout.setMinimumWidth(400);
-                eventLayout.setMinimumHeight(300);
-                eventLayout.setOrientation(LinearLayout.VERTICAL);
-                eventLayout.setBackgroundResource(R.drawable.lightbg);
-                //margin?
-
-                TextView name = new TextView(parent);
-                name.setText(events.get(i).getName());
-                name.setTextSize(getResources().getDimension(R.dimen.title1_textSize));
-                //name.setTextColor(getResources().getColor(R.color.colorPrimary));
-                eventLayout.addView(name, 0);
-
-               /* TextView data = new TextView(parent);
-                name.setText(events.get(i).getDate().toString());
-                eventLayout.addView(data, 1);
-
-                TextView desc = new TextView(parent);
-                name.setText(events.get(i).getDescription());
-                eventLayout.addView(desc, 2);*/
-
-                /*TextView event = new TextView(parent);
-                String text =
-                        events.get(i).getName() + "\t" + events.get(i).getDate() + "\n"
-                        + events.get(i).getDescription() + "\n";
-                event.setText(text);
-                eventlayout.add(i, event);*/
-
-                //eventsView.get(i).setText(events.get(i).getName());
-                //eventsView.get(i).setTextSize(50);
+        if (events != null && events.size() > 0)
+            for (int i = 0; i < events.size(); i++) {
                 try {
-                   eventsList.addView(eventLayout);
+                    LinearLayout eventLayout = new LinearLayout(parent);
+                    eventLayout.setId(i);
+                    eventLayout.setMinimumWidth(LayoutParams.MATCH_PARENT);
+                    eventLayout.setMinimumHeight(LayoutParams.WRAP_CONTENT);
+                    eventLayout.setOrientation(LinearLayout.VERTICAL);
+                    //eventLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
+                    LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+                    params.setMargins(0, 10, 0, 10);
+                    eventLayout.setLayoutParams(params);
+                    //margin?
+
+                    TextView name = new TextView(parent);
+                    name.setText(events.get(i).getName());
+                    name.setTextSize(getResources().getDimension(R.dimen.title1_textSize));
+                    name.setTextColor(Color.rgb(255, 128, 0));
+                    name.setPadding(10, 10, 10, 10);
+                    eventLayout.addView(name, 0);
+
+                    TextView data = new TextView(parent);
+                    name.setText(events.get(i).getDate().toString());
+                    eventLayout.addView(data, 1);
+
+                    TextView desc = new TextView(parent);
+                    name.setText(events.get(i).getDescription());
+                    eventLayout.addView(desc, 2);
+
+                    eventLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast toast = Toast.makeText(view.getContext(), getText(R.string.clicked), Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    });
+
+                    /*TextView event = new TextView(parent);
+                    String text =
+                            events.get(i).getName() + "\t" + events.get(i).getDate() + "\n"
+                            + events.get(i).getDescription() + "\n";
+                    event.setText(text);
+                    eventlayout.add(i, event);*/
+
+                    //eventsView.get(i).setText(events.get(i).getName());
+                    //eventsView.get(i).setTextSize(50);
+
+                    eventsList.addView(eventLayout);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "eventDrawer: Exception \n",e);
                 }
             }
     }
 
     public ArrayList<Event> getParentEvents() {
+        Log.d(TAG, "getParentEvents: start");
         return parent.getEvents();
     }
 
     public HomeActivity getParent() {
+        Log.d(TAG, "getParent: start");
         return parent;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        Log.d(TAG, "onConfigurationChanged: start");
+        super.onConfigurationChanged(newConfig);
     }
 }

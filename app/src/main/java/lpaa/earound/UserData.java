@@ -1,13 +1,18 @@
 package lpaa.earound;
 
 
+import android.util.Log;
+
 public class UserData {
+
+    private final String TAG = "UserData";
 
     private int keep;
     private String username;
     private String city;
 
     public UserData(int keep, String username, String city) {
+        Log.d(TAG, "UserData: costructor");
         this.keep = keep;
         this.username = username;
         this.city = city;

@@ -11,14 +11,18 @@ import static lpaa.earound.DBQuery.*;
 
 public class DBHelper extends SQLiteOpenHelper {
 
+    private final String TAG = "DBHelper";
+
     public DBHelper(Context context, String name, CursorFactory factory, int version) {
         super(context, name, factory, version);
+        Log.d(TAG, "DBHelper: costructor");
 
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+        Log.d(TAG, "onCreate: start");
         db.execSQL(CREATE_USERDATA_TABLE);
         //TODO inserire chreazione tabella eventi
 
@@ -27,14 +31,11 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        Log.d("DBHelper", "Upgrading db from version "+oldVersion+" to "+newVersion);
-
+        Log.d(TAG, "onUpgrade: start");
         db.execSQL(DROP_USERDATA_TABLE);
         //TODO inserire drop tabella eventi
         /*TODO da sostituire con ALTERTABLE dopo fase di testing*/
 
         onCreate(db);
     }
-
-
 }

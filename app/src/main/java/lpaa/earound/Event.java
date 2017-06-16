@@ -1,6 +1,7 @@
 package lpaa.earound;
 
 import android.media.Image;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -8,6 +9,8 @@ import java.util.Date;
 
 
 public class Event {
+
+    private final String TAG = "Event";
 
     private int id;
     private String name;
@@ -21,6 +24,7 @@ public class Event {
 
 
     public Event(int id, String name, String description, Date date, String address/*, String type*/, double lat, double lon, String image) {
+        Log.d(TAG, "Event: costructor");
         this.id = id;
         this.name = name;
         this.description = description;

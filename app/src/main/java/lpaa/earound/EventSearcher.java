@@ -23,10 +23,11 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
 
     private String eventsSearcherUrl = "http://wwww.lpaa17.altervista.org/eventsSearcher.php";
     private HomeActivity main;
-    private SearchFragment searchFragment;
+    private SearchFragment searchFragment = null;
     private Search search;
 
     public EventSearcher(HomeActivity main, SearchFragment searchFragment, Search search) {
+        Log.d(TAG, "EventSearcher: costructor");
         this.main = main;
         this.searchFragment = searchFragment;
         this.search = search;
@@ -34,14 +35,17 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
 
     @Override
     public ArrayList<Event> doInBackground(Object... params) {
+        Log.d(TAG, "doInBackground: start");
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
         try {
             //TODO Strutturare ricerca con filtri del search
+            Log.d(TAG, "doInBackground: connection output");
             URL url = new URL(eventsSearcherUrl);
             connection = url.openConnection();
             if(search != null) {
+                Log.d(TAG, "doInBackground: with search obj");
                 dat = URLEncoder.encode("position", "UTF-8") + "=" + URLEncoder.encode(search.getPosition(), "UTF-8") +
                     "&" + URLEncoder.encode("distance","UTF-8") + "=" + URLEncoder.encode(search.getDistance(), "UTF-8") +
                     "&" + URLEncoder.encode("days","UTF-8") + "=" + URLEncoder.encode(search.getDays(), "UTF-8")/* +
@@ -51,6 +55,7 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
                     "&" + URLEncoder.encode("music","UTF-8") + "=" + URLEncoder.encode(search.getMusic(), "UTF-8")*/;
 
             } else {
+                Log.d(TAG, "doInBackground: without search obj");
                 dat = URLEncoder.encode("position", "UTF-8") + "=" + URLEncoder.encode("default", "UTF-8");
             }
             connection.setDoOutput(true);
@@ -60,14 +65,16 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
             String line;
             StringBuilder stringBuilder = new StringBuilder();
 
+            Log.d(TAG, "doInBackground: connection in");
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String nextLine;
             while ((nextLine = reader.readLine()) != null) {
                 stringBuilder.append(nextLine);
             }
             line = stringBuilder.toString();
-            //wr.close();
+            wr.close();
 
+            Log.d(TAG, "doInBackground: Event adding local");
             ArrayList<Event> result = new ArrayList<>();
             JSONArray events = new JSONArray(line);
             for(int i = 0; i<events.length(); i++) {
@@ -86,16 +93,21 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
             }
             return result;
         } catch (Exception e) {
-            //result = false;
-            Log.e(TAG, "search: Exception: " + e.getMessage());
-            return new ArrayList<Event>();
+            Log.e(TAG, "doInBackground: Exception: " + "\n" + e.getMessage(), e);
+            return new ArrayList<>();
         }
     }
 
     @Override
     protected void onPostExecute(ArrayList<Event> events) {
+        Log.d(TAG, "onPostExecute: start");
         main.setEvents(events);
-        if(searchFragment != null)
+        if(searchFragment == null) return;
+        Log.d(TAG, "onPostExecute: with fragment");
+        try{
             searchFragment.searchDone();
+        } catch (NullPointerException e) {
+            Log.e(TAG, "onPostExecute: Exception " + e.getMessage() + "\n" + e.getLocalizedMessage());
+        }
     }
 }

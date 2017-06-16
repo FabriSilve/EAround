@@ -1,7 +1,11 @@
 package lpaa.earound;
 
 
+import android.util.Log;
+
 class Search {
+
+    private final String TAG = "Search";
     private String position;
     private int distance;
     private int days;
@@ -11,6 +15,7 @@ class Search {
     private boolean music;*/
 
     Search(String position, int distance, int days/*, boolean party, boolean cultural, boolean sport, boolean music*/) {
+        Log.d(TAG, "Search: costructor");
         this.position = position;
         this.distance = distance;
         this.days = days;

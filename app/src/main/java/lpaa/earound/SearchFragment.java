@@ -38,6 +38,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: init UI");
         view = inflater.inflate(R.layout.search_fragment, container, false);
 
         position = (EditText) view.findViewById(R.id.search_position);
@@ -50,26 +51,24 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
         sport = (CheckBox) view.findViewById(R.id.search_sportBox);
         music = (CheckBox) view.findViewById(R.id.search_musicBox);*/
         find = (Button) view.findViewById(R.id.search_find);
-        rememberPosition = (CheckBox) view.findViewById(R.id.search_rememberPosition);
+        //rememberPosition = (CheckBox) view.findViewById(R.id.search_rememberPosition);
 
+        //TODO Estrarre listener
         distance.setOnSeekBarChangeListener(this);
         days.setOnSeekBarChangeListener(this);
         find.setOnClickListener(this);
 
         return view;
     }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
-
+    
     public void setParent(HomeActivity parent) {
+        Log.d(TAG, "setParent: start");
         this.parent = parent;
     }
 
     @Override
     public void onClick(View v) {
+        Log.d(TAG, "onClick: start");
         switch(v.getId()) {
             case R.id.search_find:
                 startSearch();
@@ -78,6 +77,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
     }
 
     private void startSearch() {
+        Log.d(TAG, "startSearch: start");
         Search search = new Search(
                 position.getText().toString(),
                 distance.getProgress(),
@@ -95,26 +95,30 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
     }
 
     public void searchDone() {
-        Log.d(TAG, "searchDone: research complete");
+        Log.d(TAG, "searchDone: start");
         parent.goToHome();
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        Log.d(TAG, "onProgressChanged: start");
         seekBarUpdate(seekBar);
     }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
+        Log.d(TAG, "onStartTrackingTouch: start");
         //seekBarUpdate(seekBar);
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+        Log.d(TAG, "onStopTrackingTouch: start");
         //seekBarUpdate(seekBar);
     }
 
     private void seekBarUpdate(SeekBar seekBar) {
+        Log.d(TAG, "seekBarUpdate: ");
         String text;
         switch (seekBar.getId()) {
             case R.id.search_distanceBar:
@@ -126,5 +130,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
                 daysLabel.setText(text);
                 break;
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        Log.d(TAG, "onConfigurationChanged: start");
+        super.onConfigurationChanged(newConfig);
     }
 }

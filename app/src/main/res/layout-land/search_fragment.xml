@@ -207,6 +207,7 @@
             app:layout_constraintRight_toRightOf="parent"/>
         <!-- before toTop-Bottom - @id/search_musicBox" -->
 
+        <!--
         <CheckBox
             android:id="@+id/search_rememberPosition"
             android:layout_width="wrap_content"
@@ -218,6 +219,7 @@
             app:layout_constraintTop_toBottomOf="@id/search_find"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
+            -->
 
     </android.support.constraint.ConstraintLayout>
 

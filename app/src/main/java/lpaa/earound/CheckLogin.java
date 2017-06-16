@@ -15,7 +15,9 @@ import java.net.URLEncoder;
 
 public class CheckLogin extends AsyncTask<Object, Object, Boolean> {
 
-    private Fragment fragment;
+    private final String TAG =" CheckLogin";
+
+    private LoginFragment fragment;
     private String username;
     private String password;
 
@@ -25,6 +27,7 @@ public class CheckLogin extends AsyncTask<Object, Object, Boolean> {
     public CheckLogin(LoginFragment fragment, String username, String password)
     {
         //Acquisisco le credenziali dal front-end
+        Log.d(TAG, "CheckLogin: costructor");
         this.fragment = fragment;
         this.username = username;
         this.password = password;
@@ -37,11 +40,13 @@ public class CheckLogin extends AsyncTask<Object, Object, Boolean> {
         return username.equals("faber");*/
 
         /*CORRETTO*/
+        Log.d(TAG, "doInBackground: start");
         String dati;
         try {
             URLConnection connection;
             OutputStreamWriter wr;
 
+            Log.d(TAG, "doInBackground: URL connection output");
             URL url = new URL(checkLoginUrl);
             connection = url.openConnection();
             dati = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") +
@@ -51,6 +56,7 @@ public class CheckLogin extends AsyncTask<Object, Object, Boolean> {
             wr.write(dati);
             wr.flush();
 
+            Log.d(TAG, "doInBackground: URL connection input");
             String line;
             StringBuilder stringBuilder = new StringBuilder();
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -61,21 +67,17 @@ public class CheckLogin extends AsyncTask<Object, Object, Boolean> {
             line = stringBuilder.toString();
             wr.close();
 
-            //result = true;
-            Log.d("CheckLogin", "doInBackground: "+line);
             return line.equals("true");
         } catch (Exception e) {
             //result = false;
-            Log.e("CheckLogin", "doInBackground: Exception: " + e.getMessage());
+            Log.e(TAG, "doInBackground: Exception: " + e.getMessage());
             return false;
         }
-
-
     }
 
     @Override
     protected void onPostExecute(Boolean result){
-        Log.d("CheckLogin", result.toString());
-        ((LoginFragment)fragment).checkResult(result);
+        Log.d(TAG, "onPostExecute: start");
+        fragment.checkResult(result);
     }
 }
