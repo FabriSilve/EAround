@@ -1,75 +1,52 @@
 package lpaa.earound;
 
-/**
- * Created by Fabrizio on 12/06/2017.
- */
 
-public class Search {
+class Search {
     private String position;
     private int distance;
     private int days;
-    private boolean party;
+    /*private boolean party;
     private boolean cultural;
-    private boolean music;
     private boolean sport;
+    private boolean music;*/
 
-    public Search(String position) {
+    Search(String position, int distance, int days/*, boolean party, boolean cultural, boolean sport, boolean music*/) {
         this.position = position;
+        this.distance = distance;
+        this.days = days;
+        /*this.party = party;
+        this.cultural = cultural;
+        this.sport = sport;
+        this.music = music;*/
     }
 
-    public String getPosition() {
+    String getPosition() {
         return position;
     }
 
-    public int getDistance() {
-        return distance;
+    String getDistance() {
+        return String.valueOf(distance);
     }
 
-    public int getDays() {
-        return days;
+    String getDays() {
+        return String.valueOf(days);
     }
 
-    public boolean isParty() {
-        return party;
+    /*String getParty() {
+        return String.valueOf(party);
     }
 
-    public boolean isCultural() {
-        return cultural;
+    String getCultural() {
+        return String.valueOf(cultural);
     }
 
-    public boolean isMusic() {
-        return music;
+    public String getSport() {
+        return String.valueOf(sport);
     }
 
-    public boolean isSport() {
-        return sport;
-    }
+    public String getMusic() {
+        return String.valueOf(music);
+    }*/
 
-    public void setPosition(String position) {
-        this.position = position;
-    }
 
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
-
-    public void setDays(int days) {
-        this.days = days;
-    }
-
-    public void setParty(boolean party) {
-        this.party = party;
-    }
-
-    public void setCultural(boolean cultural) {
-        this.cultural = cultural;
-    }
-
-    public void setMusic(boolean music) {
-        this.music = music;
-    }
-
-    public void setSport(boolean sport) {
-        this.sport = sport;
-    }
 }

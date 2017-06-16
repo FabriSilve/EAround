@@ -41,7 +41,18 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
             //TODO Strutturare ricerca con filtri del search
             URL url = new URL(eventsSearcherUrl);
             connection = url.openConnection();
-            dat = URLEncoder.encode("posizione", "UTF-8") + "=" + URLEncoder.encode("pippo", "UTF-8"); //Posizione fittizia
+            if(search != null) {
+                dat = URLEncoder.encode("position", "UTF-8") + "=" + URLEncoder.encode(search.getPosition(), "UTF-8") +
+                    "&" + URLEncoder.encode("distance","UTF-8") + "=" + URLEncoder.encode(search.getDistance(), "UTF-8") +
+                    "&" + URLEncoder.encode("days","UTF-8") + "=" + URLEncoder.encode(search.getDays(), "UTF-8")/* +
+                    "&" + URLEncoder.encode("party","UTF-8") + "=" + URLEncoder.encode(search.getParty(), "UTF-8") +
+                    "&" + URLEncoder.encode("cultural","UTF-8") + "=" + URLEncoder.encode(search.getCultural(), "UTF-8") +
+                    "&" + URLEncoder.encode("sport","UTF-8") + "=" + URLEncoder.encode(search.getSport(), "UTF-8") +
+                    "&" + URLEncoder.encode("music","UTF-8") + "=" + URLEncoder.encode(search.getMusic(), "UTF-8")*/;
+
+            } else {
+                dat = URLEncoder.encode("position", "UTF-8") + "=" + URLEncoder.encode("default", "UTF-8");
+            }
             connection.setDoOutput(true);
             wr = new OutputStreamWriter(connection.getOutputStream());
             wr.write(dat);
@@ -65,7 +76,9 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
                         event.getInt("id"),
                         event.getString("name"),
                         event.getString("description"),
-                        null, //new Date(event.getString("date")),
+                        Date.valueOf(event.getString("date")),
+                        event.getString("address"),
+                        /*event.getString("type"),*/
                         event.getDouble("lat"),
                         event.getDouble("lon"),
                         event.getString("image")

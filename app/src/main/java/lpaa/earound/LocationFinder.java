@@ -18,14 +18,14 @@ public class LocationFinder implements LocationListener {
     private static final int MIN_DIST = 100;
     private static final int MIN_PERIOD = 60000;
 
-    public LocationFinder(HomeActivity parent, LocationManager locationManager) {
+    /*public LocationFinder(HomeActivity parent, LocationManager locationManager) {
         this.parent = parent;
         this.locationManager = locationManager;
-    }
+    }*/
 
     @Override
     public void onLocationChanged(Location location) {
-        parent.setLocation(location);
+       // parent.setLocation(location);
     }
 
     @Override
@@ -43,8 +43,8 @@ public class LocationFinder implements LocationListener {
 
     }
 
-    public boolean isEable() {
-        if (ActivityCompat.checkSelfPermission(parent.getBaseContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    /*public boolean isEable() {
+        /*if (ActivityCompat.checkSelfPermission(parent.getBaseContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.d(TAG, "isEable: not permission");
             return false;
         }
@@ -53,9 +53,9 @@ public class LocationFinder implements LocationListener {
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 200, this);
         return true;
-    }
+    }*/
 
     public void removeUpdate() {
-        locationManager.removeUpdates(this);
+        //locationManager.removeUpdates(this);
     }
 }

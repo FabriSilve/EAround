@@ -7,11 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-/**
- * Created by Fabrizio on 07/06/2017.
- */
+//TODO lavorare meglio con le dimensioni.
+    //seekbar - bottoni - input - ecc
 
 public class MainActivity extends Activity{
+
+    //TODO quando ruoto il dispositivi che resti sullo stesso fragment
 
     private static String TAG = "MainActivity";
 
@@ -52,6 +53,7 @@ public class MainActivity extends Activity{
 
     }
 
+    //TODO Ragrupare in un unico metodo
     public void goToRegister() {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(container, registerFragment);

@@ -1,8 +1,13 @@
 package lpaa.earound;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +34,7 @@ public class HomeFragment extends Fragment{
     private GoogleMap map;
 
     private MapView mapView;
-    private LinearLayout eventList;
+    private LinearLayout eventsList;
 
 
     @Override
@@ -45,7 +50,7 @@ public class HomeFragment extends Fragment{
             e.printStackTrace();
         }
 
-        eventList = (LinearLayout) view.findViewById(R.id.eventList);
+        eventsList = (LinearLayout) view.findViewById(R.id.eventList);
         eventDrawer();
         MapDrawer mapDrawer = new MapDrawer(this, view, map);
         mapView.getMapAsync(mapDrawer);
@@ -63,15 +68,44 @@ public class HomeFragment extends Fragment{
 
     public void eventDrawer() {
         Log.d(TAG, "eventDrawer: events stamp");
+        Context context = parent.getBaseContext();
         ArrayList<Event> events = parent.getEvents();
-        ArrayList<TextView> eventsView = new ArrayList<>();
+        //ArrayList<LinearLayout> eventsLayout = new ArrayList<>();
         if(events != null && events.size() > 0 )
             for(int i = 0; i<events.size(); i++) {
-                eventsView.add(i, new TextView(parent));
-                eventsView.get(i).setText(events.get(i).getName());
-                eventsView.get(i).setTextSize(50);
+
+                LinearLayout eventLayout = new LinearLayout(parent);
+                eventLayout.setMinimumWidth(400);
+                eventLayout.setMinimumHeight(300);
+                eventLayout.setOrientation(LinearLayout.VERTICAL);
+                eventLayout.setBackgroundResource(R.drawable.lightbg);
+                //margin?
+
+                TextView name = new TextView(parent);
+                name.setText(events.get(i).getName());
+                name.setTextSize(getResources().getDimension(R.dimen.title1_textSize));
+                //name.setTextColor(getResources().getColor(R.color.colorPrimary));
+                eventLayout.addView(name, 0);
+
+               /* TextView data = new TextView(parent);
+                name.setText(events.get(i).getDate().toString());
+                eventLayout.addView(data, 1);
+
+                TextView desc = new TextView(parent);
+                name.setText(events.get(i).getDescription());
+                eventLayout.addView(desc, 2);*/
+
+                /*TextView event = new TextView(parent);
+                String text =
+                        events.get(i).getName() + "\t" + events.get(i).getDate() + "\n"
+                        + events.get(i).getDescription() + "\n";
+                event.setText(text);
+                eventlayout.add(i, event);*/
+
+                //eventsView.get(i).setText(events.get(i).getName());
+                //eventsView.get(i).setTextSize(50);
                 try {
-                    eventList.addView(eventsView.get(i));
+                   eventsList.addView(eventLayout);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

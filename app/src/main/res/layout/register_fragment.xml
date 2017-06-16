@@ -9,8 +9,8 @@
 
     <Button
         android:id="@+id/register_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/button2_size"
+        android:layout_height="@dimen/button2_size"
         android:text="@string/arrow"
         android:textSize="@dimen/button1_textSize"
         android:textStyle="bold"

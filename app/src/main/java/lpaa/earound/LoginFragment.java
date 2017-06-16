@@ -82,6 +82,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         CheckLogin checker = new CheckLogin(this, user, pass);
         checker.execute();
+        Toast toast = Toast.makeText(view.getContext(), getText(R.string.sending), Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     public void checkResult(boolean result) {

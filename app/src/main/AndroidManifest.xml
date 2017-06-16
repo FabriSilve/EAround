@@ -29,6 +29,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+
+
         <meta-data
             android:name="com.google.android.maps.v3.API_KEY"
             android:value="@string/API_KEY"/>

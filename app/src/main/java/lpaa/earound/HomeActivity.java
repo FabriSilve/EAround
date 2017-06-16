@@ -17,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     private final String TAG = "HomeActivity";
     //TODO aggiungere carica degli eventi nella zona e aggiunta in locale prima di inizializzare tutto
+    //TODO quando ruoto il dispositivi che resti sullo stesso fragment
 
     private Button search;
     private Button home;
@@ -38,8 +40,8 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     private SearchFragment searchFragment;
     private PersonalFragment personalFragment;
 
-    private LocationFinder locationFinder;
-    private Location location;
+    //private LocationFinder locationFinder;
+    //private Location location;
     private ArrayList<Event> events = new ArrayList<>();
 
     public HomeActivity() {
@@ -51,7 +53,8 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
 
-        initLocationFinder();
+        //TODO studiare localizzazione dispositivo e inizializzare location finder
+        //initLocationFinder();
         searchEvent();
 
         search = (Button) findViewById(R.id.home_searchButton);
@@ -110,6 +113,10 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     }
 
     public void setEvents(ArrayList<Event> events) {
+        if(events.size() == 0) {
+            Toast toast = Toast.makeText(this, getText(R.string.eventsNotFound), Toast.LENGTH_LONG);
+            toast.show();
+        }
         this.events = events;
         homeFragment.eventDrawer();
     }
@@ -123,30 +130,19 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         eventSearcher.execute();
     }
 
-    private void initLocationFinder() {
-        locationFinder = new LocationFinder(this, (LocationManager) getSystemService(LOCATION_SERVICE));
+    /*private void initLocationFinder() {
+        /*locationFinder = new LocationFinder(this, (LocationManager) getSystemService(LOCATION_SERVICE));
         if(!locationFinder.isEable()) {
+            new Toast().makeText(this, getText(R.string.notConnected), Toast.LENGTH_LONG);
             Log.d(TAG, "initLocationFinder: internet disable");
         }
-    }
+    }*/
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initLocationFinder();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        locationFinder.removeUpdate();
-    }
-
-    public void setLocation(Location location) {
+    /*public void setLocation(Location location) {
         this.location = location;
     }
 
     public Location getLocation() {
         return location;
-    }
+    }*/
 }

@@ -61,7 +61,6 @@
 
         <SeekBar
             android:id="@+id/search_distanceBar"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="@dimen/seekBar_width"
             android:layout_height="@dimen/seekBar_height"
             android:max="6"
@@ -101,10 +100,9 @@
 
         <SeekBar
             android:id="@+id/search_daysBar"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="@dimen/seekBar_width"
             android:layout_height="@dimen/seekBar_height"
-            android:max="7"
+            android:max="6"
             android:progress="1"
             android:layout_marginEnd="@dimen/marginMiddle"
             android:layout_marginTop="@dimen/marginMin"
@@ -114,7 +112,7 @@
 
         <TextView
             android:id="@+id/search_daysLabel"
-            android:layout_width="@dimen/title2_width"
+            android:layout_width="@dimen/seekBar_width"
             android:layout_height="@dimen/label1_height"
             android:text="@string/daysDefault"
             android:layout_marginTop="@dimen/marginMin"
@@ -126,6 +124,7 @@
             app:layout_constraintRight_toRightOf="parent"
             />
 
+        <!--
         <TextView
             android:id="@+id/search_types"
             android:layout_width="@dimen/title2_width"
@@ -139,6 +138,7 @@
             app:layout_constraintTop_toBottomOf="@id/search_daysLabel"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
+
 
         <CheckBox
             android:id="@+id/search_partyBox"
@@ -191,6 +191,7 @@
             app:layout_constraintTop_toBottomOf="@id/search_types"
             app:layout_constraintLeft_toRightOf="@id/search_sportBox"
             app:layout_constraintRight_toRightOf="parent"/>
+        -->
 
         <Button
             android:id="@+id/search_find"
@@ -201,9 +202,10 @@
             android:textAlignment="center"
             android:text="@string/find"
             android:layout_marginTop="@dimen/marginMiddle"
-            app:layout_constraintTop_toBottomOf="@id/search_musicBox"
+            app:layout_constraintTop_toBottomOf="@id/search_distanceLabel"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
+        <!-- before toTop-Bottom - @id/search_musicBox" -->
 
         <CheckBox
             android:id="@+id/search_rememberPosition"

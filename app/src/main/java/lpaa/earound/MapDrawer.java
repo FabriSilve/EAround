@@ -35,11 +35,11 @@ public class MapDrawer implements OnMapReadyCallback {
 
         // For dropping a marker at a point on the Map
         LatLng center;
-        if(homeFragment.getParent().getLocation() == null)
+        //if(homeFragment.getParent().getLocation() == null)
             center = new LatLng(44.424704,8.849104);
-        else
+        /*else
             center = new LatLng(homeFragment.getParent().getLocation().getLatitude(),homeFragment.getParent().getLocation().getLongitude());
-
+        */
 
 
         map.addMarker(new MarkerOptions().position(center).title(view.getContext().getString(R.string.youAreHere)));

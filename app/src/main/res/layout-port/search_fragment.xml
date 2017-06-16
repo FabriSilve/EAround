@@ -10,7 +10,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/search_form"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dp"
         android:layout_weight="2">
 
         <TextView
@@ -66,7 +66,7 @@
             android:max="6"
             android:progress="1"
             android:layout_marginStart="@dimen/marginMiddle"
-            android:layout_marginTop="19dp"
+            android:layout_marginTop="@dimen/marginMin"
             app:layout_constraintTop_toBottomOf="@id/search_distanceTitle"
             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -103,7 +103,7 @@
             style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="@dimen/seekBar_width"
             android:layout_height="@dimen/seekBar_height"
-            android:max="7"
+            android:max="6"
             android:progress="1"
             android:layout_marginEnd="@dimen/marginMiddle"
             android:layout_marginTop="@dimen/marginMin"
@@ -113,7 +113,7 @@
 
         <TextView
             android:id="@+id/search_daysLabel"
-            android:layout_width="@dimen/title2_width"
+            android:layout_width="@dimen/seekBar_width"
             android:layout_height="@dimen/label1_height"
             android:text="@string/daysDefault"
             android:layout_marginTop="@dimen/marginMin"
@@ -125,71 +125,73 @@
             app:layout_constraintRight_toRightOf="parent"
             />
 
-        <TextView
-            android:id="@+id/search_types"
-            android:layout_width="@dimen/title2_width"
-            android:layout_height="@dimen/title2_height"
-            android:textSize="@dimen/title2_textSize"
-            android:textColor="@color/colorPrimary"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:text="@string/types"
-            android:layout_margin="@dimen/marginMin"
-            app:layout_constraintTop_toBottomOf="@id/search_daysLabel"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+        <!--
+      <TextView
+          android:id="@+id/search_types"
+          android:layout_width="@dimen/title2_width"
+          android:layout_height="@dimen/title2_height"
+          android:textSize="@dimen/title2_textSize"
+          android:textColor="@color/colorPrimary"
+          android:textAlignment="center"
+          android:textStyle="bold"
+          android:text="@string/types"
+          android:layout_margin="@dimen/marginMin"
+          app:layout_constraintTop_toBottomOf="@id/search_daysLabel"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"/>
 
-        <CheckBox
-            android:id="@+id/search_partyBox"
-            android:layout_width="@dimen/checkBox_width"
-            android:layout_height="@dimen/checkBox_height"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/checkBox_textSize"
-            android:text="@string/party"
-            android:layout_margin="@dimen/marginMin"
-            android:checked="true"
-            app:layout_constraintTop_toBottomOf="@id/search_types"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/search_culturalBox"/>
+      <CheckBox
+          android:id="@+id/search_partyBox"
+          android:layout_width="@dimen/checkBox_width"
+          android:layout_height="@dimen/checkBox_height"
+          android:textColor="@color/colorPrimary"
+          android:textSize="@dimen/checkBox_textSize"
+          android:text="@string/party"
+          android:layout_margin="@dimen/marginMin"
+          android:checked="true"
+          app:layout_constraintTop_toBottomOf="@id/search_types"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toLeftOf="@+id/search_culturalBox"/>
 
-        <CheckBox
-            android:id="@+id/search_culturalBox"
-            android:layout_width="@dimen/checkBox_width"
-            android:layout_height="@dimen/checkBox_height"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/checkBox_textSize"
-            android:text="@string/cultural"
-            android:layout_margin="@dimen/marginMin"
-            android:checked="true"
-            app:layout_constraintTop_toBottomOf="@id/search_types"
-            app:layout_constraintLeft_toRightOf="@id/search_partyBox"
-            app:layout_constraintRight_toLeftOf="@+id/search_sportBox"/>
+      <CheckBox
+          android:id="@+id/search_culturalBox"
+          android:layout_width="@dimen/checkBox_width"
+          android:layout_height="@dimen/checkBox_height"
+          android:textColor="@color/colorPrimary"
+          android:textSize="@dimen/checkBox_textSize"
+          android:text="@string/cultural"
+          android:layout_margin="@dimen/marginMin"
+          android:checked="true"
+          app:layout_constraintTop_toBottomOf="@id/search_types"
+          app:layout_constraintLeft_toRightOf="@id/search_partyBox"
+          app:layout_constraintRight_toLeftOf="@+id/search_sportBox"/>
 
-        <CheckBox
-            android:id="@+id/search_sportBox"
-            android:layout_width="@dimen/checkBox_width"
-            android:layout_height="@dimen/checkBox_height"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/checkBox_textSize"
-            android:text="@string/sport"
-            android:layout_margin="@dimen/marginMin"
-            android:checked="true"
-            app:layout_constraintTop_toBottomOf="@id/search_types"
-            app:layout_constraintLeft_toRightOf="@id/search_culturalBox"
-            app:layout_constraintRight_toLeftOf="@+id/search_musicBox"/>
+      <CheckBox
+          android:id="@+id/search_sportBox"
+          android:layout_width="@dimen/checkBox_width"
+          android:layout_height="@dimen/checkBox_height"
+          android:textColor="@color/colorPrimary"
+          android:textSize="@dimen/checkBox_textSize"
+          android:text="@string/sport"
+          android:layout_margin="@dimen/marginMin"
+          android:checked="true"
+          app:layout_constraintTop_toBottomOf="@id/search_types"
+          app:layout_constraintLeft_toRightOf="@id/search_culturalBox"
+          app:layout_constraintRight_toLeftOf="@+id/search_musicBox"/>
 
-        <CheckBox
-            android:id="@+id/search_musicBox"
-            android:layout_width="@dimen/checkBox_width"
-            android:layout_height="@dimen/checkBox_height"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/checkBox_textSize"
-            android:text="@string/music"
-            android:layout_margin="@dimen/marginMin"
-            android:checked="true"
-            app:layout_constraintTop_toBottomOf="@id/search_types"
-            app:layout_constraintLeft_toRightOf="@id/search_sportBox"
-            app:layout_constraintRight_toRightOf="parent"/>
+      <CheckBox
+          android:id="@+id/search_musicBox"
+          android:layout_width="@dimen/checkBox_width"
+          android:layout_height="@dimen/checkBox_height"
+          android:textColor="@color/colorPrimary"
+          android:textSize="@dimen/checkBox_textSize"
+          android:text="@string/music"
+          android:layout_margin="@dimen/marginMin"
+          android:checked="true"
+          app:layout_constraintTop_toBottomOf="@id/search_types"
+          app:layout_constraintLeft_toRightOf="@id/search_sportBox"
+          app:layout_constraintRight_toRightOf="parent"/>
+      -->
 
         <Button
             android:id="@+id/search_find"
@@ -200,7 +202,7 @@
             android:textAlignment="center"
             android:text="@string/find"
             android:layout_marginTop="@dimen/marginMiddle"
-            app:layout_constraintTop_toBottomOf="@id/search_musicBox"
+            app:layout_constraintTop_toBottomOf="@id/search_distanceLabel"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
@@ -218,6 +220,7 @@
 
     </android.support.constraint.ConstraintLayout>
 
+    <!--
     <LinearLayout
         android:id="@+id/search_galleryColum"
         android:orientation="vertical"
@@ -292,4 +295,5 @@
 
 
     </LinearLayout>
+    -->
 </LinearLayout>
