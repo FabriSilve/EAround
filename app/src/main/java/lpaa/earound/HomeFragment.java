@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
 
         eventsList = (LinearLayout) view.findViewById(R.id.eventList);
         eventDrawer();
-        MapDrawer mapDrawer = new MapDrawer(this, view, map);
+        MapDrawer mapDrawer = new MapDrawer(this, view, map, parent.getApplicationContext());
         mapView.getMapAsync(mapDrawer);
         return view;
     }
@@ -66,7 +66,9 @@ public class HomeFragment extends Fragment {
 
     public void eventDrawer() {
         Log.d(TAG, "eventDrawer: start");
-        ArrayList<Event> events = parent.getEvents();
+        ArrayList<Event> events;
+        DBTask dbTask = new DBTask(parent.getApplicationContext());
+        events = dbTask.getEvents();
         //ArrayList<LinearLayout> eventsLayout = new ArrayList<>();
         if (events != null && events.size() > 0)
             for (int i = 0; i < events.size(); i++) {
@@ -76,7 +78,7 @@ public class HomeFragment extends Fragment {
                     eventLayout.setMinimumWidth(LayoutParams.MATCH_PARENT);
                     eventLayout.setMinimumHeight(LayoutParams.WRAP_CONTENT);
                     eventLayout.setOrientation(LinearLayout.VERTICAL);
-                    //eventLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
+                    eventLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
                     LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
                     params.setMargins(0, 10, 0, 10);
                     eventLayout.setLayoutParams(params);
@@ -122,10 +124,12 @@ public class HomeFragment extends Fragment {
             }
     }
 
-    public ArrayList<Event> getParentEvents() {
+    /*public ArrayList<Event> getParentEvents() {
         Log.d(TAG, "getParentEvents: start");
-        return parent.getEvents();
-    }
+        //TODO Correggere qui
+        //return parent == null? new ArrayList<Event>() : ((HomeActivity) this.getActivity()).getEvents();
+        return new ArrayList<>();
+    }*/
 
     public HomeActivity getParent() {
         Log.d(TAG, "getParent: start");

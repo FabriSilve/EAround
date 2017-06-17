@@ -75,6 +75,14 @@ public class Event {
         return new LatLng(lat, lon);
     }
 
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
     public String getImage() {
         return image;
     }

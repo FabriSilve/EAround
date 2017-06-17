@@ -188,4 +188,40 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
         Log.d(TAG, "onConfigurationChanged: start");
         super.onConfigurationChanged(newConfig);
     }
+
+    @Override
+    public void onPause() {
+        Log.d(TAG, "onPause: ");
+        main.onPauseFragment("register_username", username.getText().toString());
+        main.onPauseFragment("register_password1", password1.getText().toString());
+        main.onPauseFragment("register_password2", password2.getText().toString());
+        main.onPauseFragment("register_email1", email1.getText().toString());
+        main.onPauseFragment("register_email2", email2.getText().toString());
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        username.setText(main.onResumeFragment("register_username", ""));
+        password1.setText(main.onResumeFragment("register_password1", ""));
+        password2.setText(main.onResumeFragment("register_password2", ""));
+        email1.setText(main.onResumeFragment("register_email1", ""));
+        email2.setText(main.onResumeFragment("register.email2", ""));
+        super.onResume();
+    }
+
+    /*@Override
+    public void onStop() {
+        Log.d(TAG, "onStop: ");
+
+        //TODO capire perche vuole un elemento in più nell'array
+        String[] ids = new String[6];
+        ids[0] = "register_username";
+        ids[1] = "register_password1";
+        ids[2] = "register_password2";
+        ids[3] = "register_email1";
+        ids[4] = "register_email2";
+        main.clearFragment(ids);
+        super.onStop();
+    }*/
 }

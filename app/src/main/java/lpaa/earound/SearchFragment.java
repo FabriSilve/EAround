@@ -51,6 +51,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
         sport = (CheckBox) view.findViewById(R.id.search_sportBox);
         music = (CheckBox) view.findViewById(R.id.search_musicBox);*/
         find = (Button) view.findViewById(R.id.search_find);
+        find.setClickable(true);
         //rememberPosition = (CheckBox) view.findViewById(R.id.search_rememberPosition);
 
         //TODO Estrarre listener
@@ -71,6 +72,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
         Log.d(TAG, "onClick: start");
         switch(v.getId()) {
             case R.id.search_find:
+                find.setClickable(false);
                 startSearch();
                 break;
         }
@@ -136,5 +138,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
     public void onConfigurationChanged(Configuration newConfig) {
         Log.d(TAG, "onConfigurationChanged: start");
         super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onPause() {
+
+        super.onPause();
     }
 }

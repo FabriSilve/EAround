@@ -6,7 +6,7 @@
 
     <dimen name="zero">0dp</dimen>
 
-    <dimen name="input1_width">300dp</dimen>
+    <dimen name="input1_width">400dp</dimen>
     <dimen name="input1_height">60dp</dimen>
     <dimen name="input1_textSize">30sp</dimen>
 

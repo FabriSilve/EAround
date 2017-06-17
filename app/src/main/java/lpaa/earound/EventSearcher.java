@@ -101,7 +101,9 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
     @Override
     protected void onPostExecute(ArrayList<Event> events) {
         Log.d(TAG, "onPostExecute: start");
-        main.setEvents(events);
+        //main.setEvents(events);
+        DBTask dbTask = new DBTask(main.getApplicationContext());
+        dbTask.updateEvents(events);
         if(searchFragment == null) return;
         Log.d(TAG, "onPostExecute: with fragment");
         try{

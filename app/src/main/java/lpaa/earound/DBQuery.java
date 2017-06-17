@@ -1,8 +1,5 @@
 package lpaa.earound;
 
-/**
- * Created by Fabrizio on 08/06/2017.
- */
 
 public class DBQuery {
 
@@ -14,6 +11,16 @@ public class DBQuery {
     public static final String USERDATA_USER = "user";
     public static final String USERDATA_CITY = "city";
 
+    public static final String EVENTS = "Events";
+    public static final String EVENTS_ID = "eventID";
+    public static final String EVENTS_NAME = "name";
+    public static final String EVENTS_DESCRIPTION = "description";
+    public static final String EVENTS_DATE = "date";
+    public static final String EVENTS_ADDRESS = "address";
+    public static final String EVENTS_LAT = "lat";
+    public static final String EVENTS_LON = "lon";
+    public static final String EVENTS_IMAGE = "image";
+
     public static final String CREATE_USERDATA_TABLE =
             "CREATE TABLE "+USERDATA+"( " +
                     USERDATA_KEEP+" INTEGER NOT NULL," +
@@ -21,15 +28,24 @@ public class DBQuery {
                     USERDATA_CITY+" TEXT);";
 
     public static final String DROP_USERDATA_TABLE =
-            "DROP TABLE IF EXIST "+USERDATA+";";
+            "DROP TABLE IF EXISTS "+USERDATA+";";
 
     /*public static final String INIT_USERDATA_TABLE =
             "INSERT INTO "+USERDATA+" VALUES(1, 'faber', null);";*/
 
     /*TODO creare query per tabella eventi da salvare in locale*/
     public static final String CREATE_EVENTS_TABLE =
-            "";
+            "CREATE TABLE "+EVENTS + " ( " +
+                    EVENTS_ID + " INTEGER NOT NULL PRIMARY KEY," +
+                    EVENTS_NAME + " TEXT," +
+                    EVENTS_DESCRIPTION + " TEXT, " +
+                    EVENTS_DATE + "TEXT, " +
+                    EVENTS_ADDRESS + "TEXT," +
+                    EVENTS_LAT + "FLOAT," +
+                    EVENTS_LON + "FLOAT," +
+                    EVENTS_IMAGE + "TEXT);";
 
-
+    public static final String DROP_EVENTS_TABLE =
+            "DROP TABLE IF EXISTS " + EVENTS + ";";
 
 }

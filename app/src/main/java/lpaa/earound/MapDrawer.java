@@ -1,6 +1,7 @@
 package lpaa.earound;
 
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,12 +21,14 @@ public class MapDrawer implements OnMapReadyCallback {
     private View view;
     private GoogleMap map;
     private HomeFragment homeFragment;
+    private Context context;
 
-    public MapDrawer(HomeFragment homeFragment, View view, GoogleMap map) {
+    public MapDrawer(HomeFragment homeFragment, View view, GoogleMap map, Context context) {
         Log.d(TAG, "MapDrawer: costructor");
         this.homeFragment = homeFragment;
         this.view = view;
         this.map = map;
+        this.context = context;
     }
 
     @Override
@@ -56,7 +59,8 @@ public class MapDrawer implements OnMapReadyCallback {
         /* animazione zoom camera
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
          */
-        ArrayList<Event> events = homeFragment.getParentEvents();
+        DBTask dbTask = new DBTask(context);
+        ArrayList<Event> events = dbTask.getEvents();
         for(int i = 0; i<events.size(); i++) {
             map.addMarker(
                     new MarkerOptions()

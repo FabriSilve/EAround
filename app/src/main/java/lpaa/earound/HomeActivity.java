@@ -6,6 +6,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 public class HomeActivity  extends Activity implements View.OnClickListener {
 
     private final String TAG = "HomeActivity";
+    private SharedPreferences homeValues;
     //TODO aggiungere carica degli eventi nella zona e aggiunta in locale prima di inizializzare tutto
     //TODO quando ruoto il dispositivi che resti sullo stesso fragment
 
@@ -40,6 +43,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     private HomeFragment homeFragment;
     private SearchFragment searchFragment;
     private PersonalFragment personalFragment;
+    private String currentFragment;
 
     //private LocationFinder locationFinder;
     //private Location location;
@@ -52,6 +56,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: start");
+        homeValues = getSharedPreferences("homeValues", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
 
@@ -81,6 +86,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(container, homeFragment);
         fragmentTransaction.commit();
+        currentFragment = "HOME";
 
     }
 
@@ -90,12 +96,15 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         switch(v.getId()) {
             case R.id.home_searchButton:
                 goTo(searchFragment);
+                currentFragment = "SEARCH";
                 break;
             case R.id.home_homeButton:
                 goTo(homeFragment);
+                currentFragment = "HOME";
                 break;
             case R.id.home_personalButton:
                 goTo(personalFragment);
+                currentFragment = "PERSONAL";
                 break;
         }
     }
@@ -103,6 +112,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     public void goToHome() {
         Log.d(TAG, "goToHome: start");
         goTo(homeFragment);
+        currentFragment = "HOME";
     }
 
     private void goTo(Fragment fragment) {
@@ -119,7 +129,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 
-    public void setEvents(ArrayList<Event> events) {
+    /*public void setEvents(ArrayList<Event> events) {
         Log.d(TAG, "setEvents: start");
         if(events.size() == 0) {
             Toast toast = Toast.makeText(this, getText(R.string.eventsNotFound), Toast.LENGTH_LONG);
@@ -127,7 +137,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         }
         this.events = events;
         homeFragment.eventDrawer();
-    }
+    }*/
 
     public ArrayList<Event> getEvents() {
         return events;
@@ -160,4 +170,55 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         Log.d(TAG, "onConfigurationChanged: start");
         super.onConfigurationChanged(newConfig);
     }
+
+    @Override
+    protected void onPause() {
+        Log.d(TAG, "onPause: start");
+        Editor editor = homeValues.edit();
+        editor.putString("currentFragment", currentFragment);
+        editor.apply();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        //TODO to complete
+        currentFragment = homeValues.getString("currentFragment", "HOME");
+        switch (currentFragment) {
+            case "PERSONAL":
+                goTo(personalFragment);
+                break;
+            case "SEARCH":
+                goTo(searchFragment);
+                break;
+            default:
+                goTo(homeFragment);
+                break;
+        }
+        super.onResume();
+    }
+
+    protected void onPauseFragment(String key, String value) {
+        Log.d(TAG, "onPauseFragment: ");
+        Editor editor = homeValues.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
+    protected String onResumeFragment(String key, String valueDefault) {
+        Log.d(TAG, "onResumeFragment: ");
+        return homeValues.getString(key, valueDefault);
+    }
+
+    //TODO far si che il fragment iniziale sia sempre home
+    /*@Override
+    protected void onStop() {
+        Log.d(TAG, "onStop: ");
+        Editor editor = homeValues.edit();
+        editor.putString("currentFragment", "HOME");
+        editor.apply();
+        super.onStop();
+    }*/
+
+
 }

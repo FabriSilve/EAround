@@ -7,15 +7,17 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
-//TODO lavorare meglio con le dimensioni.
-    //seekbar - bottoni - input - ecc
 
 public class MainActivity extends Activity{
 
     //TODO quando ruoto il dispositivi che resti sullo stesso fragment
 
     private final String TAG = "MainActivity";
+    private SharedPreferences mainValues;
+    private String currentFragment;
 
     private LoginFragment loginFragment;
     private RegisterFragment registerFragment;
@@ -27,6 +29,7 @@ public class MainActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: start");
+        mainValues = getSharedPreferences("MainValues", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
 
         Log.d(TAG, "onCreate: user access control");
@@ -51,6 +54,7 @@ public class MainActivity extends Activity{
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(container,loginFragment);
         fragmentTransaction.commit();
+        currentFragment = "LOG";
 
     }
 
@@ -60,6 +64,7 @@ public class MainActivity extends Activity{
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(container, registerFragment);
         fragmentTransaction.commit();
+        currentFragment = "REG";
     }
 
     public void goToLogin() {
@@ -67,6 +72,7 @@ public class MainActivity extends Activity{
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(container, loginFragment);
         fragmentTransaction.commit();
+        currentFragment = "LOG";
     }
 
     public void correctlyLogged(boolean keep, String username) {
@@ -87,5 +93,61 @@ public class MainActivity extends Activity{
     public void onConfigurationChanged(Configuration newConfig) {
         Log.d(TAG, "onConfigurationChanged: start");
         super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d(TAG, "onPause: start");
+        Editor editor = mainValues.edit();
+        editor.putString("currentFragment", currentFragment);
+        editor.apply();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        //TODO to complete
+        Log.d(TAG, "onResume: start");
+        currentFragment = mainValues.getString("currentFragment", "LOG");
+        switch (currentFragment) {
+            case "REG":
+                goToRegister();
+                break;
+            default:
+                goToLogin();
+                break;
+        }
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "onDestroy: start");
+        /*Editor editor = mainValues.edit();
+        editor.putString("currentFragment", "LOG");
+        editor.apply();*/
+
+        super.onDestroy();
+    }
+
+    protected void onPauseFragment(String key, String value) {
+        Log.d(TAG, "onPauseFragment: ");
+        Editor editor = mainValues.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
+    protected String onResumeFragment(String key, String valueDefault) {
+        Log.d(TAG, "onResumeFragment: ");
+        return mainValues.getString(key, valueDefault);
+    }
+
+    protected void clearFragment(String... ids) {
+        Log.d(TAG, "clearLogin: ");
+        Editor editor = mainValues.edit();
+        for(String id : ids) {
+            editor.putString(id, "");
+        }
+        editor.apply();
     }
 }
