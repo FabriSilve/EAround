@@ -51,6 +51,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
         days.setOnSeekBarChangeListener(this);
         find.setOnClickListener(this);
 
+        onResume();
+
         return view;
     }
 
@@ -77,11 +79,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
 
         EventSearcher searcher = new EventSearcher(parent, search);
         searcher.execute();
-    }
-
-    public void searchDone() {
-        Log.d(TAG, "searchDone: start");
-        parent.goToHome();
     }
 
     @Override
@@ -123,5 +120,22 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
         super.onConfigurationChanged(newConfig);
     }
 
-    //TODO conservare i valori inseriti nei campi in onRssume e on Pause
+    @Override
+    public void onPause() {
+        Log.d(TAG, "onPause: ");
+        parent.onPauseFragment("search_position", position.getText().toString());
+        parent.onPauseFragment("search_distance", String.valueOf(distance.getProgress()));
+        parent.onPauseFragment("search_distance", String.valueOf(days.getProgress()));
+
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        Log.d(TAG, "onResume: ");
+        position.setText(parent.onResumeFragment("search_position", ""));
+        distance.setProgress(Integer.valueOf(parent.onResumeFragment("search_distance", "1")));
+        days.setProgress(Integer.valueOf(parent.onResumeFragment("search_days", "1")));
+        super.onResume();
+    }
 }

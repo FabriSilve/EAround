@@ -101,7 +101,7 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
     protected void onPostExecute(ArrayList<Event> events) {
         Log.d(TAG, "onPostExecute: start");
         //TODO aggiornare DB qui e poi chiamare aggiornamento della ui
-        new DBTask(main).insertEvents(events);
+        new DBTask(main).updateEvents(events);
 
         main.searchDone();
     }

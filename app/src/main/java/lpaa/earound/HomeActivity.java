@@ -86,12 +86,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         }
     }
 
-    public void goToHome() {
-        Log.d(TAG, "goToHome: start");
-        goTo(homeFragment);
-        currentFragment = "HOME";
-    }
-
     private void goTo(Fragment fragment) {
         Log.d(TAG, "goTo: start");
         if(fragmentManager != null) {
@@ -107,11 +101,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         //DBTask dbTask = new DBTask(getApplicationContext());
         //dbTask.deleteUser();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-    }
-
-    public ArrayList<Event> getEvents() {
-        return events;
+        this.finish();
     }
 
     public void searchEvent( Search search) {
@@ -123,7 +113,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     public void searchDone() {
         Log.d(TAG, "searchDone: aggiungo eventi nel DB");
         //TODO add events to DB
-        initUI();
+        onResume();
     }
 
     private void initUI() {
@@ -171,9 +161,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     protected void onResume() {
         Log.d(TAG, "onResume: start");
         //TODO to complete
-        //initUI();
-
-        super.onResume();
+        initUI();
 
         currentFragment = homeValues.getString("currentFragment", "HOME");
         switch (currentFragment) {
@@ -187,7 +175,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
                 goTo(homeFragment);
                 break;
         }
-
+        super.onResume();
     }
 
     protected void onPauseFragment(String key, String value) {
