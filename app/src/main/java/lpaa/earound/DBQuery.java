@@ -15,8 +15,9 @@ public class DBQuery {
             "CREATE TABLE "+EVENTS + " ( " +
                     EVENTS_NAME + " TEXT," +
                     EVENTS_DESCRIPTION + " TEXT, " +
-                    EVENTS_DATE + "TEXT, " +
-                    "PRIMARY KEY("+ EVENTS_NAME + ","+EVENTS_DATE + ");";
+                    EVENTS_DATE + " TEXT, " +
+                    "PRIMARY KEY("+ EVENTS_NAME + ","+EVENTS_DATE + ")" +
+                    ");";
 
     public static final String DELETE_EVENTS =
             "DELETE * FROM " + EVENTS;

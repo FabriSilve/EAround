@@ -23,6 +23,7 @@ public class MapDrawer implements OnMapReadyCallback {
     private HomeFragment homeFragment;
     private HomeActivity parent;
 
+    //TODO serve homefragment?
     public MapDrawer(HomeFragment homeFragment, View view, GoogleMap map, HomeActivity parent) {
         Log.d(TAG, "MapDrawer: costructor");
         this.homeFragment = homeFragment;
@@ -51,7 +52,7 @@ public class MapDrawer implements OnMapReadyCallback {
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
          */
 
-        ArrayList<Event> events = parent.getEvents();
+        ArrayList<Event> events = new DBTask(parent).getEvents();
         for(int i = 0; i<events.size(); i++) {
             //TODO debug
             LatLng pos = new LatLng(44.424704 + (i*0.01),8.849104 + (i*0.01));

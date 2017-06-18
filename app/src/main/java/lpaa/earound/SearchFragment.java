@@ -75,7 +75,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
 
         //TODO se rememberPOsition è checkato salvare la posizione in locale
 
-        EventSearcher searcher = new EventSearcher(parent, this, search);
+        EventSearcher searcher = new EventSearcher(parent, search);
         searcher.execute();
     }
 

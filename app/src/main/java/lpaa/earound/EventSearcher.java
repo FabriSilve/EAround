@@ -20,7 +20,7 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
     private Search search;
 
     //TODO servono tutti questi campi??
-    public EventSearcher(HomeActivity main, SearchFragment searchFragment, Search search) {
+    public EventSearcher(HomeActivity main, Search search) {
         Log.d(TAG, "EventSearcher: costructor");
         this.main = main;
         this.search = search;
@@ -101,6 +101,8 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
     protected void onPostExecute(ArrayList<Event> events) {
         Log.d(TAG, "onPostExecute: start");
         //TODO aggiornare DB qui e poi chiamare aggiornamento della ui
-        main.searchDone(events);
+        new DBTask(main).insertEvents(events);
+
+        main.searchDone();
     }
 }

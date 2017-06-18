@@ -82,6 +82,7 @@ public class MainActivity extends Activity{
     private void goToHomeActivity() {
         Log.d(TAG, "goToHomeActivity: start");
         startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+
     }
 
     @Override

@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
         try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
+            MapsInitializer.initialize(parent);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment {
 
     public void eventDrawer() {
         Log.d(TAG, "eventDrawer: start");
-        ArrayList<Event> events = null;
+        ArrayList<Event> events = new DBTask(parent).getEvents();
         //TODO prende eventi dal db
         //ArrayList<LinearLayout> eventsLayout = new ArrayList<>();
         if (events != null && events.size() > 0)

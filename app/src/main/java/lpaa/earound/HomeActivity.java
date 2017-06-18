@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+//TODO implementare style.xml per stile app slide 07
 
 public class HomeActivity  extends Activity implements View.OnClickListener {
 
@@ -53,26 +54,34 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         homeValues = getSharedPreferences("homeValues", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
 
+        //TODO CORREGERE searching layout con slide 05
         setContentView(R.layout.searching_layout);
-        //TODO studiare localizzazione dispositivo e inizializzare location finder
-        searchEvent(null, null);
+
+        searchEvent(null);
     }
 
     @Override
     public void onClick(View v) {
         Log.d(TAG, "onClick: start");
+        Editor editor = homeValues.edit();
         switch(v.getId()) {
             case R.id.home_searchButton:
-                goTo(searchFragment);
                 currentFragment = "SEARCH";
+                editor.putString("currentFragment", currentFragment);
+                editor.apply();
+                goTo(searchFragment);
                 break;
             case R.id.home_homeButton:
-                goTo(homeFragment);
                 currentFragment = "HOME";
+                editor.putString("currentFragment", currentFragment);
+                editor.apply();
+                goTo(homeFragment);
                 break;
             case R.id.home_personalButton:
-                goTo(personalFragment);
                 currentFragment = "PERSONAL";
+                editor.putString("currentFragment", currentFragment);
+                editor.apply();
+                goTo(personalFragment);
                 break;
         }
     }
@@ -85,40 +94,33 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     private void goTo(Fragment fragment) {
         Log.d(TAG, "goTo: start");
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(container, fragment);
-        fragmentTransaction.commit();
+        if(fragmentManager != null) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(container, fragment);
+            fragmentTransaction.commit();
+        }
     }
 
     public void logoutUser() {
         Log.d(TAG, "logoutUser: start");
+        //TODO inserire dati user in db per renderli accessibili a tutte le activity
         //DBTask dbTask = new DBTask(getApplicationContext());
         //dbTask.deleteUser();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
-    }
 
-    /*public void setEvents(ArrayList<Event> events) {
-        Log.d(TAG, "setEvents: start");
-        if(events.size() == 0) {
-            Toast toast = Toast.makeText(this, getText(R.string.eventsNotFound), Toast.LENGTH_LONG);
-            toast.show();
-        }
-        this.events = events;
-        homeFragment.eventDrawer();
-    }*/
+    }
 
     public ArrayList<Event> getEvents() {
         return events;
     }
 
-    public void searchEvent(SearchFragment fragment, Search search) {
+    public void searchEvent( Search search) {
         Log.d(TAG, "searchEvent: start");
-        //this.events = new DBTask(getApplicationContext()).getEvents();
-        EventSearcher eventSearcher = new EventSearcher(this, fragment, search);
+        EventSearcher eventSearcher = new EventSearcher(this, search);
         eventSearcher.execute();
     }
 
-    public void searchDone(ArrayList<Event> events) {
+    public void searchDone() {
         Log.d(TAG, "searchDone: aggiungo eventi nel DB");
         //TODO add events to DB
         initUI();
@@ -167,9 +169,25 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     @Override
     protected void onResume() {
+        Log.d(TAG, "onResume: start");
         //TODO to complete
-        initUI();
+        //initUI();
+
         super.onResume();
+
+        currentFragment = homeValues.getString("currentFragment", "HOME");
+        switch (currentFragment) {
+            case "PERSONAL":
+                goTo(personalFragment);
+                break;
+            case "SEARCH":
+                goTo(searchFragment);
+                break;
+            default:
+                goTo(homeFragment);
+                break;
+        }
+
     }
 
     protected void onPauseFragment(String key, String value) {
