@@ -21,14 +21,14 @@ public class MapDrawer implements OnMapReadyCallback {
     private View view;
     private GoogleMap map;
     private HomeFragment homeFragment;
-    private Context context;
+    private HomeActivity parent;
 
-    public MapDrawer(HomeFragment homeFragment, View view, GoogleMap map, Context context) {
+    public MapDrawer(HomeFragment homeFragment, View view, GoogleMap map, HomeActivity parent) {
         Log.d(TAG, "MapDrawer: costructor");
         this.homeFragment = homeFragment;
         this.view = view;
         this.map = map;
-        this.context = context;
+        this.parent = parent;
     }
 
     @Override
@@ -59,8 +59,8 @@ public class MapDrawer implements OnMapReadyCallback {
         /* animazione zoom camera
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
          */
-        DBTask dbTask = new DBTask(context);
-        ArrayList<Event> events = dbTask.getEvents();
+
+        ArrayList<Event> events = parent.getEvents();
         for(int i = 0; i<events.size(); i++) {
             map.addMarker(
                     new MarkerOptions()

@@ -49,9 +49,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     //private Location location;
     private ArrayList<Event> events = new ArrayList<>();
 
-    public HomeActivity() {
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,8 +121,8 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     public void logoutUser() {
         Log.d(TAG, "logoutUser: start");
-        DBTask dbTask = new DBTask(getApplicationContext());
-        dbTask.deleteUser();
+        //DBTask dbTask = new DBTask(getApplicationContext());
+        //dbTask.deleteUser();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 
@@ -143,8 +140,14 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         return events;
     }
 
+    public void updateEvents(ArrayList<Event> events) {
+        DBTask dbTask = new DBTask(getApplicationContext());
+        dbTask.updateEvents(events);
+    }
+
     public void searchEvent() {
         Log.d(TAG, "searchEvent: start");
+        //this.events = new DBTask(getApplicationContext()).getEvents();
         EventSearcher eventSearcher = new EventSearcher(this,null, null);
         eventSearcher.execute();
     }
@@ -219,6 +222,4 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         editor.apply();
         super.onStop();
     }*/
-
-
 }

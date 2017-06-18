@@ -33,6 +33,8 @@ public class MainActivity extends Activity{
         super.onCreate(savedInstanceState);
 
         Log.d(TAG, "onCreate: user access control");
+        /*
+        DB
         dbTask = new DBTask(getApplicationContext());
         UserData user = dbTask.getUser();
         if(user != null) {
@@ -40,6 +42,9 @@ public class MainActivity extends Activity{
                 goToHomeActivity();
             }
         }
+        */
+        if(!mainValues.getString("user", "").equals(""))
+            goToHomeActivity();
 
         Log.d(TAG, "onCreate: init UI");
         setContentView(R.layout.main_activity);
@@ -78,8 +83,11 @@ public class MainActivity extends Activity{
     public void correctlyLogged(boolean keep, String username) {
         Log.d(TAG, "correctlyLogged: start");
         if(keep) {
-            dbTask.deleteUser();
-            dbTask.insertUser(new UserData(1, username, null));
+            /*dbTask.deleteUser();
+            dbTask.insertUser(new UserData(1, username, null));*/
+            Editor editor =  mainValues.edit();
+            editor.putString("user", username);
+            editor.apply();
         }
         goToHomeActivity();
     }

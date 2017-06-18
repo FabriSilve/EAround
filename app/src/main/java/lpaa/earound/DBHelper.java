@@ -16,30 +16,27 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context, String name, CursorFactory factory, int version) {
         super(context, name, factory, version);
         Log.d(TAG, "DBHelper: costructor");
+
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
         Log.d(TAG, "onCreate: start");
-        db.execSQL(
-                CREATE_USERDATA_TABLE +
-                CREATE_EVENTS_TABLE);
-        //TODO inserire chreazione tabella eventi
+
+        //db.execSQL(CREATE_DB);
+        db.execSQL(CREATE_USERDATA_TABLE);
+        db.execSQL(test);
+        db.execSQL(CREATE_EVENTS_TABLE);
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d(TAG, "onUpgrade: start");
-        if(oldVersion<newVersion) {
-            db.execSQL(DROP_USERDATA_TABLE);
-            db.execSQL(DROP_EVENTS_TABLE);
-            onCreate(db);
-        }
-        //TODO inserire drop tabella eventi
+        db.execSQL(DROP_USERDATA_TABLE);
+        db.execSQL(DROP_EVENTS_TABLE);
+        onCreate(db);
         /*TODO da sostituire con ALTERTABLE dopo fase di testing*/
-
-
     }
 }

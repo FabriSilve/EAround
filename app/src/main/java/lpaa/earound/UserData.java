@@ -7,23 +7,13 @@ public class UserData {
 
     private final String TAG = "UserData";
 
-    private int keep;
     private String username;
     private String city;
 
-    public UserData(int keep, String username, String city) {
+    public UserData(String username, String city) {
         Log.d(TAG, "UserData: costructor");
-        this.keep = keep;
         this.username = username;
         this.city = city;
-    }
-
-    public void setKeep(int keep) {
-        this.keep = keep;
-    }
-
-    public int getKeep() {
-        return keep;
     }
 
     public void setUsername(String username) {

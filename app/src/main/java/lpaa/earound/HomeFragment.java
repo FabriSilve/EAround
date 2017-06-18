@@ -54,9 +54,20 @@ public class HomeFragment extends Fragment {
 
         eventsList = (LinearLayout) view.findViewById(R.id.eventList);
         eventDrawer();
-        MapDrawer mapDrawer = new MapDrawer(this, view, map, parent.getApplicationContext());
+
+        MapDrawer mapDrawer = new MapDrawer(this, view, map, parent);
         mapView.getMapAsync(mapDrawer);
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     public void setParent(HomeActivity parent) {
@@ -67,8 +78,7 @@ public class HomeFragment extends Fragment {
     public void eventDrawer() {
         Log.d(TAG, "eventDrawer: start");
         ArrayList<Event> events;
-        DBTask dbTask = new DBTask(parent.getApplicationContext());
-        events = dbTask.getEvents();
+        events = parent.getEvents();
         //ArrayList<LinearLayout> eventsLayout = new ArrayList<>();
         if (events != null && events.size() > 0)
             for (int i = 0; i < events.size(); i++) {

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import java.sql.Date;
@@ -12,9 +13,6 @@ import java.util.ArrayList;
 
 import static lpaa.earound.DBQuery.*;
 
-/**
- * Created by Fabrizio on 08/06/2017.
- */
 
 public class DBTask {
 
@@ -72,7 +70,6 @@ public class DBTask {
             try {
                 Log.d(TAG, "getUserToCursor: find user "+cursor.getString(cursor.getColumnIndex(USERDATA_USER)));
                 UserData user = new UserData(
-                        cursor.getInt(cursor.getColumnIndex(USERDATA_KEEP)),
                         cursor.getString(cursor.getColumnIndex(USERDATA_USER)),
                         cursor.getString(cursor.getColumnIndex(USERDATA_CITY))
                 );
@@ -86,7 +83,6 @@ public class DBTask {
     public void insertUser(UserData user) {
         Log.d(TAG, "insertUser: start");
         ContentValues cv = new ContentValues();
-        cv.put(USERDATA_KEEP, user.getKeep());
         cv.put(USERDATA_USER, user.getUsername());
         cv.put(USERDATA_CITY, user.getCity());
 
@@ -99,9 +95,6 @@ public class DBTask {
         Log.d(TAG, "deleteUser: start");
         openWritableDatabase();
         db.execSQL("DROP TABLE "+ USERDATA);
-        /*TODO provare preparestatement
-            db.delete(USERDATA, null, null);
-         */
         closeDB();
     }
 
@@ -115,7 +108,7 @@ public class DBTask {
 
         openWritableDatabase();
         for(Event event : events) {
-            ContentValues cv = new ContentValues();
+            /*ContentValues cv = new ContentValues();
             cv.put(EVENTS_ID, event.getId());
             cv.put(EVENTS_NAME, event.getName());
             cv.put(EVENTS_DESCRIPTION, event.getDescription());
@@ -124,7 +117,18 @@ public class DBTask {
             cv.put(EVENTS_LAT, event.getLat());
             cv.put(EVENTS_LON, event.getLon());
             cv.put(EVENTS_IMAGE, event.getImage());
-            db.insert(EVENTS, null, cv);
+            db.insert(EVENTS, null, cv);*/
+            db.execSQL("INSERT INTO " + EVENTS + " VALUES ("+
+                event.getId() + ", " +
+                event.getName() + ", " +
+                event.getDescription() + ", " +
+                String.valueOf(event.getDate()) + ", " +
+                null /*event.getAddress()*/ + ", " +
+                null /*String.valueOf(event.getLat())*/ + ", " +
+                null /*String.valueOf(event.getLon())*/ + ", " +
+                null /*event.getImage()*/ +
+                ");"
+            );
         }
         this.closeDB();
     }
@@ -139,18 +143,31 @@ public class DBTask {
     public ArrayList<Event> getEvents() {
         Log.d(TAG, "getEvents: ");
 
-        String where = "'1'='1'";
-        //String[] whereArgs = { "1" };
+        String where = EVENTS_ID +" > ?";
+        String[] whereArgs = { "0" };
 
         this.openReadableDatabase();
-        Cursor cursor = db.query(EVENTS, null, where, null, null, null, null);
-
-        ArrayList<Event> events = new ArrayList<>();
-        while(cursor.moveToNext()) {
-            events.add(getEventToCursor(cursor));
+        try {
+            db.rawQuery("SELECT * FROM Events;", null);
+        } catch (SQLiteException e) {
+            Log.e(TAG, "getEvents: Exception test connection db",e );
+            db.execSQL(CREATE_EVENTS_TABLE);
+            Log.d(TAG, "getEvents: Table Events Created");
         }
 
-        cursor.close();
+        ArrayList<Event> events = new ArrayList<>();
+        try {
+            //Cursor cursor = db.query(EVENTS, null, where, whereArgs, null, null, null);
+            Cursor cursor = db.rawQuery("SELECT * FROM "+EVENTS+";", null);
+            while(cursor.moveToNext()) {
+                events.add(getEventToCursor(cursor));
+            }
+            Log.d(TAG, "getEvents: events added");
+            cursor.close();
+        } catch (SQLiteException e) {
+            Log.e(TAG, "getEvents: Exception: \n", e);
+        }
+
         this.closeDB();
 
         return events;
@@ -163,7 +180,7 @@ public class DBTask {
         } else {
             try {
                 Log.d(TAG, "getEventToCursor: find event "+cursor.getString(cursor.getColumnIndex(EVENTS_NAME)));
-                Event event = new Event(
+                return new Event(
                         cursor.getInt(cursor.getColumnIndex(EVENTS_ID)),
                         cursor.getString(cursor.getColumnIndex(EVENTS_NAME)),
                         cursor.getString(cursor.getColumnIndex(EVENTS_DESCRIPTION)),
@@ -173,7 +190,6 @@ public class DBTask {
                         cursor.getFloat(cursor.getColumnIndex(EVENTS_LON)),
                         cursor.getString(cursor.getColumnIndex(EVENTS_IMAGE))
                 );
-                return event;
             } catch (Exception e) {
                 return null;
             }

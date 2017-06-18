@@ -36,6 +36,7 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
     @Override
     public ArrayList<Event> doInBackground(Object... params) {
         Log.d(TAG, "doInBackground: start");
+        /*
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
@@ -54,7 +55,7 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
                     "&" + URLEncoder.encode("sport","UTF-8") + "=" + URLEncoder.encode(search.getSport(), "UTF-8") +
                     "&" + URLEncoder.encode("music","UTF-8") + "=" + URLEncoder.encode(search.getMusic(), "UTF-8")*/;
 
-            } else {
+            /*} else {
                 Log.d(TAG, "doInBackground: without search obj");
                 dat = URLEncoder.encode("position", "UTF-8") + "=" + URLEncoder.encode("default", "UTF-8");
             }
@@ -73,18 +74,26 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
             }
             line = stringBuilder.toString();
             wr.close();
-
+            */
+        try{
+            //TODO rimuobere line inizializzata qui sotto per test offline
+            String line =
+                "[" +
+                "   {\"id\":\"1\",\"name\":\"n1\",\"description\":'d1',\"date\":\"2017-06-30\",\"lat\":\"44.425704\",\"lon\":\"8.848104\",\"image\":\"http://montenisa.com/GALLERIE/flyersE/calici_sotto_le_stelle.jpg\"}," +
+                "   {\"id\":\"2\",\"name\":\"n2\",\"description\":\"d2\",\"date\":\"2017-06-30\",\"lat\":\"44.423704\",\"lon\":\"8.847104\",\"image\":\"http://montenisa.com/GALLERIE/flyersE/calici_sotto_le_stelle.jpg\"}" +
+                "]";
             Log.d(TAG, "doInBackground: Event adding local");
             ArrayList<Event> result = new ArrayList<>();
             JSONArray events = new JSONArray(line);
             for(int i = 0; i<events.length(); i++) {
                 JSONObject event = events.getJSONObject(i);
+                Log.d(TAG, "doInBackground: add " + event.getString("name"));
                 result.add(new Event(
                         event.getInt("id"),
                         event.getString("name"),
                         event.getString("description"),
                         Date.valueOf(event.getString("date")),
-                        event.getString("address"),
+                        null,//event.getString("address"),
                         /*event.getString("type"),*/
                         event.getDouble("lat"),
                         event.getDouble("lon"),
@@ -102,8 +111,7 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
     protected void onPostExecute(ArrayList<Event> events) {
         Log.d(TAG, "onPostExecute: start");
         //main.setEvents(events);
-        DBTask dbTask = new DBTask(main.getApplicationContext());
-        dbTask.updateEvents(events);
+        main.updateEvents(events);
         if(searchFragment == null) return;
         Log.d(TAG, "onPostExecute: with fragment");
         try{
