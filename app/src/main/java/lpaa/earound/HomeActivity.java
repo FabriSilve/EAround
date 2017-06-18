@@ -168,21 +168,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     @Override
     protected void onResume() {
         //TODO to complete
-
         initUI();
-
-        /*currentFragment = homeValues.getString("currentFragment", "HOME");
-        switch (currentFragment) {
-            case "PERSONAL":
-                goTo(personalFragment);
-                break;
-            case "SEARCH":
-                goTo(searchFragment);
-                break;
-            default:
-                goTo(homeFragment);
-                break;
-        }*/
         super.onResume();
     }
 
