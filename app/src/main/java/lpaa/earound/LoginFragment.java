@@ -1,8 +1,6 @@
 package lpaa.earound;
 
 import android.app.Fragment;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,15 +14,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static android.content.Context.MODE_PRIVATE;
-
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private final String TAG = "LoginFragment";
-    //private SharedPreferences loginValues;
 
-    private MainActivity main;
+    private MainActivity parent;
     private View view;
 
     private EditText username;
@@ -36,15 +31,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private String user;
     private boolean keep;
 
-    //TODO sostituire le chiamate sil main con "this.getActivity()"
-    public void setActivity(MainActivity main) {
-        this.main = main;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: start");
-        //loginValues = this.getActivity().getSharedPreferences("LoginValues", MODE_PRIVATE);
+        this.parent = (MainActivity) this.getActivity();
+
         view = inflater.inflate(R.layout.login_fragment, container, false);
 
         Log.d(TAG, "onCreateView: init UI");
@@ -95,7 +87,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         CheckLogin checker = new CheckLogin(this, user, pass);
         checker.execute();
-        Toast toast = Toast.makeText(view.getContext(), getText(R.string.sending), Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(parent, getText(R.string.sending), Toast.LENGTH_SHORT);
         toast.show();
     }
 
@@ -103,20 +95,20 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         Log.d(TAG, "checkResult: start");
         if(result) {
             Log.d("Sign", "sign_login_click: signed");
-            Toast toast = Toast.makeText(view.getContext(), getText(R.string.logged), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(parent, getText(R.string.logged), Toast.LENGTH_SHORT);
             toast.show();
 
-            main.correctlyLogged(keep, user);
+            parent.correctlyLogged(keep, user);
         } else {
             Log.d("Sign", "sign_login_click: not signed");
-            Toast toast = Toast.makeText(view.getContext(), getText(R.string.error), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(parent, getText(R.string.error), Toast.LENGTH_SHORT);
             toast.show();
         }
     }
 
     private void registerClick() {
         Log.d(TAG, "registerClick: start");
-        main.goToRegister();
+        parent.goToRegister();
     }
 
     @Override
@@ -128,14 +120,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onPause() {
         Log.d(TAG, "onPause: ");
-        /*Editor editor = loginValues.edit();
-        editor.putString("username", username.getText().toString());
-        editor.putString("password", password.getText().toString());
-        editor.putBoolean("remember", rememberMe.isChecked());
-        editor.apply();*/
-        main.onPauseFragment("login_username", username.getText().toString());
-        main.onPauseFragment("login_password", password.getText().toString());
-        main.onPauseFragment("login_remember", String.valueOf(rememberMe.isChecked()));
+        parent.onPauseFragment("login_username", username.getText().toString());
+        parent.onPauseFragment("login_password", password.getText().toString());
+        parent.onPauseFragment("login_remember", String.valueOf(rememberMe.isChecked()));
 
         super.onPause();
     }
@@ -143,21 +130,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         Log.d(TAG, "onResume: ");
-        username.setText(main.onResumeFragment("login_username", ""));
-        password.setText(main.onResumeFragment("login_password", ""));
-        rememberMe.setChecked(main.onResumeFragment("login_remember", "false").equals("true"));
+        username.setText(parent.onResumeFragment("login_username", ""));
+        password.setText(parent.onResumeFragment("login_password", ""));
+        rememberMe.setChecked(parent.onResumeFragment("login_remember", "false").equals("true"));
         super.onResume();
     }
-
-    /*@Override
-    public void onStop() {
-        Log.d(TAG, "onStop: ");
-        //TODO capire perche vuole un elemento in più nell'array
-        String[] ids = new String[4];
-        ids[0] = "login_username";
-        ids[1] = "login_password";
-        ids[2] = "login_remember";
-        main.clearFragment(ids);
-        super.onStop();
-    }*/
 }

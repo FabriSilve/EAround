@@ -6,37 +6,30 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.sql.Date;
-import java.util.Objects;
 
 
 public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
 
     private final String TAG = "EventSearcher";
 
-    private String eventsSearcherUrl = "http://wwww.lpaa17.altervista.org/eventsSearcher.php";
+    //TODO estrarre variabili come url in un file a parte
+    private static final String eventsSearcherUrl = "http://wwww.lpaa17.altervista.org/eventsSearcher.php";
     private HomeActivity main;
-    private SearchFragment searchFragment = null;
     private Search search;
 
+    //TODO servono tutti questi campi??
     public EventSearcher(HomeActivity main, SearchFragment searchFragment, Search search) {
         Log.d(TAG, "EventSearcher: costructor");
         this.main = main;
-        this.searchFragment = searchFragment;
         this.search = search;
     }
 
     @Override
     public ArrayList<Event> doInBackground(Object... params) {
         Log.d(TAG, "doInBackground: start");
-        /*
+        /*CORRETTO
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
@@ -75,12 +68,14 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
             line = stringBuilder.toString();
             wr.close();
             */
+
+        //TODO rimuovere debug senza connessione
         try{
             //TODO rimuobere line inizializzata qui sotto per test offline
             String line =
                 "[" +
-                "   {\"id\":\"1\",\"name\":\"n1\",\"description\":'d1',\"date\":\"2017-06-30\",\"lat\":\"44.425704\",\"lon\":\"8.848104\",\"image\":\"http://montenisa.com/GALLERIE/flyersE/calici_sotto_le_stelle.jpg\"}," +
-                "   {\"id\":\"2\",\"name\":\"n2\",\"description\":\"d2\",\"date\":\"2017-06-30\",\"lat\":\"44.423704\",\"lon\":\"8.847104\",\"image\":\"http://montenisa.com/GALLERIE/flyersE/calici_sotto_le_stelle.jpg\"}" +
+                "   {\"id\":\"1\",\"name\":\"n1\",\"description\":'d1',\"date\":\"2017-06-30\"}," +
+                "   {\"id\":\"2\",\"name\":\"n2\",\"description\":\"d2\",\"date\":\"2017-06-30\"}" +
                 "]";
             Log.d(TAG, "doInBackground: Event adding local");
             ArrayList<Event> result = new ArrayList<>();
@@ -92,12 +87,7 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
                         event.getInt("id"),
                         event.getString("name"),
                         event.getString("description"),
-                        Date.valueOf(event.getString("date")),
-                        null,//event.getString("address"),
-                        /*event.getString("type"),*/
-                        event.getDouble("lat"),
-                        event.getDouble("lon"),
-                        event.getString("image")
+                        Date.valueOf(event.getString("date"))
                 ));
             }
             return result;
@@ -110,14 +100,7 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
     @Override
     protected void onPostExecute(ArrayList<Event> events) {
         Log.d(TAG, "onPostExecute: start");
-        //main.setEvents(events);
-        main.updateEvents(events);
-        if(searchFragment == null) return;
-        Log.d(TAG, "onPostExecute: with fragment");
-        try{
-            searchFragment.searchDone();
-        } catch (NullPointerException e) {
-            Log.e(TAG, "onPostExecute: Exception " + e.getMessage() + "\n" + e.getLocalizedMessage());
-        }
+        //TODO aggiornare DB qui e poi chiamare aggiornamento della ui
+        main.searchDone(events);
     }
 }

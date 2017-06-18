@@ -30,7 +30,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     private final String TAG = "HomeActivity";
     private SharedPreferences homeValues;
     //TODO aggiungere carica degli eventi nella zona e aggiunta in locale prima di inizializzare tutto
-    //TODO quando ruoto il dispositivi che resti sullo stesso fragment
 
     private Button search;
     private Button home;
@@ -45,8 +44,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     private PersonalFragment personalFragment;
     private String currentFragment;
 
-    //private LocationFinder locationFinder;
-    //private Location location;
     private ArrayList<Event> events = new ArrayList<>();
 
 
@@ -55,36 +52,10 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         Log.d(TAG, "onCreate: start");
         homeValues = getSharedPreferences("homeValues", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_activity);
 
+        setContentView(R.layout.searching_layout);
         //TODO studiare localizzazione dispositivo e inizializzare location finder
-        //initLocationFinder();
-        searchEvent();
-
-        Log.d(TAG, "onCreate: init UI");
-        search = (Button) findViewById(R.id.home_searchButton);
-        home = (Button) findViewById(R.id.home_homeButton);
-        personal = (Button) findViewById(R.id.home_personalButton);
-
-        search.setOnClickListener(this);
-        home.setOnClickListener(this);
-        personal.setOnClickListener(this);
-
-        container = R.id.home_container;
-
-        homeFragment = new HomeFragment();
-        homeFragment.setParent(this);
-        searchFragment = new SearchFragment();
-        searchFragment.setParent(this);
-        personalFragment = new PersonalFragment();
-        personalFragment.setParent(this);
-
-        fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(container, homeFragment);
-        fragmentTransaction.commit();
-        currentFragment = "HOME";
-
+        searchEvent(null, null);
     }
 
     @Override
@@ -140,33 +111,44 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         return events;
     }
 
-    public void updateEvents(ArrayList<Event> events) {
-        DBTask dbTask = new DBTask(getApplicationContext());
-        dbTask.updateEvents(events);
-    }
-
-    public void searchEvent() {
+    public void searchEvent(SearchFragment fragment, Search search) {
         Log.d(TAG, "searchEvent: start");
         //this.events = new DBTask(getApplicationContext()).getEvents();
-        EventSearcher eventSearcher = new EventSearcher(this,null, null);
+        EventSearcher eventSearcher = new EventSearcher(this, fragment, search);
         eventSearcher.execute();
     }
 
-    /*private void initLocationFinder() {
-        /*locationFinder = new LocationFinder(this, (LocationManager) getSystemService(LOCATION_SERVICE));
-        if(!locationFinder.isEable()) {
-            new Toast().makeText(this, getText(R.string.notConnected), Toast.LENGTH_LONG);
-            Log.d(TAG, "initLocationFinder: internet disable");
-        }
-    }*/
-
-    /*public void setLocation(Location location) {
-        this.location = location;
+    public void searchDone(ArrayList<Event> events) {
+        Log.d(TAG, "searchDone: aggiungo eventi nel DB");
+        //TODO add events to DB
+        initUI();
     }
 
-    public Location getLocation() {
-        return location;
-    }*/
+    private void initUI() {
+        setContentView(R.layout.home_activity);
+
+        Log.d(TAG, "onCreate: init UI");
+        search = (Button) findViewById(R.id.home_searchButton);
+        home = (Button) findViewById(R.id.home_homeButton);
+        personal = (Button) findViewById(R.id.home_personalButton);
+
+        search.setOnClickListener(this);
+        home.setOnClickListener(this);
+        personal.setOnClickListener(this);
+
+        container = R.id.home_container;
+
+        homeFragment = new HomeFragment();
+        searchFragment = new SearchFragment();
+        personalFragment = new PersonalFragment();
+
+        fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(container, homeFragment);
+        fragmentTransaction.commit();
+        currentFragment = "HOME";
+
+    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -186,7 +168,10 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     @Override
     protected void onResume() {
         //TODO to complete
-        currentFragment = homeValues.getString("currentFragment", "HOME");
+
+        initUI();
+
+        /*currentFragment = homeValues.getString("currentFragment", "HOME");
         switch (currentFragment) {
             case "PERSONAL":
                 goTo(personalFragment);
@@ -197,7 +182,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
             default:
                 goTo(homeFragment);
                 break;
-        }
+        }*/
         super.onResume();
     }
 
@@ -212,14 +197,4 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         Log.d(TAG, "onResumeFragment: ");
         return homeValues.getString(key, valueDefault);
     }
-
-    //TODO far si che il fragment iniziale sia sempre home
-    /*@Override
-    protected void onStop() {
-        Log.d(TAG, "onStop: ");
-        Editor editor = homeValues.edit();
-        editor.putString("currentFragment", "HOME");
-        editor.apply();
-        super.onStop();
-    }*/
 }

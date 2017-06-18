@@ -23,8 +23,7 @@ public class CheckRegistration extends AsyncTask<Object, Object, Boolean> {
     protected String username;
     private String password;
     private String email;
-    private String checkRegistrationUrl = "http://wwww.lpaa17.altervista.org/checkRegistration.php";
-    //private boolean result;
+    private static final String checkRegistrationUrl = "http://wwww.lpaa17.altervista.org/checkRegistration.php";
 
 
     public CheckRegistration(RegisterFragment fragment, String username, String password, String email)
@@ -75,7 +74,6 @@ public class CheckRegistration extends AsyncTask<Object, Object, Boolean> {
             return line.equals("true");
 
         } catch (Exception e) {
-            //result = false;
             Log.e(TAG, "doInBackground: Exception: " + e.getMessage());
             return false;
         }

@@ -40,6 +40,9 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: start");
+
+        this.parent = (HomeActivity) this.getActivity();
+
         view = inflater.inflate(R.layout.home_fragment, container, false);
 
         Log.d(TAG, "onCreateView: init UI");
@@ -53,32 +56,17 @@ public class HomeFragment extends Fragment {
         }
 
         eventsList = (LinearLayout) view.findViewById(R.id.eventList);
-        eventDrawer();
-
         MapDrawer mapDrawer = new MapDrawer(this, view, map, parent);
+
+        eventDrawer();
         mapView.getMapAsync(mapDrawer);
         return view;
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    public void setParent(HomeActivity parent) {
-        Log.d(TAG, "setParent: start");
-        this.parent = parent;
-    }
-
     public void eventDrawer() {
         Log.d(TAG, "eventDrawer: start");
-        ArrayList<Event> events;
-        events = parent.getEvents();
+        ArrayList<Event> events = null;
+        //TODO prende eventi dal db
         //ArrayList<LinearLayout> eventsLayout = new ArrayList<>();
         if (events != null && events.size() > 0)
             for (int i = 0; i < events.size(); i++) {
@@ -101,13 +89,13 @@ public class HomeFragment extends Fragment {
                     name.setPadding(10, 10, 10, 10);
                     eventLayout.addView(name, 0);
 
-                    TextView data = new TextView(parent);
+                    /*TextView data = new TextView(parent);
                     name.setText(events.get(i).getDate().toString());
                     eventLayout.addView(data, 1);
 
                     TextView desc = new TextView(parent);
                     name.setText(events.get(i).getDescription());
-                    eventLayout.addView(desc, 2);
+                    eventLayout.addView(desc, 2);*/
 
                     eventLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -117,16 +105,6 @@ public class HomeFragment extends Fragment {
                         }
                     });
 
-                    /*TextView event = new TextView(parent);
-                    String text =
-                            events.get(i).getName() + "\t" + events.get(i).getDate() + "\n"
-                            + events.get(i).getDescription() + "\n";
-                    event.setText(text);
-                    eventlayout.add(i, event);*/
-
-                    //eventsView.get(i).setText(events.get(i).getName());
-                    //eventsView.get(i).setTextSize(50);
-
                     eventsList.addView(eventLayout);
                 } catch (Exception e) {
                     Log.e(TAG, "eventDrawer: Exception \n",e);
@@ -134,17 +112,6 @@ public class HomeFragment extends Fragment {
             }
     }
 
-    /*public ArrayList<Event> getParentEvents() {
-        Log.d(TAG, "getParentEvents: start");
-        //TODO Correggere qui
-        //return parent == null? new ArrayList<Event>() : ((HomeActivity) this.getActivity()).getEvents();
-        return new ArrayList<>();
-    }*/
-
-    public HomeActivity getParent() {
-        Log.d(TAG, "getParent: start");
-        return parent;
-    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

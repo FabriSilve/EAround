@@ -1,6 +1,5 @@
 package lpaa.earound;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -23,6 +22,9 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: init UI");
+
+        this.parent = (HomeActivity) this.getActivity();
+
         view = inflater.inflate(R.layout.personal_fragment, container, false);
 
         logout = (Button) view.findViewById(R.id.personal_logout);
@@ -40,11 +42,6 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
                 logout();
                 break;
         }
-    }
-
-    public void setParent(HomeActivity parent) {
-        Log.d(TAG, "setParent: start");
-        this.parent = parent;
     }
 
     private void logout() {

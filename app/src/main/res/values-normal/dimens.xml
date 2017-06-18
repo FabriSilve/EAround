@@ -37,6 +37,7 @@
 
     <dimen name="seekBar_width">130dp</dimen>
     <dimen name="seekBar_height">15dp</dimen>
+    <dimen name="progressBar_size">40dp</dimen>
 
 
 </resources>

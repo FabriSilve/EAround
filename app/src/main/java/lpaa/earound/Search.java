@@ -9,20 +9,12 @@ class Search {
     private String position;
     private int distance;
     private int days;
-    /*private boolean party;
-    private boolean cultural;
-    private boolean sport;
-    private boolean music;*/
 
-    Search(String position, int distance, int days/*, boolean party, boolean cultural, boolean sport, boolean music*/) {
+    Search(String position, int distance, int days) {
         Log.d(TAG, "Search: costructor");
         this.position = position;
         this.distance = distance;
         this.days = days;
-        /*this.party = party;
-        this.cultural = cultural;
-        this.sport = sport;
-        this.music = music;*/
     }
 
     String getPosition() {
@@ -36,22 +28,5 @@ class Search {
     String getDays() {
         return String.valueOf(days);
     }
-
-    /*String getParty() {
-        return String.valueOf(party);
-    }
-
-    String getCultural() {
-        return String.valueOf(cultural);
-    }
-
-    public String getSport() {
-        return String.valueOf(sport);
-    }
-
-    public String getMusic() {
-        return String.valueOf(music);
-    }*/
-
 
 }

@@ -20,10 +20,12 @@ import java.util.regex.Pattern;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener {
 
+    //TODO nei toast mettere parent e non this.getContext()
+
     private final String TAG = "RegisterFragment";
 
     private View view;
-    private MainActivity main;
+    private MainActivity parent;
 
     private Button back;
     private EditText username;
@@ -35,15 +37,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
     private String user;
 
-    public void setActivity(MainActivity main) {
-        Log.d(TAG, "setActivity: start");
-        this.main = main;
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: init UI");
+
+        this.parent = (MainActivity) this.getActivity();
+
         view = inflater.inflate(R.layout.register_fragment, container, false);
 
         back = (Button) view.findViewById(R.id.register_back);
@@ -79,7 +79,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
     private void backClick() {
         Log.d(TAG, "backClick: start");
-        main.goToLogin();
+        parent.goToLogin();
     }
 
     private void registerClick() {
@@ -175,7 +175,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
             Log.d(TAG, "checkResult: registred and logged");
             Toast toast = Toast.makeText(view.getContext(), getText(R.string.logged), Toast.LENGTH_SHORT);
             toast.show();
-            main.correctlyLogged(false, user);
+            parent.correctlyLogged(false, user);
         } else {
             Log.d(TAG, "checkResult: not registred");
             Toast toast = Toast.makeText(view.getContext(), getText(R.string.error), Toast.LENGTH_SHORT);
@@ -192,36 +192,21 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onPause() {
         Log.d(TAG, "onPause: ");
-        main.onPauseFragment("register_username", username.getText().toString());
-        main.onPauseFragment("register_password1", password1.getText().toString());
-        main.onPauseFragment("register_password2", password2.getText().toString());
-        main.onPauseFragment("register_email1", email1.getText().toString());
-        main.onPauseFragment("register_email2", email2.getText().toString());
+        parent.onPauseFragment("register_username", username.getText().toString());
+        parent.onPauseFragment("register_password1", password1.getText().toString());
+        parent.onPauseFragment("register_password2", password2.getText().toString());
+        parent.onPauseFragment("register_email1", email1.getText().toString());
+        parent.onPauseFragment("register_email2", email2.getText().toString());
         super.onPause();
     }
 
     @Override
     public void onResume() {
-        username.setText(main.onResumeFragment("register_username", ""));
-        password1.setText(main.onResumeFragment("register_password1", ""));
-        password2.setText(main.onResumeFragment("register_password2", ""));
-        email1.setText(main.onResumeFragment("register_email1", ""));
-        email2.setText(main.onResumeFragment("register.email2", ""));
+        username.setText(parent.onResumeFragment("register_username", ""));
+        password1.setText(parent.onResumeFragment("register_password1", ""));
+        password2.setText(parent.onResumeFragment("register_password2", ""));
+        email1.setText(parent.onResumeFragment("register_email1", ""));
+        email2.setText(parent.onResumeFragment("register.email2", ""));
         super.onResume();
     }
-
-    /*@Override
-    public void onStop() {
-        Log.d(TAG, "onStop: ");
-
-        //TODO capire perche vuole un elemento in più nell'array
-        String[] ids = new String[6];
-        ids[0] = "register_username";
-        ids[1] = "register_password1";
-        ids[2] = "register_password2";
-        ids[3] = "register_email1";
-        ids[4] = "register_email2";
-        main.clearFragment(ids);
-        super.onStop();
-    }*/
 }

@@ -39,16 +39,7 @@ public class MapDrawer implements OnMapReadyCallback {
 
         map = googleMap;
 
-        //LocationManager locationManager = (LocationManager) view.getContext().getSystemService(Context.LOCATION_SERVICE);
-
-        // For dropping a marker at a point on the Map
-        LatLng center;
-        //if(homeFragment.getParent().getLocation() == null)
-            center = new LatLng(44.424704,8.849104);
-        /*else
-            center = new LatLng(homeFragment.getParent().getLocation().getLatitude(),homeFragment.getParent().getLocation().getLongitude());
-        */
-
+        LatLng center = new LatLng(44.424704,8.849104);
 
         map.addMarker(new MarkerOptions().position(center).title(view.getContext().getString(R.string.youAreHere)));
 
@@ -62,10 +53,15 @@ public class MapDrawer implements OnMapReadyCallback {
 
         ArrayList<Event> events = parent.getEvents();
         for(int i = 0; i<events.size(); i++) {
+            //TODO debug
+            LatLng pos = new LatLng(44.424704 + (i*0.01),8.849104 + (i*0.01));
             map.addMarker(
                     new MarkerOptions()
-                            .position(events.get(i).getPosition())
+                            .position(pos)
                             .title(events.get(i).getName()));
+                    /*new MarkerOptions()
+                            .position(events.get(i).getPosition())
+                            .title(events.get(i).getName()));*/
         }
     }
 }

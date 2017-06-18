@@ -21,12 +21,10 @@ public class CheckLogin extends AsyncTask<Object, Object, Boolean> {
     private String username;
     private String password;
 
-    private String checkLoginUrl = "http://wwww.lpaa17.altervista.org/checkLogin.php"; //"http://webdev.disi.unige.it/~S4110217/Lab3.1/login_success.php";
-   // private boolean result;
+    private static final String checkLoginUrl = "http://wwww.lpaa17.altervista.org/checkLogin.php"; //"http://webdev.disi.unige.it/~S4110217/Lab3.1/login_success.php";
 
     public CheckLogin(LoginFragment fragment, String username, String password)
     {
-        //Acquisisco le credenziali dal front-end
         Log.d(TAG, "CheckLogin: costructor");
         this.fragment = fragment;
         this.username = username;
@@ -36,10 +34,10 @@ public class CheckLogin extends AsyncTask<Object, Object, Boolean> {
     @Override
     protected Boolean doInBackground(Object... params) {
         /*TODO rimuovere debug senza rete
-        debug senza rete
-        return username.equals("faber");*/
+        debug senza rete*/
+        return username.equals("faber");
 
-        /*CORRETTO*/
+        /*CORRETTO
         Log.d(TAG, "doInBackground: start");
         String dati;
         try {
@@ -69,10 +67,9 @@ public class CheckLogin extends AsyncTask<Object, Object, Boolean> {
 
             return line.equals("true");
         } catch (Exception e) {
-            //result = false;
             Log.e(TAG, "doInBackground: Exception: " + e.getMessage());
             return false;
-        }
+        }*/
     }
 
     @Override

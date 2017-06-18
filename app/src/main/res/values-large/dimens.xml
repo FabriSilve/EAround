@@ -37,7 +37,7 @@
     <dimen name="checkBox_width">100dp</dimen>
     <dimen name="checkBox_height">25dp</dimen>
     <dimen name="checkBox_textSize">20sp</dimen>
-
+    <dimen name="progressBar_size">40dp</dimen>
 
 
 </resources>

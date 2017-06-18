@@ -24,7 +24,6 @@ public class MainActivity extends Activity{
 
     private FragmentManager fragmentManager;
     private int container;
-    private DBTask dbTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +32,7 @@ public class MainActivity extends Activity{
         super.onCreate(savedInstanceState);
 
         Log.d(TAG, "onCreate: user access control");
-        /*
-        DB
-        dbTask = new DBTask(getApplicationContext());
-        UserData user = dbTask.getUser();
-        if(user != null) {
-            if (user.getKeep() == 1 && user.getUsername() != null) {
-                goToHomeActivity();
-            }
-        }
-        */
+
         if(!mainValues.getString("user", "").equals(""))
             goToHomeActivity();
 
@@ -50,9 +40,8 @@ public class MainActivity extends Activity{
         setContentView(R.layout.main_activity);
 
         loginFragment = new LoginFragment();
-        loginFragment.setActivity(this);
         registerFragment = new RegisterFragment();
-        registerFragment.setActivity(this);
+
         container = R.id.MainActivity_frame;
 
         fragmentManager = getFragmentManager();
@@ -83,8 +72,6 @@ public class MainActivity extends Activity{
     public void correctlyLogged(boolean keep, String username) {
         Log.d(TAG, "correctlyLogged: start");
         if(keep) {
-            /*dbTask.deleteUser();
-            dbTask.insertUser(new UserData(1, username, null));*/
             Editor editor =  mainValues.edit();
             editor.putString("user", username);
             editor.apply();
@@ -128,15 +115,6 @@ public class MainActivity extends Activity{
         super.onResume();
     }
 
-    @Override
-    protected void onDestroy() {
-        Log.d(TAG, "onDestroy: start");
-        /*Editor editor = mainValues.edit();
-        editor.putString("currentFragment", "LOG");
-        editor.apply();*/
-
-        super.onDestroy();
-    }
 
     protected void onPauseFragment(String key, String value) {
         Log.d(TAG, "onPauseFragment: ");
@@ -150,12 +128,12 @@ public class MainActivity extends Activity{
         return mainValues.getString(key, valueDefault);
     }
 
-    protected void clearFragment(String... ids) {
+    /*protected void clearFragment(String... ids) {
         Log.d(TAG, "clearLogin: ");
         Editor editor = mainValues.edit();
         for(String id : ids) {
             editor.putString(id, "");
         }
         editor.apply();
-    }
+    }*/
 }
