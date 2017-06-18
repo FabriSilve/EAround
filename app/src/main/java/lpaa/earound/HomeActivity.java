@@ -111,9 +111,14 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     }
 
     public void searchDone() {
-        Log.d(TAG, "searchDone: aggiungo eventi nel DB");
-        //TODO add events to DB
+        Log.d(TAG, "searchDone: start");
         onResume();
+    }
+
+    public void postSearch() {
+        Editor editor = homeValues.edit();
+        editor.putString("currentFragment", "HOME");
+        editor.apply();
     }
 
     private void initUI() {

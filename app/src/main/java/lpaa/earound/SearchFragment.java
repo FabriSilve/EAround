@@ -79,6 +79,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
 
         EventSearcher searcher = new EventSearcher(parent, search);
         searcher.execute();
+        parent.postSearch();
     }
 
     @Override
