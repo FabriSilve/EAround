@@ -139,18 +139,19 @@ public class DBTask {
         openReadableDatabase();
         String user = "";
         try {
-            Cursor cursor = db.rawQuery("SELECT * FROM "+ USERDATA +";", null);
-            if(cursor != null && cursor.isFirst()) {
-                user = cursor.getString(cursor.getColumnIndex(USERDATA_USERNAME));
+            Cursor cursor = db.query(USERDATA, null, null, null, null, null, null);
+            if(cursor != null) {
+                if(cursor.getCount() == 1 && cursor.moveToNext()) {
+                    user = cursor.getString(cursor.getColumnIndex(USERDATA_USERNAME));
+                }
             }
             cursor.close();
         } catch (Exception e) {
             Log.e(TAG, "getUser: Exception: \n", e);
-            return "";
+            user = "";
         }
 
         this.closeDB();
-
         return user;
     }
 

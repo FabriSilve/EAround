@@ -89,13 +89,13 @@ public class HomeFragment extends Fragment {
                     name.setPadding(10, 10, 10, 10);
                     eventLayout.addView(name, 0);
 
-                    /*TextView data = new TextView(parent);
+                    TextView data = new TextView(parent);
                     name.setText(events.get(i).getDate().toString());
                     eventLayout.addView(data, 1);
 
                     TextView desc = new TextView(parent);
                     name.setText(events.get(i).getDescription());
-                    eventLayout.addView(desc, 2);*/
+                    eventLayout.addView(desc, 2);
 
                     eventLayout.setOnClickListener(new View.OnClickListener() {
                         @Override

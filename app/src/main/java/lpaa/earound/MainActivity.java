@@ -32,8 +32,8 @@ public class MainActivity extends Activity{
         super.onCreate(savedInstanceState);
 
         Log.d(TAG, "onCreate: user access control");
-
-        if(!(new DBTask(this).getUser().equals("")))
+        String user = new DBTask(this).getUser();
+        if(!user.equals(""))
             goToHomeActivity();
 
         Log.d(TAG, "onCreate: init UI");
