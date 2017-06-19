@@ -80,22 +80,30 @@ public class HomeFragment extends Fragment {
                     LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
                     params.setMargins(0, 10, 0, 10);
                     eventLayout.setLayoutParams(params);
-                    //margin?
 
                     TextView name = new TextView(parent);
                     name.setText(events.get(i).getName());
                     name.setTextSize(getResources().getDimension(R.dimen.title1_textSize));
                     name.setTextColor(Color.rgb(255, 128, 0));
                     name.setPadding(10, 10, 10, 10);
-                    eventLayout.addView(name, 0);
+                    name.setLayoutParams(new LayoutParams(
+                            LayoutParams.MATCH_PARENT,
+                            LayoutParams.WRAP_CONTENT));
+                    eventLayout.addView(name);
 
                     TextView data = new TextView(parent);
-                    name.setText(events.get(i).getDate().toString());
-                    eventLayout.addView(data, 1);
+                    data.setText(events.get(i).getDate().toString());
+                    data.setLayoutParams(new LayoutParams(
+                            LayoutParams.MATCH_PARENT,
+                            LayoutParams.WRAP_CONTENT));
+                    eventLayout.addView(data);
 
                     TextView desc = new TextView(parent);
-                    name.setText(events.get(i).getDescription());
-                    eventLayout.addView(desc, 2);
+                    desc.setText(events.get(i).getDescription());
+                    desc.setLayoutParams(new LayoutParams(
+                            LayoutParams.MATCH_PARENT,
+                            LayoutParams.WRAP_CONTENT));
+                    eventLayout.addView(desc);
 
                     eventLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
