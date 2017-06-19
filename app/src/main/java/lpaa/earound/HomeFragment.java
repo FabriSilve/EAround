@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -78,14 +79,25 @@ public class HomeFragment extends Fragment {
                     eventLayout.setOrientation(LinearLayout.VERTICAL);
                     eventLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
                     LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-                    params.setMargins(0, 10, 0, 10);
+                    params.setMargins(
+                            0,
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            0,
+                            (int) getResources().getDimension(R.dimen.marginMin)
+                    );
                     eventLayout.setLayoutParams(params);
 
                     TextView name = new TextView(parent);
                     name.setText(events.get(i).getName());
                     name.setTextSize(getResources().getDimension(R.dimen.title1_textSize));
+                    name.setTypeface(name.getTypeface(), Typeface.BOLD);
                     name.setTextColor(Color.rgb(255, 128, 0));
-                    name.setPadding(10, 10, 10, 10);
+                    name.setPadding(
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            0
+                    );
                     name.setLayoutParams(new LayoutParams(
                             LayoutParams.MATCH_PARENT,
                             LayoutParams.WRAP_CONTENT));
@@ -93,6 +105,15 @@ public class HomeFragment extends Fragment {
 
                     TextView data = new TextView(parent);
                     data.setText(events.get(i).getDate().toString());
+                    data.setTextSize(getResources().getDimension(R.dimen.title2_textSize));
+                    data.setTypeface(data.getTypeface(), Typeface.ITALIC);
+                    data.setTextColor(Color.BLACK);
+                    data.setPadding(
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            0
+                    );
                     data.setLayoutParams(new LayoutParams(
                             LayoutParams.MATCH_PARENT,
                             LayoutParams.WRAP_CONTENT));
@@ -100,6 +121,15 @@ public class HomeFragment extends Fragment {
 
                     TextView desc = new TextView(parent);
                     desc.setText(events.get(i).getDescription());
+                    desc.setTextSize(getResources().getDimension(R.dimen.par_textSize));
+                    //desc.setTypeface(data.getTypeface(), Typeface.DEFAULT);
+                    desc.setTextColor(Color.BLACK);
+                    desc.setPadding(
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            (int) getResources().getDimension(R.dimen.marginMin)
+                    );
                     desc.setLayoutParams(new LayoutParams(
                             LayoutParams.MATCH_PARENT,
                             LayoutParams.WRAP_CONTENT));

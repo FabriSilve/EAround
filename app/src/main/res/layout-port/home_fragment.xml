@@ -67,7 +67,7 @@
                     android:text="Evento molto bello al quale partecipare per bere molta birra e conoscere gli anziani del paese che preparano tanta focaccia e carne alla brace"
                     android:textAlignment="gravity"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/par_textSize" />
 
             </LinearLayout>
 
