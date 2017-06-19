@@ -47,7 +47,7 @@ public class MapDrawer implements OnMapReadyCallback {
 
         map.addMarker(new MarkerOptions().position(center).title(view.getContext().getString(R.string.youAreHere)));
 
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(center).zoom(16).build();
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(center).zoom(13).build();
         map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         ArrayList<Event> events = new DBTask(parent).getEvents();
@@ -58,7 +58,8 @@ public class MapDrawer implements OnMapReadyCallback {
                             .title(events.get(i).getName()));
         }
 
+        /*TODO migliorare map listener o non usare
         MapListener mapListener = new MapListener(events, map, view);
-        map.setOnCameraMoveListener(mapListener);
+        map.setOnMarkerClickListener(mapListener);*/
     }
 }

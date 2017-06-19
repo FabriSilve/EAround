@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class SearchFragment extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
@@ -79,6 +80,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
 
         EventSearcher searcher = new EventSearcher(parent, search);
         searcher.execute();
+        Toast toast = Toast.makeText(parent, "Searching", Toast.LENGTH_SHORT);
+        toast.show();
         parent.postSearch();
     }
 

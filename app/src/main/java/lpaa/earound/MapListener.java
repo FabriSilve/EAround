@@ -6,15 +6,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnCameraMoveListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.LatLng;
-
+import com.google.android.gms.maps.model.Marker;
 
 
 import java.util.ArrayList;
 
 
-public class MapListener implements OnCameraMoveListener {
+public class MapListener implements OnMarkerClickListener {
 
     private final static String TAG = "MapListener";
 
@@ -26,22 +26,6 @@ public class MapListener implements OnCameraMoveListener {
         this.events = events;
         this.map = map;
         this.view = view;
-    }
-
-    @Override
-    public void onCameraMove() {
-        LatLng camera = map.getCameraPosition().target;
-        LatLng event = null;
-        for(int i = 0; i < events.size(); i++) {
-            event = events.get(i).getPosition();
-            if (isNear(camera, event)) {
-                LinearLayout layout = (LinearLayout) view.findViewById(i);
-                layout.requestFocus();
-                layout.setBackgroundResource(R.color.colorPrimary);
-                Log.d(TAG, "onCameraMove: onMove");
-                break;
-            }
-        }
     }
 
     private boolean isNear(LatLng pos1, LatLng pos2) {
@@ -58,6 +42,25 @@ public class MapListener implements OnCameraMoveListener {
         if((pos2.latitude - pos1.latitude < precision) && (pos1.longitude - pos2.longitude < precision) &&
                 (pos2.latitude - pos1.latitude > 0) && (pos1.longitude - pos2.longitude > 0))
             return true;
+        return false;
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Log.d(TAG, "onMarkerClick: ");
+        for(Event event : events) {
+            if (marker.getTitle().equals(event.getName())) {
+                for(Event all : events) {
+                    LinearLayout layout = (LinearLayout) view.findViewById(all.getId());
+                    layout.requestFocus();
+                    layout.setBackgroundResource(R.drawable.lightbg);
+                }
+                LinearLayout layout = (LinearLayout) view.findViewById(event.getId());
+                layout.requestFocus();
+                layout.setBackgroundResource(R.color.colorPrimary);
+                return true;
+            }
+        }
         return false;
     }
 }
