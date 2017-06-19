@@ -33,9 +33,6 @@ public class MainActivity extends Activity{
 
         Log.d(TAG, "onCreate: user access control");
 
-        //RIMUOVERE
-        new DBTask(this).deleteUser();
-
         if(!(new DBTask(this).getUser().equals("")))
             goToHomeActivity();
 

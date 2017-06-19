@@ -56,6 +56,8 @@ public class DBTask {
             cv.put(EVENTS_NAME, event.getName());
             cv.put(EVENTS_DESCRIPTION, event.getDescription());
             cv.put(EVENTS_DATE, String.valueOf(event.getDate()));
+            cv.put(EVENTS_LAT, event.getLat());
+            cv.put(EVENTS_LON, event.getLon());
 
             db.insert(EVENTS, null, cv);
         }
@@ -106,12 +108,14 @@ public class DBTask {
             return null;
         } else {
             try {
-                Log.d(TAG, "getEventToCursor: find event "+cursor.getString(cursor.getColumnIndex(EVENTS_NAME)));
+                Log.d(TAG, "getEventToCursor: find event "+ cursor.getString(cursor.getColumnIndex(EVENTS_NAME)));
                 return new Event(
                         id,
                         cursor.getString(cursor.getColumnIndex(EVENTS_NAME)),
                         cursor.getString(cursor.getColumnIndex(EVENTS_DESCRIPTION)),
-                        Date.valueOf(cursor.getString(cursor.getColumnIndex(EVENTS_DATE)))
+                        Date.valueOf(cursor.getString(cursor.getColumnIndex(EVENTS_DATE))),
+                        cursor.getDouble(cursor.getColumnIndex(EVENTS_LAT)),
+                        cursor.getDouble(cursor.getColumnIndex(EVENTS_LON))
                 );
             } catch (Exception e) {
                 return null;
@@ -140,7 +144,7 @@ public class DBTask {
                 user = cursor.getString(cursor.getColumnIndex(USERDATA_USERNAME));
             }
             cursor.close();
-        } catch (Exception e) { //SQLiteException o RunTimeException
+        } catch (Exception e) {
             Log.e(TAG, "getUser: Exception: \n", e);
             return "";
         }
