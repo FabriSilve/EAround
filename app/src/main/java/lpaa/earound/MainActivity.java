@@ -33,7 +33,10 @@ public class MainActivity extends Activity{
 
         Log.d(TAG, "onCreate: user access control");
 
-        if(!mainValues.getString("user", "").equals(""))
+        //RIMUOVERE
+        new DBTask(this).deleteUser();
+
+        if(!(new DBTask(this).getUser().equals("")))
             goToHomeActivity();
 
         Log.d(TAG, "onCreate: init UI");
@@ -72,9 +75,7 @@ public class MainActivity extends Activity{
     public void correctlyLogged(boolean keep, String username) {
         Log.d(TAG, "correctlyLogged: start");
         if(keep) {
-            Editor editor =  mainValues.edit();
-            editor.putString("user", username);
-            editor.apply();
+            new DBTask(this).insertUser(username);
         }
         goToHomeActivity();
     }

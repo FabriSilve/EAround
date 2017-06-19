@@ -33,11 +33,6 @@ public class CheckLogin extends AsyncTask<Object, Object, Boolean> {
 
     @Override
     protected Boolean doInBackground(Object... params) {
-        /*TODO rimuovere debug senza rete
-        debug senza rete*/
-        return username.equals("faber");
-
-        /*CORRETTO
         Log.d(TAG, "doInBackground: start");
         String dati;
         try {
@@ -69,7 +64,7 @@ public class CheckLogin extends AsyncTask<Object, Object, Boolean> {
         } catch (Exception e) {
             Log.e(TAG, "doInBackground: Exception: " + e.getMessage());
             return false;
-        }*/
+        }
     }
 
     @Override

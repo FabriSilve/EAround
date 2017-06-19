@@ -38,11 +38,6 @@ public class CheckRegistration extends AsyncTask<Object, Object, Boolean> {
 
     @Override
     protected Boolean doInBackground(Object... params) {
-        /*TODO rimuovere debug senza rete
-        //debug senza rete
-        return email.equals("fabri@mail.it");*/
-
-        /*CORRETTO*/
         Log.d(TAG, "doInBackground: start");
         URLConnection connection;
         OutputStreamWriter wr;

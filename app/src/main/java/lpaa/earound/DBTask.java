@@ -74,17 +74,16 @@ public class DBTask {
 
         //TODO rimuovere
         this.openReadableDatabase();
-        try {
+        /*try {
             db.rawQuery("SELECT * FROM Events;", null);
         } catch (SQLiteException e) {
             Log.e(TAG, "getEvents: Exception test connection db",e );
             db.execSQL(CREATE_EVENTS_TABLE);
             Log.d(TAG, "getEvents: Table Events Created");
-        }
+        }*/
 
         ArrayList<Event> events = new ArrayList<>();
         try {
-            //Cursor cursor = db.query(EVENTS, null, where, whereArgs, null, null, null);
             Cursor cursor = db.rawQuery("SELECT * FROM "+EVENTS+";", null);
             int i = 0;
             while(cursor.moveToNext()) {
@@ -118,5 +117,43 @@ public class DBTask {
                 return null;
             }
         }
+    }
+
+    public void insertUser(String username) {
+        Log.d(TAG, "insertUser: start");
+
+        openWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(USERDATA_USERNAME, username);
+        db.insert(USERDATA, null, cv);
+        this.closeDB();
+    }
+
+    public String getUser() {
+        Log.d(TAG, "getUser: start");
+
+        openReadableDatabase();
+        String user = "";
+        try {
+            Cursor cursor = db.rawQuery("SELECT * FROM "+ USERDATA +";", null);
+            if(cursor != null && cursor.isFirst()) {
+                user = cursor.getString(cursor.getColumnIndex(USERDATA_USERNAME));
+            }
+            cursor.close();
+        } catch (Exception e) { //SQLiteException o RunTimeException
+            Log.e(TAG, "getUser: Exception: \n", e);
+            return "";
+        }
+
+        this.closeDB();
+
+        return user;
+    }
+
+    public void deleteUser() {
+        Log.d(TAG, "deleteUser: start");
+        openWritableDatabase();
+        db.execSQL(DELETE_USERDATA);
+        closeDB();
     }
 }

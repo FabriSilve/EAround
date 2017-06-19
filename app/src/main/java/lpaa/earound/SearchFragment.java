@@ -91,13 +91,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
         Log.d(TAG, "onStartTrackingTouch: start");
-        //seekBarUpdate(seekBar);
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         Log.d(TAG, "onStopTrackingTouch: start");
-        //seekBarUpdate(seekBar);
     }
 
     private void seekBarUpdate(SeekBar seekBar) {

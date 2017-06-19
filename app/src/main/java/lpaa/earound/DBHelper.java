@@ -23,6 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.d(TAG, "onCreate: start");
 
         db.execSQL(CREATE_EVENTS_TABLE);
+        db.execSQL(CREATE_USERDATA_TABLE);
     }
 
     @Override
@@ -30,6 +31,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.d(TAG, "onUpgrade: start");
 
         db.execSQL(DROP_EVENTS_TABLE);
+        db.execSQL(DROP_USERDATA_TABLE);
         onCreate(db);
         /*TODO da sostituire con ALTERTABLE dopo fase di testing*/
     }

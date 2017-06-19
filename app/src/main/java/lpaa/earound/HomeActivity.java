@@ -98,9 +98,10 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     public void logoutUser() {
         Log.d(TAG, "logoutUser: start");
         //TODO inserire dati user in db per renderli accessibili a tutte le activity
-        //DBTask dbTask = new DBTask(getApplicationContext());
-        //dbTask.deleteUser();
+        new DBTask(this).deleteUser();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        currentFragment = "HOME";
+        onPause();
         this.finish();
     }
 
