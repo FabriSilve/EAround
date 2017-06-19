@@ -74,6 +74,7 @@ public class MainActivity extends Activity{
         if(keep) {
             new DBTask(this).insertUser(username);
         }
+        clearFragment("register_username", "register_password1", "register_password2", "register_email1", "register_email2");
         goToHomeActivity();
     }
 
@@ -127,12 +128,12 @@ public class MainActivity extends Activity{
         return mainValues.getString(key, valueDefault);
     }
 
-    /*protected void clearFragment(String... ids) {
+    protected void clearFragment(String... ids) {
         Log.d(TAG, "clearLogin: ");
         Editor editor = mainValues.edit();
         for(String id : ids) {
             editor.putString(id, "");
         }
         editor.apply();
-    }*/
+    }
 }
