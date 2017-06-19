@@ -55,18 +55,18 @@ public class HomeFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        MapDrawer mapDrawer = new MapDrawer(this, view, map, parent);
+        mapView.getMapAsync(mapDrawer);
 
         eventsList = (LinearLayout) view.findViewById(R.id.eventList);
-        MapDrawer mapDrawer = new MapDrawer(this, view, map, parent);
-
         eventDrawer();
-        mapView.getMapAsync(mapDrawer);
+
         return view;
     }
 
     public void eventDrawer() {
         Log.d(TAG, "eventDrawer: start");
-        ArrayList<Event> events = new DBTask(parent).getEvents();
+        final ArrayList<Event> events = new DBTask(parent).getEvents();
         //TODO prende eventi dal db
         //ArrayList<LinearLayout> eventsLayout = new ArrayList<>();
         if (events != null && events.size() > 0)
@@ -74,6 +74,7 @@ public class HomeFragment extends Fragment {
                 try {
                     LinearLayout eventLayout = new LinearLayout(parent);
                     eventLayout.setId(i);
+                    //eventLayout.setTag(events.get(i).getId());
                     eventLayout.setMinimumWidth(LayoutParams.MATCH_PARENT);
                     eventLayout.setMinimumHeight(LayoutParams.WRAP_CONTENT);
                     eventLayout.setOrientation(LinearLayout.VERTICAL);
@@ -135,13 +136,8 @@ public class HomeFragment extends Fragment {
                             LayoutParams.WRAP_CONTENT));
                     eventLayout.addView(desc);
 
-                    eventLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast toast = Toast.makeText(view.getContext(), getText(R.string.clicked), Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                    });
+                    EventListListener listener = new EventListListener(events.get(i), this);
+                    eventLayout.setOnClickListener(listener);
 
                     eventsList.addView(eventLayout);
                 } catch (Exception e) {
@@ -149,6 +145,12 @@ public class HomeFragment extends Fragment {
                 }
             }
     }
+
+    public void setMap(GoogleMap map) {
+        this.map = map;
+    }
+
+    public GoogleMap getMap() { return map; }
 
 
     @Override

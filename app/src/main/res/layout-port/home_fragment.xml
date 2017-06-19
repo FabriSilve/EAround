@@ -31,46 +31,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/lightbg"
-                android:layout_marginBottom="@dimen/marginMin">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/marginMin"
-                    android:layout_marginStart="@dimen/marginMin"
-                    android:text="Festa del paese"
-                    android:textAlignment="gravity"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/title1_textSize"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/marginMin"
-                    android:layout_marginStart="@dimen/marginMin"
-                    android:text="2017-06-20"
-                    android:textAlignment="gravity"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/title2_textSize"
-                    android:textStyle="italic" />
-
-                <TextView
-                    android:layout_width="350dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/marginMin"
-                    android:text="Evento molto bello al quale partecipare per bere molta birra e conoscere gli anziani del paese che preparano tanta focaccia e carne alla brace"
-                    android:textAlignment="gravity"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/par_textSize" />
-
-            </LinearLayout>
-
         </LinearLayout>
 
     </ScrollView>
