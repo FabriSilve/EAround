@@ -42,21 +42,26 @@ public class MapDrawer implements OnMapReadyCallback {
 
         map = googleMap;
         homeFragment.setMap(map);
-
-        LatLng center = new LatLng(44.424704,8.849104);
-
-        map.addMarker(new MarkerOptions().position(center).title(view.getContext().getString(R.string.youAreHere)));
-
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(center).zoom(13).build();
-        map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
         ArrayList<Event> events = new DBTask(parent).getEvents();
-        for(int i = 0; i<events.size(); i++) {
-            map.addMarker(
-                    new MarkerOptions()
-                            .position(events.get(i).getPosition())
-                            .title(events.get(i).getName()));
+
+        Log.d(TAG, "onMapReady: eventi acquisiti");
+
+        if(events != null && events.size() > 0) {
+            LatLng center = new LatLng(events.get(0).getLat(), events.get(0).getLon());
+
+            //map.addMarker(new MarkerOptions().position(center).title(events.get(0).getName()));
+
+            CameraPosition cameraPosition = new CameraPosition.Builder().target(center).zoom(14).build();
+            map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+            for (int i = 1; i < events.size()-1; i++) {
+                map.addMarker(
+                        new MarkerOptions()
+                                .position(events.get(i).getPosition())
+                                .title(events.get(i).getName()));
+            }
         }
+
 
         /*TODO migliorare map listener o non usare
         MapListener mapListener = new MapListener(events, map, view);

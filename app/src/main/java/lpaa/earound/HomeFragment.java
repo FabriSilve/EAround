@@ -66,14 +66,14 @@ public class HomeFragment extends Fragment {
 
     public void eventDrawer() {
         Log.d(TAG, "eventDrawer: start");
-        final ArrayList<Event> events = new DBTask(parent).getEvents();
+        ArrayList<Event> events = new DBTask(parent).getEvents();
         //TODO prende eventi dal db
         //ArrayList<LinearLayout> eventsLayout = new ArrayList<>();
-        if (events != null && events.size() > 0)
-            for (int i = 0; i < events.size(); i++) {
+        if (events != null && events.size() > 1) {
+            for (int i = 1; i < events.size() - 1; i++) {
                 try {
                     LinearLayout eventLayout = new LinearLayout(parent);
-                    eventLayout.setId(i);
+                    eventLayout.setId(i-1);
                     //eventLayout.setTag(events.get(i).getId());
                     eventLayout.setMinimumWidth(LayoutParams.MATCH_PARENT);
                     eventLayout.setMinimumHeight(LayoutParams.WRAP_CONTENT);
@@ -141,9 +141,42 @@ public class HomeFragment extends Fragment {
 
                     eventsList.addView(eventLayout);
                 } catch (Exception e) {
-                    Log.e(TAG, "eventDrawer: Exception \n",e);
+                    Log.e(TAG, "eventDrawer: Exception \n", e);
                 }
             }
+        } else {
+            LinearLayout noEventLayout = new LinearLayout(parent);
+            noEventLayout.setOrientation(LinearLayout.VERTICAL);
+            noEventLayout.setMinimumWidth(LayoutParams.MATCH_PARENT);
+            noEventLayout.setMinimumHeight(LayoutParams.WRAP_CONTENT);
+            noEventLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
+            LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            params.setMargins(
+                    (int) getResources().getDimension(R.dimen.marginMiddle),
+                    (int) getResources().getDimension(R.dimen.marginMax),
+                    (int) getResources().getDimension(R.dimen.marginMiddle),
+                    (int) getResources().getDimension(R.dimen.marginMin)
+            );
+            noEventLayout.setLayoutParams(params);
+
+            TextView message = new TextView(parent);
+            message.setText(R.string.noEvents);
+            message.setTextSize(getResources().getDimension(R.dimen.title1_textSize));
+            message.setTypeface(message.getTypeface(), Typeface.BOLD);
+            message.setTextColor(Color.rgb(255, 128, 0));
+            message.setPadding(
+                    (int) getResources().getDimension(R.dimen.marginMin),
+                    (int) getResources().getDimension(R.dimen.marginMin),
+                    (int) getResources().getDimension(R.dimen.marginMin),
+                    0
+            );
+            message.setLayoutParams(new LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT));
+            noEventLayout.addView(message);
+
+            eventsList.addView(noEventLayout);
+        }
     }
 
     public void setMap(GoogleMap map) {
