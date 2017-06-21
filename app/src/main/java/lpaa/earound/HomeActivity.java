@@ -8,21 +8,11 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 //TODO implementare style.xml per stile app slide 07
 //TODO sostituire async task con asynctask a tempo
@@ -32,21 +22,14 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     private final String TAG = "HomeActivity";
     private SharedPreferences homeValues;
 
-    private Button search;
-    private Button home;
-    private Button personal;
-
     private int container;
 
     private FragmentManager fragmentManager;
-
     private HomeFragment homeFragment;
     private SearchFragment searchFragment;
     private PersonalFragment personalFragment;
     private AddEventFragment addEventFragment;
     private String currentFragment;
-
-    private ArrayList<Event> events = new ArrayList<>();
 
 
     @Override
@@ -130,9 +113,9 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         setContentView(R.layout.home_activity);
 
         Log.d(TAG, "onCreate: init UI");
-        search = (Button) findViewById(R.id.home_searchButton);
-        home = (Button) findViewById(R.id.home_homeButton);
-        personal = (Button) findViewById(R.id.home_personalButton);
+        Button search = (Button) findViewById(R.id.home_searchButton);
+        Button home = (Button) findViewById(R.id.home_homeButton);
+        Button personal = (Button) findViewById(R.id.home_personalButton);
 
         search.setOnClickListener(this);
         home.setOnClickListener(this);

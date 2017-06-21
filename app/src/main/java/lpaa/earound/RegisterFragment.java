@@ -3,7 +3,6 @@ package lpaa.earound;
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,43 +13,36 @@ import android.widget.Toast;
 
 import java.util.regex.Pattern;
 
-/**
- * Created by Fabrizio on 07/06/2017.
- */
 
 public class RegisterFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener {
 
     private final String TAG = "RegisterFragment";
 
-    private View view;
     private MainActivity parent;
 
-    private Button back;
     private EditText username;
     private EditText password1;
     private EditText password2;
     private EditText email1;
     private EditText email2;
-    private Button register;
 
     private String user;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: init UI");
 
         this.parent = (MainActivity) this.getActivity();
 
-        view = inflater.inflate(R.layout.register_fragment, container, false);
+        View view = inflater.inflate(R.layout.register_fragment, container, false);
 
-        back = (Button) view.findViewById(R.id.register_back);
+        Button back = (Button) view.findViewById(R.id.register_back);
         username = (EditText) view.findViewById(R.id.register_username);
         password1 = (EditText) view.findViewById(R.id.register_password1);
         password2 = (EditText) view.findViewById(R.id.register_password2);
         email1 = (EditText) view.findViewById(R.id.register_email1);
         email2 = (EditText) view.findViewById(R.id.register_email2);
-        register = (Button) view.findViewById(R.id.register_register);
+        Button register = (Button) view.findViewById(R.id.register_register);
 
         back.setOnClickListener(this);
         register.setOnClickListener(this);
@@ -161,7 +153,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void usernameCheck(EditText username) {
-        Log.d(TAG, "usernameCheck: start");
+        Log.d(TAG, "usernameCheck: start check "+username);
         //TODO controllo presenza username nel sistema
     }
 

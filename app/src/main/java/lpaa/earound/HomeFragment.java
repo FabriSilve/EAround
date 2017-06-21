@@ -1,24 +1,17 @@
 package lpaa.earound;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -30,11 +23,8 @@ public class HomeFragment extends Fragment {
 
     private final String TAG = "HomeFragment";
 
-    private View view;
     private HomeActivity parent;
     private GoogleMap map;
-
-    private MapView mapView;
     private LinearLayout eventsList;
 
 
@@ -44,10 +34,10 @@ public class HomeFragment extends Fragment {
 
         this.parent = (HomeActivity) this.getActivity();
 
-        view = inflater.inflate(R.layout.home_fragment, container, false);
+        View view = inflater.inflate(R.layout.home_fragment, container, false);
 
         Log.d(TAG, "onCreateView: init UI");
-        mapView = (MapView) view.findViewById(R.id.mapView);
+        MapView mapView = (MapView) view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
         try {
@@ -55,7 +45,7 @@ public class HomeFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        MapDrawer mapDrawer = new MapDrawer(this, view, map, parent);
+        MapDrawer mapDrawer = new MapDrawer(this, map, parent);
         mapView.getMapAsync(mapDrawer);
 
         eventsList = (LinearLayout) view.findViewById(R.id.eventList);

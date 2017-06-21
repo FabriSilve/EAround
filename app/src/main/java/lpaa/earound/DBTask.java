@@ -3,11 +3,9 @@ package lpaa.earound;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
-
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -136,9 +134,9 @@ public class DBTask {
                 if(cursor.getCount() == 1 && cursor.moveToNext()) {
                     user = cursor.getString(cursor.getColumnIndex(USERDATA_USERNAME));
                 }
+                cursor.close();
             }
-            cursor.close();
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             Log.e(TAG, "getUser: Exception: \n", e);
             user = "";
         }

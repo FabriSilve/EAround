@@ -2,7 +2,6 @@ package lpaa.earound;
 
 import android.app.Fragment;
 import android.content.res.Configuration;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,25 +11,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Calendar;
-import java.util.Date;
-
-/**
- * Created by Fabrizio on 21/06/2017.
- */
 
 public class AddEventFragment extends Fragment implements View.OnClickListener {
 
     private final String TAG = "AddEventFragment";
 
-    private View view;
     private HomeActivity parent;
 
     private EditText name;
     private EditText address;
     private EditText day;
     private EditText description;
-    private Button add;
 
 
     @Override
@@ -38,13 +29,13 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
         Log.d(TAG, "onCreateView: start");
         this.parent = (HomeActivity) this.getActivity();
 
-        view = inflater.inflate(R.layout.addevent_fragment, container, false);
+        View view = inflater.inflate(R.layout.addevent_fragment, container, false);
 
         name = (EditText) view.findViewById(R.id.addevent_name);
         address = (EditText) view.findViewById(R.id.addevent_address);
         day = (EditText) view.findViewById(R.id.addevent_day);
         description = (EditText) view.findViewById(R.id.addevent_description);
-        add = (Button) view.findViewById(R.id.addevent_add);
+        Button add = (Button) view.findViewById(R.id.addevent_add);
 
         add.setOnClickListener(this);
 

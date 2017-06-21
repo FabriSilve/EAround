@@ -1,6 +1,5 @@
 package lpaa.earound;
 
-
 import android.util.Log;
 
 class Search {

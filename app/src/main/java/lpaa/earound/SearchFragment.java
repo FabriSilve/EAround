@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -19,7 +18,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
 
     private final String TAG = "SearchFragment";
 
-    private View view;
     private HomeActivity parent;
 
     private EditText position;
@@ -34,7 +32,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
         Log.d(TAG, "onCreateView: init UI");
 
         this.parent = (HomeActivity) this.getActivity();
-        view = inflater.inflate(R.layout.search_fragment, container, false);
+        View view = inflater.inflate(R.layout.search_fragment, container, false);
 
         position = (EditText) view.findViewById(R.id.search_position);
         distance = (SeekBar) view.findViewById(R.id.search_distanceBar);

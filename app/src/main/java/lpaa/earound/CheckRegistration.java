@@ -2,18 +2,13 @@ package lpaa.earound;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
-/**
- * Created by cogor on 18/05/2017.
- */
 
 public class CheckRegistration extends AsyncTask<Object, Object, Boolean> {
 

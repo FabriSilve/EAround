@@ -3,7 +3,6 @@ package lpaa.earound;
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,31 +19,28 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private final String TAG = "LoginFragment";
 
     private MainActivity parent;
-    private View view;
 
     private EditText username;
     private EditText password;
     private CheckBox rememberMe;
-    private Button login;
-    private TextView register;
 
     private String user;
     private boolean keep;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: start");
         this.parent = (MainActivity) this.getActivity();
 
-        view = inflater.inflate(R.layout.login_fragment, container, false);
+        View view = inflater.inflate(R.layout.login_fragment, container, false);
 
         Log.d(TAG, "onCreateView: init UI");
         username = (EditText) view.findViewById(R.id.login_username);
         password = (EditText) view.findViewById(R.id.login_password);
         rememberMe = (CheckBox) view.findViewById(R.id.login_rememberMe);
-        login = (Button) view.findViewById(R.id.login_login);
-        register = (TextView) view.findViewById(R.id.login_register);
+        Button login = (Button) view.findViewById(R.id.login_login);
+        TextView register = (TextView) view.findViewById(R.id.login_register);
 
         login.setOnClickListener(this);
         register.setOnClickListener(this);
@@ -69,7 +65,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         Log.d(TAG, "loginClick: start");
         String user = username.getText().toString();
         String pass = password.getText().toString();
-        boolean keep = rememberMe.isChecked();
 
         if(user.trim().isEmpty()) {
             username.setError(getText(R.string.empty_field));
