@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
         //TODO prende eventi dal db
         //ArrayList<LinearLayout> eventsLayout = new ArrayList<>();
         if (events != null && events.size() > 1) {
-            for (int i = 1; i < events.size() - 1; i++) {
+            for (int i =1; i < events.size(); i++) {
                 try {
                     LinearLayout eventLayout = new LinearLayout(parent);
                     eventLayout.setId(i-1);

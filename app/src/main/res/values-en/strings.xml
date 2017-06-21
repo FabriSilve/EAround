@@ -49,4 +49,12 @@
     <string name="notConnected">Not Connected</string>
     <string name="clicked">Clicked</string>
     <string name="noEvents">There are no events</string>
+    <string name="addNewEvent">Add New Event</string>
+    <string name="name">Name</string>
+    <string name="address">Address</string>
+    <string name="date">Date</string>
+    <string name="description">Description</string>
+    <string name="addEvent">Add Event</string>
+    <string name="eventNotValid">Event Not Valid</string>
+    <string name="added">Added</string>
 </resources>

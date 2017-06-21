@@ -17,6 +17,7 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
     private View view;
     private HomeActivity parent;
 
+    private Button addEvent;
     private Button logout;
 
     @Override
@@ -27,8 +28,10 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
 
         view = inflater.inflate(R.layout.personal_fragment, container, false);
 
+        addEvent = (Button) view.findViewById(R.id.personal_addEvent);
         logout = (Button) view.findViewById(R.id.personal_logout);
 
+        addEvent.setOnClickListener(this);
         logout.setOnClickListener(this);
 
         return view;
@@ -38,6 +41,9 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         Log.d(TAG, "onClick: start");
         switch(v.getId()) {
+            case R.id.personal_addEvent:
+                parent.goToAddEvent();
+                break;
             case R.id.personal_logout:
                 logout();
                 break;

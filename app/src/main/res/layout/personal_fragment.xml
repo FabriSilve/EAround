@@ -24,6 +24,23 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
+        android:id="@+id/personal_addEvent"
+        android:layout_width="@dimen/button1_width"
+        android:layout_height="@dimen/button1_height"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/button1_textSize"
+        android:text="@string/add_event"
+        android:layout_marginTop="@dimen/marginMiddle"
+        android:layout_marginStart="@dimen/marginMax"
+        android:layout_marginEnd="@dimen/marginMax"
+        app:layout_constraintTop_toBottomOf="@id/personal_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
         android:id="@+id/personal_logout"
         android:layout_width="@dimen/button1_width"
         android:layout_height="@dimen/button1_height"
@@ -36,7 +53,8 @@
         android:layout_marginTop="@dimen/marginMiddle"
         android:layout_marginStart="@dimen/marginMax"
         android:layout_marginEnd="@dimen/marginMax"
-        app:layout_constraintTop_toBottomOf="@id/personal_title"
+        app:layout_constraintTop_toBottomOf="@id/personal_addEvent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>

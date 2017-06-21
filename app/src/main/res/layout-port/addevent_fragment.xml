@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/lightbg">
+
+    <TextView
+        android:id="@+id/addevent_title"
+        android:layout_width="@dimen/title1_width"
+        android:layout_height="@dimen/title1_height"
+        android:textSize="@dimen/title1_textSize"
+        android:text="@string/addNewEvent"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/marginMiddle"
+        android:layout_marginStart="@dimen/marginMiddle"
+        android:layout_marginEnd="@dimen/marginMiddle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/addevent_name"
+        android:layout_width="@dimen/input1_width"
+        android:layout_height="@dimen/input1_height"
+        android:textSize="@dimen/input1_textSize"
+        android:textAlignment="center"
+        android:hint="@string/name"
+        android:inputType="textPersonName"
+        android:layout_marginTop="@dimen/marginMiddle"
+        android:layout_marginStart="@dimen/marginMiddle"
+        android:layout_marginEnd="@dimen/marginMiddle"
+        app:layout_constraintTop_toBottomOf="@id/addevent_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <EditText
+        android:id="@+id/addevent_address"
+        android:layout_width="@dimen/input1_width"
+        android:layout_height="@dimen/input1_height"
+        android:textSize="@dimen/input1_textSize"
+        android:textAlignment="center"
+        android:hint="@string/address"
+        android:inputType="textPostalAddress"
+        android:layout_marginTop="@dimen/marginMin"
+        android:layout_marginStart="@dimen/marginMiddle"
+        android:layout_marginEnd="@dimen/marginMiddle"
+        app:layout_constraintTop_toBottomOf="@id/addevent_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <EditText
+        android:id="@+id/addevent_day"
+        android:layout_width="@dimen/input1_width"
+        android:layout_height="@dimen/input1_height"
+        android:textSize="@dimen/input1_textSize"
+        android:textAlignment="center"
+        android:hint="@string/date"
+        android:inputType="date"
+        android:layout_marginTop="@dimen/marginMin"
+        android:layout_marginStart="@dimen/marginMiddle"
+        android:layout_marginEnd="@dimen/marginMiddle"
+        app:layout_constraintTop_toBottomOf="@id/addevent_address"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <EditText
+        android:id="@+id/addevent_description"
+        android:layout_width="@dimen/input2_width"
+        android:layout_height="@dimen/input2_height"
+        android:textSize="@dimen/input2_textSize"
+        android:textAlignment="gravity"
+        android:hint="@string/description"
+        android:inputType="textMultiLine"
+        android:layout_margin="@dimen/marginMiddle"
+        android:layout_marginTop="@dimen/marginMin"
+        app:layout_constraintTop_toBottomOf="@id/addevent_day"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <Button
+        android:id="@+id/addevent_add"
+        android:layout_width="@dimen/button1_width"
+        android:layout_height="@dimen/button1_height"
+        android:textSize="@dimen/button1_textSize"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
+        android:textStyle="bold"
+        android:text="@string/addEvent"
+        android:layout_marginEnd="@dimen/marginMiddle"
+        android:layout_marginStart="@dimen/marginMiddle"
+        android:layout_marginBottom="@dimen/marginMiddle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addevent_description"/>
+
+</android.support.constraint.ConstraintLayout>

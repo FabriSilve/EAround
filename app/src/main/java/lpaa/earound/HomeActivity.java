@@ -43,6 +43,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     private HomeFragment homeFragment;
     private SearchFragment searchFragment;
     private PersonalFragment personalFragment;
+    private AddEventFragment addEventFragment;
     private String currentFragment;
 
     private ArrayList<Event> events = new ArrayList<>();
@@ -53,10 +54,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         Log.d(TAG, "onCreate: start");
         homeValues = getSharedPreferences("homeValues", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
-
-        //TODO CORREGERE searching layout con slide 05
-        setContentView(R.layout.searching_layout);
-
         searchEvent(null);
     }
 
@@ -95,9 +92,16 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         }
     }
 
+    public void goToAddEvent() {
+        Editor editor = homeValues.edit();
+        currentFragment = "ADDEVENT";
+        editor.putString("currentFragment", currentFragment);
+        editor.apply();
+        goTo(addEventFragment);
+    }
+
     public void logoutUser() {
         Log.d(TAG, "logoutUser: start");
-        //TODO inserire dati user in db per renderli accessibili a tutte le activity
         new DBTask(this).deleteUser();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         currentFragment = "HOME";
@@ -139,6 +143,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         homeFragment = new HomeFragment();
         searchFragment = new SearchFragment();
         personalFragment = new PersonalFragment();
+        addEventFragment = new AddEventFragment();
 
         fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -147,6 +152,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         currentFragment = "HOME";
 
     }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -166,7 +172,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     @Override
     protected void onResume() {
         Log.d(TAG, "onResume: start");
-        //TODO to complete
         initUI();
 
         currentFragment = homeValues.getString("currentFragment", "HOME");
@@ -176,6 +181,9 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
                 break;
             case "SEARCH":
                 goTo(searchFragment);
+                break;
+            case "ADDEVENT":
+                goTo(addEventFragment);
                 break;
             default:
                 goTo(homeFragment);

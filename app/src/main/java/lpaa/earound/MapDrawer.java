@@ -54,7 +54,7 @@ public class MapDrawer implements OnMapReadyCallback {
             CameraPosition cameraPosition = new CameraPosition.Builder().target(center).zoom(14).build();
             map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-            for (int i = 1; i < events.size()-1; i++) {
+            for (int i = 1; i < events.size(); i++) {
                 map.addMarker(
                         new MarkerOptions()
                                 .position(events.get(i).getPosition())

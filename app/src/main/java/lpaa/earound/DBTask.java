@@ -76,13 +76,6 @@ public class DBTask {
 
         //TODO rimuovere
         this.openReadableDatabase();
-        /*try {
-            db.rawQuery("SELECT * FROM Events;", null);
-        } catch (SQLiteException e) {
-            Log.e(TAG, "getEvents: Exception test connection db",e );
-            db.execSQL(CREATE_EVENTS_TABLE);
-            Log.d(TAG, "getEvents: Table Events Created");
-        }*/
 
         ArrayList<Event> events = new ArrayList<>();
         try {
