@@ -25,12 +25,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 //TODO implementare style.xml per stile app slide 07
+//TODO sostituire async task con asynctask a tempo
 
 public class HomeActivity  extends Activity implements View.OnClickListener {
 
     private final String TAG = "HomeActivity";
     private SharedPreferences homeValues;
-    //TODO aggiungere carica degli eventi nella zona e aggiunta in locale prima di inizializzare tutto
 
     private Button search;
     private Button home;

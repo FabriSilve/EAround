@@ -74,7 +74,6 @@ public class DBTask {
     public ArrayList<Event> getEvents() {
         Log.d(TAG, "getEvents: ");
 
-        //TODO rimuovere
         this.openReadableDatabase();
 
         ArrayList<Event> events = new ArrayList<>();

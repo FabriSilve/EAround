@@ -21,12 +21,10 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
 
     private final String TAG = "EventSearcher";
 
-    //TODO estrarre variabili come url in un file a parte
     private static final String eventsSearcherUrl = "http://wwww.lpaa17.altervista.org/eventsSearcher.php";
     private HomeActivity main;
     private Search search;
 
-    //TODO servono tutti questi campi??
     public EventSearcher(HomeActivity main, Search search) {
         Log.d(TAG, "EventSearcher: costructor");
         this.main = main;

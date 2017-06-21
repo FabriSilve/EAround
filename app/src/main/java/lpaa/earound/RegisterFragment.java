@@ -20,8 +20,6 @@ import java.util.regex.Pattern;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener {
 
-    //TODO nei toast mettere parent e non this.getContext()
-
     private final String TAG = "RegisterFragment";
 
     private View view;
@@ -129,7 +127,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
             return;
         }
 
-        Toast toast = Toast.makeText(view.getContext(), getText(R.string.sending), Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(parent, getText(R.string.sending), Toast.LENGTH_SHORT);
         toast.show();
 
         user = username.getText().toString();
@@ -173,12 +171,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
         Log.d(TAG, "checkResult: start");
         if(result) {
             Log.d(TAG, "checkResult: registred and logged");
-            Toast toast = Toast.makeText(view.getContext(), getText(R.string.logged), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(parent, getText(R.string.logged), Toast.LENGTH_SHORT);
             toast.show();
             parent.correctlyLogged(false, user);
         } else {
             Log.d(TAG, "checkResult: not registred");
-            Toast toast = Toast.makeText(view.getContext(), getText(R.string.error), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(parent, getText(R.string.error), Toast.LENGTH_SHORT);
             toast.show();
         }
     }

@@ -17,9 +17,6 @@ import android.widget.Toast;
 
 public class SearchFragment extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
-    //TODO caricare in locale gli eventi cercati
-    //TODO classe ricerca ultimi eventi aggiunti e li carica in locale
-
     private final String TAG = "SearchFragment";
 
     private View view;
@@ -75,8 +72,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
                 distance.getProgress(),
                 days.getProgress()
         );
-
-        //TODO se rememberPOsition è checkato salvare la posizione in locale
 
         EventSearcher searcher = new EventSearcher(parent, search);
         searcher.execute();

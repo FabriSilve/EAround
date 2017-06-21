@@ -26,7 +26,6 @@ public class MapDrawer implements OnMapReadyCallback {
     private HomeFragment homeFragment;
     private HomeActivity parent;
 
-    //TODO serve homefragment?
     public MapDrawer(HomeFragment homeFragment, View view, GoogleMap map, HomeActivity parent) {
         Log.d(TAG, "MapDrawer: costructor");
         this.homeFragment = homeFragment;

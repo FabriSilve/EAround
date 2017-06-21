@@ -13,8 +13,6 @@ import android.content.SharedPreferences.Editor;
 
 public class MainActivity extends Activity{
 
-    //TODO quando ruoto il dispositivi che resti sullo stesso fragment
-
     private final String TAG = "MainActivity";
     private SharedPreferences mainValues;
     private String currentFragment;
@@ -101,7 +99,6 @@ public class MainActivity extends Activity{
 
     @Override
     protected void onResume() {
-        //TODO to complete
         Log.d(TAG, "onResume: start");
         currentFragment = mainValues.getString("currentFragment", "LOG");
         switch (currentFragment) {

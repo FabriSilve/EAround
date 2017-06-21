@@ -1,6 +1,7 @@
 package lpaa.earound;
 
 import android.app.Fragment;
+import android.content.res.Configuration;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,7 +47,6 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
         add = (Button) view.findViewById(R.id.addevent_add);
 
         add.setOnClickListener(this);
-
 
         return view;
     }
@@ -109,5 +109,32 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
         } else {
             Toast.makeText(parent, result, Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        Log.d(TAG, "onConfigurationChanged: start");
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onPause() {
+        Log.d(TAG, "onPause: ");
+        parent.onPauseFragment("addevent_name", name.getText().toString());
+        parent.onPauseFragment("addevent_address", String.valueOf(address.getText().toString()));
+        parent.onPauseFragment("addevent_day", String.valueOf(day.getText().toString()));
+        parent.onPauseFragment("addevent_description", String.valueOf(description.getText().toString()));
+
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        Log.d(TAG, "onResume: ");
+        name.setText(parent.onResumeFragment("addevent_name", ""));
+        address.setText(parent.onResumeFragment("addevent_address", ""));
+        day.setText(parent.onResumeFragment("addevent_day", ""));
+        description.setText(parent.onResumeFragment("addevent_description", ""));
+        super.onResume();
     }
 }

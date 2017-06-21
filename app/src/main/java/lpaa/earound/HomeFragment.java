@@ -67,8 +67,6 @@ public class HomeFragment extends Fragment {
     public void eventDrawer() {
         Log.d(TAG, "eventDrawer: start");
         ArrayList<Event> events = new DBTask(parent).getEvents();
-        //TODO prende eventi dal db
-        //ArrayList<LinearLayout> eventsLayout = new ArrayList<>();
         if (events != null && events.size() > 1) {
             for (int i =1; i < events.size(); i++) {
                 try {
