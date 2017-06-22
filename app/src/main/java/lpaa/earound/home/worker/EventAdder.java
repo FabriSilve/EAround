@@ -1,4 +1,4 @@
-package lpaa.earound;
+package lpaa.earound.home.worker;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -9,6 +9,8 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+
+import lpaa.earound.home.AddEventFragment;
 
 
 public class EventAdder extends AsyncTask<Object, Object, String> {

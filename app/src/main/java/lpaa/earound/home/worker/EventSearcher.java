@@ -1,4 +1,4 @@
-package lpaa.earound;
+package lpaa.earound.home.worker;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -13,6 +13,11 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.sql.Date;
+
+import lpaa.earound.home.HomeActivity;
+import lpaa.earound.type.Event;
+import lpaa.earound.type.Search;
+import lpaa.earound.database.DBTask;
 
 
 public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{

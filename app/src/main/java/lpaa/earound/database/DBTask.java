@@ -1,4 +1,4 @@
-package lpaa.earound;
+package lpaa.earound.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.util.Log;
 import java.sql.Date;
 import java.util.ArrayList;
 
-import static lpaa.earound.DBQuery.*;
+import lpaa.earound.type.Event;
 
 
 public class DBTask {
@@ -21,7 +21,7 @@ public class DBTask {
 
     public DBTask(Context context) {
         Log.d(TAG, "DBTask: costructor");
-        dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
+        dbHelper = new DBHelper(context, DBQuery.DB_NAME, null, DBQuery.DB_VERSION);
     }
 
     private void openReadableDatabase() {
@@ -45,27 +45,27 @@ public class DBTask {
         insertEvents(events);
     }
 
-    public void insertEvents(ArrayList<Event> events) {
+    private void insertEvents(ArrayList<Event> events) {
         Log.d(TAG, "insertEvents: start");
 
         openWritableDatabase();
         for(Event event : events) {
             ContentValues cv = new ContentValues();
-            cv.put(EVENTS_NAME, event.getName());
-            cv.put(EVENTS_DESCRIPTION, event.getDescription());
-            cv.put(EVENTS_DATE, String.valueOf(event.getDate()));
-            cv.put(EVENTS_LAT, event.getLat());
-            cv.put(EVENTS_LON, event.getLon());
+            cv.put(DBQuery.EVENTS_NAME, event.getName());
+            cv.put(DBQuery.EVENTS_DESCRIPTION, event.getDescription());
+            cv.put(DBQuery.EVENTS_DATE, String.valueOf(event.getDate()));
+            cv.put(DBQuery.EVENTS_LAT, event.getLat());
+            cv.put(DBQuery.EVENTS_LON, event.getLon());
 
-            db.insert(EVENTS, null, cv);
+            db.insert(DBQuery.EVENTS, null, cv);
         }
         this.closeDB();
     }
 
-    public void deleteEvents() {
+    private void deleteEvents() {
         Log.d(TAG, "deleteEvents: start");
         openWritableDatabase();
-        db.execSQL(DELETE_EVENTS);
+        db.execSQL(DBQuery.DELETE_EVENTS);
         closeDB();
     }
 
@@ -76,7 +76,7 @@ public class DBTask {
 
         ArrayList<Event> events = new ArrayList<>();
         try {
-            Cursor cursor = db.rawQuery("SELECT * FROM "+EVENTS+";", null);
+            Cursor cursor = db.rawQuery("SELECT * FROM "+ DBQuery.EVENTS+";", null);
             int i = 0;
             while(cursor.moveToNext()) {
                 events.add(getEventToCursor(cursor, i++));
@@ -98,14 +98,14 @@ public class DBTask {
             return null;
         } else {
             try {
-                Log.d(TAG, "getEventToCursor: find event "+ cursor.getString(cursor.getColumnIndex(EVENTS_NAME)));
+                Log.d(TAG, "getEventToCursor: find event "+ cursor.getString(cursor.getColumnIndex(DBQuery.EVENTS_NAME)));
                 return new Event(
                         id,
-                        cursor.getString(cursor.getColumnIndex(EVENTS_NAME)),
-                        cursor.getString(cursor.getColumnIndex(EVENTS_DESCRIPTION)),
-                        Date.valueOf(cursor.getString(cursor.getColumnIndex(EVENTS_DATE))),
-                        cursor.getDouble(cursor.getColumnIndex(EVENTS_LAT)),
-                        cursor.getDouble(cursor.getColumnIndex(EVENTS_LON))
+                        cursor.getString(cursor.getColumnIndex(DBQuery.EVENTS_NAME)),
+                        cursor.getString(cursor.getColumnIndex(DBQuery.EVENTS_DESCRIPTION)),
+                        Date.valueOf(cursor.getString(cursor.getColumnIndex(DBQuery.EVENTS_DATE))),
+                        cursor.getDouble(cursor.getColumnIndex(DBQuery.EVENTS_LAT)),
+                        cursor.getDouble(cursor.getColumnIndex(DBQuery.EVENTS_LON))
                 );
             } catch (Exception e) {
                 return null;
@@ -118,8 +118,8 @@ public class DBTask {
 
         openWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(USERDATA_USERNAME, username);
-        db.insert(USERDATA, null, cv);
+        cv.put(DBQuery.USERDATA_USERNAME, username);
+        db.insert(DBQuery.USERDATA, null, cv);
         this.closeDB();
     }
 
@@ -129,10 +129,10 @@ public class DBTask {
         openReadableDatabase();
         String user = "";
         try {
-            Cursor cursor = db.query(USERDATA, null, null, null, null, null, null);
+            Cursor cursor = db.query(DBQuery.USERDATA, null, null, null, null, null, null);
             if(cursor != null) {
                 if(cursor.getCount() == 1 && cursor.moveToNext()) {
-                    user = cursor.getString(cursor.getColumnIndex(USERDATA_USERNAME));
+                    user = cursor.getString(cursor.getColumnIndex(DBQuery.USERDATA_USERNAME));
                 }
                 cursor.close();
             }
@@ -148,7 +148,7 @@ public class DBTask {
     public void deleteUser() {
         Log.d(TAG, "deleteUser: start");
         openWritableDatabase();
-        db.execSQL(DELETE_USERDATA);
+        db.execSQL(DBQuery.DELETE_USERDATA);
         closeDB();
     }
 }

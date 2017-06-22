@@ -1,30 +1,30 @@
-package lpaa.earound;
+package lpaa.earound.type;
 
 import android.util.Log;
 
-class Search {
+public class Search {
 
     private final String TAG = "Search";
     private String position;
     private int distance;
     private int days;
 
-    Search(String position, int distance, int days) {
+    public Search(String position, int distance, int days) {
         Log.d(TAG, "Search: costructor");
         this.position = position;
         this.distance = distance;
         this.days = days;
     }
 
-    String getPosition() {
+    public String getPosition() {
         return position;
     }
 
-    String getDistance() {
+    public String getDistance() {
         return String.valueOf(distance);
     }
 
-    String getDays() {
+    public String getDays() {
         return String.valueOf(days);
     }
 

@@ -1,4 +1,4 @@
-package lpaa.earound;
+package lpaa.earound.home;
 
 import android.app.Fragment;
 import android.content.res.Configuration;
@@ -17,6 +17,12 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 
 import java.util.ArrayList;
+
+import lpaa.earound.home.worker.EventListListener;
+import lpaa.earound.home.worker.MapDrawer;
+import lpaa.earound.type.Event;
+import lpaa.earound.R;
+import lpaa.earound.database.DBTask;
 
 
 public class HomeFragment extends Fragment {
@@ -66,6 +72,7 @@ public class HomeFragment extends Fragment {
                     eventLayout.setMinimumWidth(LayoutParams.MATCH_PARENT);
                     eventLayout.setMinimumHeight(LayoutParams.WRAP_CONTENT);
                     eventLayout.setOrientation(LinearLayout.VERTICAL);
+                    //TODO trovare modo per rimuovere metodo deprecato
                     eventLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
                     LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
                     params.setMargins(
@@ -137,6 +144,7 @@ public class HomeFragment extends Fragment {
             noEventLayout.setOrientation(LinearLayout.VERTICAL);
             noEventLayout.setMinimumWidth(LayoutParams.MATCH_PARENT);
             noEventLayout.setMinimumHeight(LayoutParams.WRAP_CONTENT);
+            //TODO rimuovere metodo deprecato
             noEventLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
             LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
             params.setMargins(

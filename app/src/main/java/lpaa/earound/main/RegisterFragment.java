@@ -1,4 +1,4 @@
-package lpaa.earound;
+package lpaa.earound.main;
 
 import android.app.Fragment;
 import android.content.res.Configuration;
@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.regex.Pattern;
+
+import lpaa.earound.R;
+import lpaa.earound.main.worker.CheckRegistration;
 
 
 public class RegisterFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener {

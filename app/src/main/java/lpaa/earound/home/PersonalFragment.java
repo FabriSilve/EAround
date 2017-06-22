@@ -1,4 +1,4 @@
-package lpaa.earound;
+package lpaa.earound.home;
 
 import android.app.Fragment;
 import android.content.res.Configuration;
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import lpaa.earound.R;
 
 
 public class PersonalFragment extends Fragment implements View.OnClickListener {

@@ -1,4 +1,4 @@
-package lpaa.earound;
+package lpaa.earound.type;
 
 import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;

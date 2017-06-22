@@ -1,4 +1,4 @@
-package lpaa.earound;
+package lpaa.earound.home.worker;
 
 import android.util.Log;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -8,6 +8,11 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
+
+import lpaa.earound.home.HomeActivity;
+import lpaa.earound.home.HomeFragment;
+import lpaa.earound.type.Event;
+import lpaa.earound.database.DBTask;
 
 
 public class MapDrawer implements OnMapReadyCallback {

@@ -1,4 +1,4 @@
-package lpaa.earound;
+package lpaa.earound.home;
 
 
 import android.app.Activity;
@@ -13,6 +13,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import lpaa.earound.R;
+import lpaa.earound.type.Search;
+import lpaa.earound.database.DBTask;
+import lpaa.earound.home.worker.EventSearcher;
+import lpaa.earound.main.MainActivity;
 
 //TODO implementare style.xml per stile app slide 07
 //TODO sostituire async task con asynctask a tempo

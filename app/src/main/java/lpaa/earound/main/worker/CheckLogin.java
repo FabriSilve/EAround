@@ -1,4 +1,4 @@
-package lpaa.earound;
+package lpaa.earound.main.worker;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -8,6 +8,8 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+
+import lpaa.earound.main.LoginFragment;
 
 
 public class CheckLogin extends AsyncTask<Object, Object, Boolean> {

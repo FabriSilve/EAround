@@ -1,4 +1,4 @@
-package lpaa.earound;
+package lpaa.earound.home;
 
 import android.app.Fragment;
 import android.content.res.Configuration;
@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import lpaa.earound.R;
+import lpaa.earound.home.worker.EventAdder;
 
 
 public class AddEventFragment extends Fragment implements View.OnClickListener {

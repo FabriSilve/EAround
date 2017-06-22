@@ -1,4 +1,4 @@
-package lpaa.earound;
+package lpaa.earound.home;
 
 import android.app.Fragment;
 import android.content.res.Configuration;
@@ -12,6 +12,10 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import lpaa.earound.R;
+import lpaa.earound.home.worker.EventSearcher;
+import lpaa.earound.type.Search;
 
 
 public class SearchFragment extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {

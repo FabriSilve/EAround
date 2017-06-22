@@ -1,4 +1,4 @@
-package lpaa.earound;
+package lpaa.earound.main;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -9,6 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+
+import lpaa.earound.home.HomeActivity;
+import lpaa.earound.R;
+import lpaa.earound.database.DBTask;
 
 
 public class MainActivity extends Activity{
