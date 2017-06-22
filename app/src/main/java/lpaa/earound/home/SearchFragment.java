@@ -79,6 +79,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
         searcher.execute();
         Toast toast = Toast.makeText(parent, "Searching", Toast.LENGTH_SHORT);
         toast.show();
+        parent.onPauseFragment("search_position", position.getText().toString());
+        parent.onPauseFragment("search_distance", String.valueOf(distance.getProgress()));
+        parent.onPauseFragment("search_distance", String.valueOf(days.getProgress()));
         parent.postSearch();
     }
 
@@ -124,7 +127,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
         Log.d(TAG, "onPause: ");
         parent.onPauseFragment("search_position", position.getText().toString());
         parent.onPauseFragment("search_distance", String.valueOf(distance.getProgress()));
-        parent.onPauseFragment("search_distance", String.valueOf(days.getProgress()));
+        parent.onPauseFragment("search_days", String.valueOf(days.getProgress()));
 
         super.onPause();
     }

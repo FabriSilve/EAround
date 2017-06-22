@@ -43,7 +43,14 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         Log.d(TAG, "onCreate: start");
         homeValues = getSharedPreferences("homeValues", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
-        searchEvent(null);
+
+        Search search = new Search(
+                homeValues.getString("search_position", "genova"),
+                Integer.valueOf(homeValues.getString("search_distance", "1")),
+                Integer.valueOf(homeValues.getString("search_days", "1"))
+        );
+
+        searchEvent(search);
     }
 
     @Override
