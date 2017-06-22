@@ -146,7 +146,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         fragmentTransaction.replace(container, homeFragment);
         fragmentTransaction.commit();
         currentFragment = "HOME";
-
     }
 
 

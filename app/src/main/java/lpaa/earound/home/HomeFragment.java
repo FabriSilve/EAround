@@ -131,6 +131,23 @@ public class HomeFragment extends Fragment {
                             LayoutParams.WRAP_CONTENT));
                     eventLayout.addView(desc);
 
+                    TextView owner = new TextView(parent);
+                    owner.setText(events.get(i).getOwner());
+                    owner.setTextSize(getResources().getDimension(R.dimen.par_textSize));
+                    //desc.setTypeface(data.getTypeface(), Typeface.DEFAULT);
+                    owner.setTextColor(Color.DKGRAY);
+                    owner.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+                    owner.setPadding(
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            (int) getResources().getDimension(R.dimen.marginMin)
+                    );
+                    owner.setLayoutParams(new LayoutParams(
+                            LayoutParams.MATCH_PARENT,
+                            LayoutParams.WRAP_CONTENT));
+                    eventLayout.addView(owner);
+
                     EventListListener listener = new EventListListener(events.get(i), this);
                     eventLayout.setOnClickListener(listener);
 

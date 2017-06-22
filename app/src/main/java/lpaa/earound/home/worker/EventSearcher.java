@@ -88,7 +88,8 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
                         event.getString("description"),
                         Date.valueOf(event.getString("date")),
                         event.getDouble("lat"),
-                        event.getDouble("lon")
+                        event.getDouble("lon"),
+                        event.getString("owner")
                 ));
             }
             return result;

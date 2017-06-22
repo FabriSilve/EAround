@@ -11,8 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.sql.Date;
+
 import lpaa.earound.R;
+import lpaa.earound.database.DBTask;
 import lpaa.earound.home.worker.EventAdder;
+import lpaa.earound.type.LocalEvent;
 
 
 public class AddEventFragment extends Fragment implements View.OnClickListener {
@@ -51,7 +55,17 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
         switch(v.getId()) {
             case R.id.addevent_add:
                 if (checkEvent()) {
-                    EventAdder eventAdder = new EventAdder(this, name.getText().toString(), address.getText().toString(), day.getText().toString(), description.getText().toString());
+                    LocalEvent newEvent = new LocalEvent(
+                        name.getText().toString(),
+                        address.getText().toString(),
+                        Date.valueOf(day.getText().toString()),
+                        description.getText().toString()
+                    );
+                    EventAdder eventAdder = new EventAdder(
+                        this,
+                        newEvent,
+                        new DBTask(parent).getUser()
+                    );
                     eventAdder.execute();
                     Toast toast = Toast.makeText(parent, R.string.sending, Toast.LENGTH_LONG);
                     toast.show();

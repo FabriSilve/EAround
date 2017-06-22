@@ -10,7 +10,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+import lpaa.earound.database.DBTask;
 import lpaa.earound.home.AddEventFragment;
+import lpaa.earound.type.LocalEvent;
 
 
 public class EventAdder extends AsyncTask<Object, Object, String> {
@@ -19,17 +21,14 @@ public class EventAdder extends AsyncTask<Object, Object, String> {
     private final String URL = "http://wwww.lpaa17.altervista.org/eventAdder.php";
 
     private AddEventFragment fragment;
-    private String name;
-    private String address;
-    private String day;
-    private String description;
+    private LocalEvent event;
+    private String owner;
 
-    public EventAdder(AddEventFragment fragment, String name, String address, String day, String description) {
+    public EventAdder(AddEventFragment fragment, LocalEvent event, String owner) {
         this.fragment = fragment;
-        this.name = name;
-        this.address = address;
-        this.day = day;
-        this.description = description;
+        this.event = event;
+        this.owner = owner;
+
     }
 
     //TODO tenere traccia dell'utente che crea l'evento
@@ -44,11 +43,12 @@ public class EventAdder extends AsyncTask<Object, Object, String> {
             Log.d(TAG, "doInBackground: connection out");
             URL url = new URL(URL);
             connection = url.openConnection();
-            Log.d(TAG, name + "; " + address + "; " + day);
-            dat = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") +
-                    "&"+ URLEncoder.encode("address", "UTF-8") + "=" + URLEncoder.encode(address, "UTF-8") +
-                    "&"+ URLEncoder.encode("day", "UTF-8") + "=" + URLEncoder.encode(day, "UTF-8") +
-                    "&"+ URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8");
+            Log.d(TAG, event.getName() + "; " + event.getAddress() + "; " + event.getDayString());
+            dat = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(event.getName(), "UTF-8") +
+                    "&"+ URLEncoder.encode("address", "UTF-8") + "=" + URLEncoder.encode(event.getAddress(), "UTF-8") +
+                    "&"+ URLEncoder.encode("day", "UTF-8") + "=" + URLEncoder.encode(event.getDayString(), "UTF-8") +
+                    "&"+ URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(event.getDescription(), "UTF-8") +
+                    "&"+ URLEncoder.encode("owner", "UTF-8") + "=" + URLEncoder.encode(owner, "UTF-8");
             connection.setDoOutput(true);
             wr = new OutputStreamWriter(connection.getOutputStream());
             wr.write(dat);
@@ -72,8 +72,14 @@ public class EventAdder extends AsyncTask<Object, Object, String> {
     }
 
     protected void onPostExecute(String result) {
-        Log.d(TAG, "onPostExecute: start");
-        //TODO aggiungere evento creato in db locale
+        Log.d(TAG, "onPostExecute: start ");
+        Log.d(TAG, "onPostExecute: "+result);
+
+        if(result.equals("true")) {
+            new DBTask(fragment.getActivity()).insertLocalEvent(event);
+        }
+
         fragment.checkResult(result);
+
     }
 }

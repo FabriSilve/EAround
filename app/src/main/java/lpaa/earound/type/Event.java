@@ -15,9 +15,10 @@ public class Event {
     private Date date;
     private double lat;
     private double lon;
+    private String owner;
 
 
-    public Event(int id, String name, String description, Date date, double lat, double lon) {
+    public Event(int id, String name, String description, Date date, double lat, double lon, String owner) {
         Log.d(TAG, "Event: costructor");
         this.id = id;
         this.name = name;
@@ -25,6 +26,7 @@ public class Event {
         this.date = date;
         this.lat = lat;
         this.lon = lon;
+        this.owner = owner;
 
     }
 
@@ -53,4 +55,6 @@ public class Event {
     }
 
     public LatLng getPosition() { return new LatLng(lat, lon); }
+
+    public String getOwner() { return owner; }
 }
