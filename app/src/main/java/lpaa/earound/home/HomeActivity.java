@@ -35,6 +35,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     private SearchFragment searchFragment;
     private PersonalFragment personalFragment;
     private AddEventFragment addEventFragment;
+    private MyEventsFragment myEventsFragment;
     private String currentFragment;
 
 
@@ -89,11 +90,18 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     }
 
     public void goToAddEvent() {
-        Editor editor = homeValues.edit();
+        Log.d(TAG, "goToAddEvent: ");
         currentFragment = "ADDEVENT";
+        /*Editor editor = homeValues.edit();
         editor.putString("currentFragment", currentFragment);
-        editor.apply();
+        editor.apply();*/
         goTo(addEventFragment);
+    }
+
+    public void goToMyEvent() {
+        Log.d(TAG, "goToMyEvent: ");
+        currentFragment = "MYEVENT";
+        goTo(myEventsFragment);
     }
 
     public void logoutUser() {
@@ -140,6 +148,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         searchFragment = new SearchFragment();
         personalFragment = new PersonalFragment();
         addEventFragment = new AddEventFragment();
+        myEventsFragment = new MyEventsFragment();
 
         fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -179,6 +188,9 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
                 break;
             case "ADDEVENT":
                 goTo(addEventFragment);
+                break;
+            case "MYEVENT":
+                goTo(myEventsFragment);
                 break;
             default:
                 goTo(homeFragment);

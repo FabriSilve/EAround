@@ -57,4 +57,7 @@
     <string name="addEvent">Add Event</string>
     <string name="eventNotValid">Event Not Valid</string>
     <string name="added">Added</string>
+    <string name="noEvents">There are no events</string>
+    <string name="event_editor">Event Editor</string>
+    <string name="modify">Modify</string>
 </resources>

@@ -24,6 +24,7 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
     private final String TAG = "AddEventFragment";
 
     private HomeActivity parent;
+    private LocalEvent newEvent;
 
     private EditText name;
     private EditText address;
@@ -55,11 +56,11 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
         switch(v.getId()) {
             case R.id.addevent_add:
                 if (checkEvent()) {
-                    LocalEvent newEvent = new LocalEvent(
+                    newEvent = new LocalEvent(
                         name.getText().toString(),
-                        address.getText().toString(),
+                        description.getText().toString(),
                         Date.valueOf(day.getText().toString()),
-                        description.getText().toString()
+                        address.getText().toString()
                     );
                     EventAdder eventAdder = new EventAdder(
                         this,
@@ -67,7 +68,7 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
                         new DBTask(parent).getUser()
                     );
                     eventAdder.execute();
-                    Toast toast = Toast.makeText(parent, R.string.sending, Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(parent, R.string.sending, Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
                     Toast toast = Toast.makeText(parent, R.string.eventNotValid, Toast.LENGTH_LONG);
@@ -114,6 +115,9 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
             address.setText("");
             day.setText("");
             description.setText("");
+            if(result.equals("true")) {
+                new DBTask(getActivity()).insertLocalEvent(newEvent);
+            }
         } else {
             Toast.makeText(parent, result, Toast.LENGTH_LONG).show();
         }

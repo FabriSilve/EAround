@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/myevent_edit_modify"
+        android:layout_width="@dimen/button1_width"
+        android:layout_height="@dimen/button1_height"
+        android:text="@string/modify"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
+        android:textSize="@dimen/button1_textSize"
+        android:textAlignment="center"
+        android:layout_margin="@dimen/marginMin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/myevent_edit_title"
+        android:layout_width="@dimen/title1_width"
+        android:layout_height="@dimen/title1_height"
+        android:text="@string/event_editor"
+        android:textSize="@dimen/title1_textSize"
+        android:textAlignment="gravity"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_margin="@dimen/marginMin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/myevent_edit_name"
+        android:layout_width="@dimen/input3_width"
+        android:layout_height="@dimen/input3_height"
+        android:inputType="textPersonName"
+        android:textSize="@dimen/input3_textSize"
+        android:textColor="@color/colorPrimaryDark"
+        android:text=""
+        android:hint="@string/name"
+        android:layout_marginStart="@dimen/marginMiddle"
+        android:layout_marginTop="@dimen/marginMiddle"
+        android:layout_marginBottom="@dimen/marginMin"
+        android:layout_marginEnd="@dimen/marginMiddle"
+        app:layout_constraintTop_toBottomOf="@id/myevent_edit_title"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <EditText
+        android:id="@+id/myevent_edit_address"
+        android:layout_width="@dimen/input3_width"
+        android:layout_height="@dimen/input3_height"
+        android:inputType="textPersonName"
+        android:textSize="@dimen/input3_textSize"
+        android:textColor="@color/colorPrimaryDark"
+        android:text=""
+        android:hint="@string/address"
+        android:layout_marginStart="@dimen/marginMiddle"
+        android:layout_marginTop="@dimen/marginMin"
+        android:layout_marginBottom="@dimen/marginMin"
+        android:layout_marginEnd="@dimen/marginMiddle"
+        app:layout_constraintTop_toBottomOf="@id/myevent_edit_name"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <EditText
+        android:id="@+id/myevent_edit_day"
+        android:layout_width="@dimen/input3_width"
+        android:layout_height="@dimen/input3_height"
+        android:inputType="textPersonName"
+        android:textSize="@dimen/input3_textSize"
+        android:textColor="@color/colorPrimaryDark"
+        android:text=""
+        android:hint="@string/date"
+        android:layout_marginStart="@dimen/marginMiddle"
+        android:layout_marginTop="@dimen/marginMiddle"
+        android:layout_marginBottom="@dimen/marginMin"
+        android:layout_marginEnd="@dimen/marginMiddle"
+        app:layout_constraintTop_toBottomOf="@id/myevent_edit_title"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/myevent_edit_description"
+        android:layout_width="@dimen/input2_width"
+        android:layout_height="@dimen/input4_height"
+        android:inputType="textMultiLine"
+        android:textSize="@dimen/input2_textSize"
+        android:textColor="@color/colorPrimaryDark"
+        android:text=""
+        android:hint="@string/description"
+        android:layout_marginStart="@dimen/marginMiddle"
+        android:layout_marginTop="@dimen/marginMin"
+        android:layout_marginBottom="@dimen/marginMin"
+        android:layout_marginEnd="@dimen/marginMin"
+        app:layout_constraintTop_toBottomOf="@id/myevent_edit_address"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

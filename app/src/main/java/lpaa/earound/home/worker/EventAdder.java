@@ -75,10 +75,6 @@ public class EventAdder extends AsyncTask<Object, Object, String> {
         Log.d(TAG, "onPostExecute: start ");
         Log.d(TAG, "onPostExecute: "+result);
 
-        if(result.equals("true")) {
-            new DBTask(fragment.getActivity()).insertLocalEvent(event);
-        }
-
         fragment.checkResult(result);
 
     }

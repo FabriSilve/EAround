@@ -113,6 +113,7 @@ public class DBTask {
                         cursor.getString(cursor.getColumnIndex(EVENTS_OWNER))
                 );
             } catch (Exception e) {
+                Log.e(TAG, "getEventToCursor: ",e );
                 return null;
             }
         }
@@ -170,5 +171,47 @@ public class DBTask {
         db.insert(MYEVENTS, null, cv);
 
         this.closeDB();
+    }
+
+    public ArrayList<LocalEvent> getLocalEvents() {
+        Log.d(TAG, "getLocalEvents: ");
+
+        this.openReadableDatabase();
+        ArrayList<LocalEvent> events = new ArrayList<>();
+        try {
+            Cursor cursor = db.rawQuery("SELECT * FROM "+ MYEVENTS+";", null);
+            int i = 0;
+            while(cursor.moveToNext()) {
+                events.add(getLocalEventToCursor(cursor));
+            }
+            Log.d(TAG, "getEvents: events added");
+            cursor.close();
+        } catch (SQLiteException e) {
+            Log.e(TAG, "getEvents: Exception: \n", e);
+        }
+
+        this.closeDB();
+
+        return events;
+    }
+
+    private LocalEvent getLocalEventToCursor(Cursor cursor) {
+        Log.d(TAG, "getLocalEventToCursor: start");
+        if (cursor == null || cursor.getCount() == 0) {
+            return null;
+        } else {
+            try {
+                Log.d(TAG, "getLocalEventToCursor: find event "+ cursor.getString(cursor.getColumnIndex(MYEVENTS_NAME)));
+                return new LocalEvent(
+                        cursor.getString(cursor.getColumnIndex(MYEVENTS_NAME)),
+                        cursor.getString(cursor.getColumnIndex(MYEVENTS_DESCRIPTION)),
+                        Date.valueOf(cursor.getString(cursor.getColumnIndex(MYEVENTS_DAY))),
+                        cursor.getString(cursor.getColumnIndex(MYEVENTS_ADDRESS))
+                );
+            } catch (Exception e) {
+                Log.e(TAG, "getLocalEventToCursor: ",e);
+                return null;
+            }
+        }
     }
 }
