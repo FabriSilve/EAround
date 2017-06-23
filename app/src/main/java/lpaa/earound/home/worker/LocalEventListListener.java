@@ -27,6 +27,14 @@ public class LocalEventListListener implements OnClickListener {
         fragment.setDay(event.getDayString());
         fragment.setDescription(event.getDescription());
         fragment.setAddress(event.getAddress());
+        fragment.setOldEvent(
+                new LocalEvent(
+                    event.getName(),
+                    event.getDescription(),
+                    event.getDay(),
+                    event.getAddress()
+                )
+        );
         fragment.eableButtons(true);
     }
 

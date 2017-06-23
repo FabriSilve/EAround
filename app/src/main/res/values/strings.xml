@@ -62,4 +62,6 @@
     <string name="modify">Modify</string>
     <string name="remove">Remove</string>
     <string name="removing">Removing</string>
+    <string name="removed">Removed</string>
+    <string name="updating">Updating</string>
 </resources>

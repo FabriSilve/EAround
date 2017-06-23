@@ -12,19 +12,20 @@ import java.net.URLEncoder;
 
 import lpaa.earound.database.DBTask;
 import lpaa.earound.home.AddEventFragment;
+import lpaa.earound.home.MyEventsFragment;
 import lpaa.earound.type.LocalEvent;
 
 
-public class EventAdder extends AsyncTask<Object, Object, String> {
+public class EventRemover extends AsyncTask<Object, Object, String> {
 
-    private final String TAG = "EventAdder";
-    private final String URL = "http://wwww.lpaa17.altervista.org/eventAdder.php";
+    private final String TAG = "EventRemover";
+    private final String URL = "http://wwww.lpaa17.altervista.org/eventRemover.php";
 
-    private AddEventFragment fragment;
+    private MyEventsFragment fragment;
     private LocalEvent event;
     private String owner;
 
-    public EventAdder(AddEventFragment fragment, LocalEvent event, String owner) {
+    public EventRemover(MyEventsFragment fragment, LocalEvent event, String owner) {
         this.fragment = fragment;
         this.event = event;
         this.owner = owner;
@@ -41,13 +42,11 @@ public class EventAdder extends AsyncTask<Object, Object, String> {
         String dat;
         try{
             Log.d(TAG, "doInBackground: connection out");
-            URL url = new URL(URL);
+            java.net.URL url = new URL(URL);
             connection = url.openConnection();
             Log.d(TAG, event.getName() + "; " + event.getAddress() + "; " + event.getDayString());
-            dat = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(event.getName(), "UTF-8") +
-                    "&"+ URLEncoder.encode("address", "UTF-8") + "=" + URLEncoder.encode(event.getAddress(), "UTF-8") +
+            dat = URLEncoder.encode("address", "UTF-8") + "=" + URLEncoder.encode(event.getAddress(), "UTF-8") +
                     "&"+ URLEncoder.encode("day", "UTF-8") + "=" + URLEncoder.encode(event.getDayString(), "UTF-8") +
-                    "&"+ URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(event.getDescription(), "UTF-8") +
                     "&"+ URLEncoder.encode("owner", "UTF-8") + "=" + URLEncoder.encode(owner, "UTF-8");
             connection.setDoOutput(true);
             wr = new OutputStreamWriter(connection.getOutputStream());
@@ -75,9 +74,11 @@ public class EventAdder extends AsyncTask<Object, Object, String> {
         Log.d(TAG, "onPostExecute: start ");
         Log.d(TAG, "onPostExecute: "+result);
 
+        if (result.equals("true"))
+            new DBTask(fragment.getActivity()).removeEvent(event);
 
         //TODO tradurre messaggi server in messaggi per utente
-        fragment.checkResult(result);
+        fragment.removedEvent(result);
 
     }
 }

@@ -70,6 +70,7 @@ public class DBTask {
         Log.d(TAG, "deleteEvents: start");
         openWritableDatabase();
         db.execSQL(DELETE_EVENTS);
+        //TODO sostituire con db.delete(EVENTS,null,null);
         closeDB();
     }
 
@@ -81,6 +82,7 @@ public class DBTask {
         ArrayList<Event> events = new ArrayList<>();
         try {
             Cursor cursor = db.rawQuery("SELECT * FROM "+ EVENTS+";", null);
+            //TODO da sostituire con db.query()
             int i = 0;
             while(cursor.moveToNext()) {
                 events.add(getEventToCursor(cursor, i++));
@@ -155,6 +157,7 @@ public class DBTask {
         Log.d(TAG, "deleteUser: start");
         openWritableDatabase();
         db.execSQL(DELETE_USERDATA);
+        //TODO sostituire con db.delete(USERDATA, null, null)
         closeDB();
     }
 
@@ -180,6 +183,7 @@ public class DBTask {
         ArrayList<LocalEvent> events = new ArrayList<>();
         try {
             Cursor cursor = db.rawQuery("SELECT * FROM "+ MYEVENTS+";", null);
+            //TODO sostituire con db.query()
             int i = 0;
             while(cursor.moveToNext()) {
                 events.add(getLocalEventToCursor(cursor));
@@ -213,5 +217,36 @@ public class DBTask {
                 return null;
             }
         }
+    }
+
+    public void removeEvent(LocalEvent event) {
+        Log.d(TAG, "removeEvent: ");
+
+        openWritableDatabase();
+
+        String where = MYEVENTS_ADDRESS + " = ? AND "+ MYEVENTS_DAY + " = ?";
+        String[] args = { event.getAddress(), event.getDayString() };
+        db.delete(MYEVENTS, where, args);
+
+        closeDB();
+    }
+
+    public void updateEvent(LocalEvent oldEvent, LocalEvent newEvent) {
+        Log.d(TAG, "updateEvent: ");
+
+        openWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(MYEVENTS_NAME, newEvent.getName());
+        cv.put(MYEVENTS_DESCRIPTION, newEvent.getDescription());
+        cv.put(MYEVENTS_DAY, newEvent.getDayString());
+        cv.put(MYEVENTS_ADDRESS, newEvent.getAddress());
+
+        String where = MYEVENTS_ADDRESS + " = ? AND "+MYEVENTS_DAY+" = ?";
+        String[] args = { oldEvent.getAddress(), oldEvent.getDayString() };
+
+        db.update(MYEVENTS, cv, where, args );
+
+        closeDB();
     }
 }

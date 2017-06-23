@@ -21,7 +21,9 @@ import java.util.ArrayList;
 
 import lpaa.earound.R;
 import lpaa.earound.database.DBTask;
+import lpaa.earound.home.worker.EventRemover;
 import lpaa.earound.home.worker.EventSearcher;
+import lpaa.earound.home.worker.EventUpdater;
 import lpaa.earound.home.worker.LocalEventListListener;
 import lpaa.earound.type.LocalEvent;
 import lpaa.earound.type.Search;
@@ -32,6 +34,7 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
     private final String TAG = "MyEventsFragment";
 
     private HomeActivity parent;
+    private LocalEvent oldEvent;
 
     private ScrollView list;
     private EditText name;
@@ -60,6 +63,7 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
         modify.setOnClickListener(this);
         remove.setOnClickListener(this);
         eableButtons(false);
+        initEdit();
 
         eventDrawer();
 
@@ -173,7 +177,7 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
         Log.d(TAG, "onClick: ");
         switch(v.getId()) {
             case R.id.myevent_edit_modify:
-                modifyEvent();
+                updateEvent();
                 break;
             case R.id.myevent_edit_remove:
                 removeEvent();
@@ -181,8 +185,21 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void modifyEvent() {
+    private void updateEvent() {
         Log.d(TAG, "modifyEvent: ");
+        eableButtons(false);
+
+        LocalEvent newEvent = new LocalEvent(
+                name.getText().toString(),
+                description.getText().toString(),
+                Date.valueOf(day.getText().toString()),
+                address.getText().toString()
+        );
+
+        EventUpdater updater = new EventUpdater(this, newEvent, new DBTask(parent).getUser());
+        updater.execute();
+        Toast toast = Toast.makeText(parent, R.string.updating, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     private void removeEvent() {
@@ -195,10 +212,17 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
                 address.getText().toString()
         );
 
-        /*EventRemover remover = new EventRemover(parent, event);
+        EventRemover remover = new EventRemover(this, event, new DBTask(parent).getUser());
         remover.execute();
         Toast toast = Toast.makeText(parent, R.string.removing, Toast.LENGTH_SHORT);
-        toast.show();*/
+        toast.show();
+    }
+
+    private void initEdit() {
+        setName("");
+        setAddress("");
+        setDay("");
+        setDescription("");
     }
 
     public void setName(String name) {
@@ -227,25 +251,52 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
         remove.setClickable(value);
     }
 
+    public void setOldEvent(LocalEvent oldEvent) {
+        this.oldEvent = oldEvent;
+    }
+
+    public LocalEvent getOldEvent() {
+        return oldEvent;
+    }
+    
+    public void removedEvent(String result) {
+        Log.d(TAG, "removedEvent: ");
+        if(result.equals("true")) {
+            Toast toast = Toast.makeText(parent, R.string.removed, Toast.LENGTH_SHORT);
+            toast.show();
+            initEdit();
+            list.removeAllViews();
+            eventDrawer();
+        } else {
+            Toast toast = Toast.makeText(parent, R.string.error, Toast.LENGTH_SHORT);
+            toast.show();
+            eableButtons(true);
+        }
+    }
+
     //TODO inserire "Importa eventi da server"
     @Override
     public void onPause() {
         Log.d(TAG, "onPause: ");
+        /*TODO migliore con o senza?
         parent.onPauseFragment("myevent_name", name.getText().toString());
         parent.onPauseFragment("myevent_address", address.getText().toString());
         parent.onPauseFragment("myevent_day", day.getText().toString());
         parent.onPauseFragment("myevent_description", description.getText().toString());
-
+*/
         super.onPause();
     }
 
     @Override
     public void onResume() {
         Log.d(TAG, "onResume: ");
+        /*TODO migliore con o senza?
         name.setText(parent.onResumeFragment("myevent_name", ""));
         address.setText(parent.onResumeFragment("myevent_address", ""));
         day.setText(parent.onResumeFragment("myevent_day", ""));
         description.setText(parent.onResumeFragment("myevent_description", ""));
+        if(!name.getText().toString().equals(""))
+            eableButtons(true);*/
         super.onResume();
     }
 
