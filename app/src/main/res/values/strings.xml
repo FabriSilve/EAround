@@ -60,4 +60,6 @@
     <string name="noEvents">There are no events</string>
     <string name="event_editor">Event Editor</string>
     <string name="modify">Modify</string>
+    <string name="remove">Remove</string>
+    <string name="removing">Removing</string>
 </resources>

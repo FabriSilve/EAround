@@ -2,6 +2,7 @@ package lpaa.earound.home.worker;
 
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 
@@ -9,7 +10,7 @@ import lpaa.earound.home.HomeFragment;
 import lpaa.earound.type.Event;
 
 
-public class EventListListener implements View.OnClickListener {
+public class EventListListener implements OnClickListener {
 
     private static final String TAG = "EventListListener";
 
