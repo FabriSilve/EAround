@@ -7,10 +7,13 @@ import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -22,17 +25,19 @@ import lpaa.earound.database.DBTask;
 import lpaa.earound.type.LocalEvent;
 
 
-public class MyEventsFragment extends Fragment {
+public class MyEventsFragment extends Fragment implements View.OnClickListener {
 
     private final String TAG = "MyEventsFragment";
 
     private HomeActivity parent;
 
     private ScrollView list;
+    private ConstraintLayout edit;
+    private EditText name;
+    private EditText address;
+    private EditText day;
+    private EditText description;
 
-    private int idEvent;
-    private MyEventsEdit myEventsEdit;
-    private FragmentManager fragmentManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,17 +47,18 @@ public class MyEventsFragment extends Fragment {
         View view = inflater.inflate(R.layout.myevents_fragment, container, false);
 
         list = (ScrollView) view.findViewById(R.id.myevent_list);
+        edit = (ConstraintLayout) view.findViewById(R.id.myevent_edit);
+
+        name = (EditText) view.findViewById(R.id.myevent_edit_name);
+        address = (EditText) view.findViewById(R.id.myevent_edit_address);
+        day = (EditText) view.findViewById(R.id.myevent_edit_day);
+        description = (EditText) view.findViewById(R.id.myevent_edit_description);
+        Button modify = (Button) view.findViewById(R.id.myevent_edit_modify);
+
+        modify.setOnClickListener(this);
+
 
         eventDrawer();
-
-        idEvent = R.id.myevent_event;
-
-        myEventsEdit = new MyEventsEdit();
-
-        fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(idEvent, myEventsEdit );
-        fragmentTransaction.commit();
 
         return view;
     }
@@ -158,5 +164,23 @@ public class MyEventsFragment extends Fragment {
         }
         list.addView(listevent);
     }
+
+    @Override
+    public void onClick(View v) {
+        Log.d(TAG, "onClick: ");
+        switch(v.getId()) {
+            case R.id.myevent_edit_modify:
+                modifyEvent();
+                break;
+        }
+    }
+
+    private void modifyEvent() {
+        Log.d(TAG, "modifyEvent: ");
+
+    }
+
+    //TODO inserire "Importa eventi da server"
+    //TODO inserire listener sugli eventi della lista
 
 }
