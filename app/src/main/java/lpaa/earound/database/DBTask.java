@@ -56,7 +56,8 @@ public class DBTask {
             ContentValues cv = new ContentValues();
             cv.put(EVENTS_NAME, event.getName());
             cv.put(EVENTS_DESCRIPTION, event.getDescription());
-            cv.put(EVENTS_DAY, String.valueOf(event.getDate()));
+            cv.put(EVENTS_DAY, String.valueOf(event.getDay()));
+            cv.put(EVENTS_ADDRESS, event.getAddress());
             cv.put(EVENTS_LAT, event.getLat());
             cv.put(EVENTS_LON, event.getLon());
             cv.put(EVENTS_OWNER, event.getOwner());
@@ -69,8 +70,7 @@ public class DBTask {
     private void deleteEvents() {
         Log.d(TAG, "deleteEvents: start");
         openWritableDatabase();
-        db.execSQL(DELETE_EVENTS);
-        //TODO sostituire con db.delete(EVENTS,null,null);
+        db.delete(EVENTS, null, null);
         closeDB();
     }
 
@@ -110,6 +110,7 @@ public class DBTask {
                         cursor.getString(cursor.getColumnIndex(EVENTS_NAME)),
                         cursor.getString(cursor.getColumnIndex(EVENTS_DESCRIPTION)),
                         Date.valueOf(cursor.getString(cursor.getColumnIndex(EVENTS_DAY))),
+                        cursor.getString(cursor.getColumnIndex(EVENTS_ADDRESS)),
                         cursor.getDouble(cursor.getColumnIndex(EVENTS_LAT)),
                         cursor.getDouble(cursor.getColumnIndex(EVENTS_LON)),
                         cursor.getString(cursor.getColumnIndex(EVENTS_OWNER))
@@ -231,8 +232,8 @@ public class DBTask {
         closeDB();
     }
 
-    public void updateEvent(LocalEvent oldEvent, LocalEvent newEvent) {
-        Log.d(TAG, "updateEvent: ");
+    public void updateLocalEvent(LocalEvent oldEvent, LocalEvent newEvent) {
+        Log.d(TAG, "updateLocalEvent: ");
 
         openWritableDatabase();
 
@@ -247,6 +248,41 @@ public class DBTask {
 
         db.update(MYEVENTS, cv, where, args );
 
+        closeDB();
+    }
+
+
+    public void importEvents(ArrayList<LocalEvent> events) {
+        Log.d(TAG, "importEvents: ");
+        openWritableDatabase();
+        db.delete(MYEVENTS, null, null);
+
+        openWritableDatabase();
+        for(LocalEvent event : events) {
+            ContentValues cv = new ContentValues();
+            cv.put(MYEVENTS_NAME, event.getName());
+            cv.put(MYEVENTS_DESCRIPTION, event.getDescription());
+            cv.put(MYEVENTS_DAY, String.valueOf(event.getDayString()));
+            cv.put(MYEVENTS_ADDRESS, event.getAddress());
+
+            db.insert(MYEVENTS, null, cv);
+        }
+        this.closeDB();
+    }
+
+    public void deleteMyEvents() {
+        Log.d(TAG, "deleteMyEvents: ");
+        openWritableDatabase();
+        db.delete(MYEVENTS, null,null);
+        closeDB();
+    }
+
+    public void clearDB() {
+        Log.d(TAG, "clearDB: ");
+        openWritableDatabase();
+        deleteEvents();
+        deleteUser();
+        deleteMyEvents();
         closeDB();
     }
 }

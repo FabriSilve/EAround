@@ -14,9 +14,6 @@ import lpaa.earound.database.DBTask;
 import lpaa.earound.home.MyEventsFragment;
 import lpaa.earound.type.LocalEvent;
 
-/**
- * Created by Fabrizio on 23/06/2017.
- */
 
 public class EventUpdater extends AsyncTask<Object, Object, String> {
 
@@ -29,14 +26,13 @@ public class EventUpdater extends AsyncTask<Object, Object, String> {
     private String owner;
 
     public EventUpdater(MyEventsFragment fragment, LocalEvent newEvent, String owner) {
+        Log.d(TAG, "EventUpdater: ");
         this.fragment = fragment;
         this.newEvent = newEvent;
         this.oldEvent = fragment.getOldEvent();
         this.owner = owner;
-
+        Log.d(TAG, "EventUpdater: old name= "+oldEvent.getName());
     }
-
-    //TODO tenere traccia dell'utente che crea l'evento
 
     @Override
     protected String doInBackground(Object... params) {
@@ -48,7 +44,6 @@ public class EventUpdater extends AsyncTask<Object, Object, String> {
             Log.d(TAG, "doInBackground: connection out");
             java.net.URL url = new URL(URL);
             connection = url.openConnection();
-            Log.d(TAG, newEvent.getName() + "; " + newEvent.getAddress() + "; " + newEvent.getDayString());
             dat = URLEncoder.encode("newName", "UTF-8") + "=" + URLEncoder.encode(newEvent.getName(), "UTF-8") +
                     "&"+ URLEncoder.encode("newAddress", "UTF-8") + "=" + URLEncoder.encode(newEvent.getAddress(), "UTF-8") +
                     "&"+ URLEncoder.encode("newDay", "UTF-8") + "=" + URLEncoder.encode(newEvent.getDayString(), "UTF-8") +
@@ -64,7 +59,6 @@ public class EventUpdater extends AsyncTask<Object, Object, String> {
             wr.flush();
             String line;
             StringBuilder stringBuilder = new StringBuilder();
-            Log.d(TAG, "doInBackground: connection in");
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String nextLine;
             while ((nextLine = reader.readLine()) != null) {
@@ -86,10 +80,9 @@ public class EventUpdater extends AsyncTask<Object, Object, String> {
 
         //TODO Aggiornare eventi in locale
         if (result.equals("true"))
-            new DBTask(fragment.getActivity()).updateEvent(oldEvent, newEvent);
+            new DBTask(fragment.getActivity()).updateLocalEvent(oldEvent, newEvent);
 
         //TODO tradurre messaggi server in messaggi per utente
-        fragment.removedEvent(result);
-
+        fragment.updatedEvent(result);
     }
 }

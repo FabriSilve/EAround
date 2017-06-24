@@ -4,13 +4,14 @@ package lpaa.earound.database;
 class DBQuery {
 
     static final String DB_NAME = "earound.db";
-    static final int DB_VERSION = 6;
+    static final int DB_VERSION = 7;
 
     static final String EVENTS = "Events";
     private static final String EVENTS_ID = "id";
     static final String EVENTS_NAME = "name";
     static final String EVENTS_DESCRIPTION = "description";
     static final String EVENTS_DAY = "day";
+    static final String EVENTS_ADDRESS = "address";
     static final String EVENTS_LAT = "lat";
     static final String EVENTS_LON = "lon";
     static final String EVENTS_OWNER = "owner";
@@ -31,6 +32,7 @@ class DBQuery {
                     EVENTS_NAME + " TEXT," +
                     EVENTS_DESCRIPTION + " TEXT, " +
                     EVENTS_DAY + " TEXT, "+
+                    EVENTS_ADDRESS + " TEXT, " +
                     EVENTS_LAT + " REAL," +
                     EVENTS_LON + " REAL," +
                     EVENTS_OWNER + " TEXT" +

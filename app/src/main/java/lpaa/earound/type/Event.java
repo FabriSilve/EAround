@@ -12,18 +12,20 @@ public class Event {
     private int id;
     private String name;
     private String description;
-    private Date date;
+    private Date day;
+    private String address;
     private double lat;
     private double lon;
     private String owner;
 
 
-    public Event(int id, String name, String description, Date date, double lat, double lon, String owner) {
+    public Event(int id, String name, String description, Date day, String address, double lat, double lon, String owner) {
         Log.d(TAG, "Event: costructor");
         this.id = id;
         this.name = name;
         this.description = description;
-        this.date = date;
+        this.day = day;
+        this.address = address;
         this.lat = lat;
         this.lon = lon;
         this.owner = owner;
@@ -42,9 +44,11 @@ public class Event {
         return description;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDay() {
+        return day;
     }
+
+    public String getAddress() { return address; }
 
     public double getLat() {
         return lat;

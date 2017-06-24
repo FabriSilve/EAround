@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment {
                     eventLayout.addView(name);
 
                     TextView data = new TextView(parent);
-                    data.setText(events.get(i).getDate().toString());
+                    data.setText(events.get(i).getAddress()+ " - " +events.get(i).getDay().toString());
                     data.setTextSize(getResources().getDimension(R.dimen.title2_textSize));
                     data.setTypeface(data.getTypeface(), Typeface.ITALIC);
                     data.setTextColor(Color.BLACK);

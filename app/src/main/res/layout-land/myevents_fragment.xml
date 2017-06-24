@@ -102,7 +102,7 @@
             android:textSize="@dimen/input3_textSize"
             android:textColor="@color/colorPrimaryDark"
             android:text=""
-            android:hint="@string/date"
+            android:hint="@string/day"
             android:layout_marginStart="@dimen/marginMiddle"
             android:layout_marginTop="@dimen/marginMiddle"
             android:layout_marginBottom="@dimen/marginMin"

@@ -56,7 +56,7 @@
         android:layout_height="@dimen/input1_height"
         android:textSize="@dimen/input1_textSize"
         android:textAlignment="center"
-        android:hint="@string/date"
+        android:hint="@string/day"
         android:inputType="date"
         android:layout_marginTop="@dimen/marginMin"
         android:layout_marginStart="@dimen/marginMax"

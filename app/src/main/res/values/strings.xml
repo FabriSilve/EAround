@@ -52,7 +52,7 @@
     <string name="addNewEvent">Add New Event</string>
     <string name="name">Name</string>
     <string name="address">Address</string>
-    <string name="date">Date</string>
+    <string name="day">Date</string>
     <string name="description">Description</string>
     <string name="addEvent">Add Event</string>
     <string name="eventNotValid">Event Not Valid</string>
@@ -64,4 +64,7 @@
     <string name="removing">Removing</string>
     <string name="removed">Removed</string>
     <string name="updating">Updating</string>
+    <string name="updated">Updated</string>
+    <string name="import_from_server">Import From Server</string>
+    <string name="imported">Imported</string>
 </resources>

@@ -106,7 +106,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     public void logoutUser() {
         Log.d(TAG, "logoutUser: start");
-        new DBTask(this).deleteUser();
+        new DBTask(this).clearDB();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         currentFragment = "HOME";
         onPause();
