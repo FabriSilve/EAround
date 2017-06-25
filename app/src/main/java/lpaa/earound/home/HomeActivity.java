@@ -92,15 +92,18 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     public void goToAddEvent() {
         Log.d(TAG, "goToAddEvent: ");
         currentFragment = "ADDEVENT";
-        /*Editor editor = homeValues.edit();
+        Editor editor = homeValues.edit();
         editor.putString("currentFragment", currentFragment);
-        editor.apply();*/
+        editor.apply();
         goTo(addEventFragment);
     }
 
     public void goToMyEvent() {
         Log.d(TAG, "goToMyEvent: ");
         currentFragment = "MYEVENT";
+        Editor editor = homeValues.edit();
+        editor.putString("currentFragment", currentFragment);
+        editor.apply();
         goTo(myEventsFragment);
     }
 
