@@ -70,4 +70,6 @@
     <string name="followed">Followed</string>
     <string name="followed_events">Followed Events</string>
     <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="delete">delete</string>
 </resources>

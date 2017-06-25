@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import lpaa.earound.R;
 import lpaa.earound.database.DBTask;
+import lpaa.earound.home.worker.DeleteListener;
 import lpaa.earound.home.worker.FollowedImporterListener;
 import lpaa.earound.type.Event;
 
@@ -42,6 +43,12 @@ public class FollowedFragment extends Fragment {
 
         return view;
 
+    }
+
+    public void initUI() {
+        Log.d(TAG, "initUI: ");
+        list.removeAllViews();
+        eventsDrawer();
     }
 
     private void eventsDrawer() {
@@ -133,6 +140,41 @@ public class FollowedFragment extends Fragment {
                                 LinearLayout.LayoutParams.WRAP_CONTENT));
                         eventLayout.addView(desc);
 
+                        TextView owner = new TextView(parent);
+                        owner.setText(events.get(i).getOwner());
+                        owner.setTextSize(getResources().getDimension(R.dimen.par_textSize));
+                        //desc.setTypeface(data.getTypeface(), Typeface.DEFAULT);
+                        owner.setTextColor(Color.DKGRAY);
+                        owner.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+                        owner.setPadding(
+                                (int) getResources().getDimension(R.dimen.marginMin),
+                                (int) getResources().getDimension(R.dimen.marginMin),
+                                (int) getResources().getDimension(R.dimen.marginMin),
+                                (int) getResources().getDimension(R.dimen.marginMin)
+                        );
+                        owner.setLayoutParams(new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT));
+                        eventLayout.addView(owner);
+
+                        TextView delete = new TextView(parent);
+                        delete.setText(R.string.delete);
+                        delete.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        delete.setTextSize(getResources().getDimension(R.dimen.title2_textSize));
+                        delete.setTypeface(delete.getTypeface(), Typeface.BOLD);
+                        delete.setTextColor(Color.rgb(255, 128, 0));
+                        delete.setPadding(
+                                (int) getResources().getDimension(R.dimen.marginMin),
+                                (int) getResources().getDimension(R.dimen.marginMin),
+                                (int) getResources().getDimension(R.dimen.marginMin),
+                                (int) getResources().getDimension(R.dimen.marginMin)
+                        );
+                        delete.setLayoutParams(new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT));
+                        DeleteListener listener = new DeleteListener(parent, this, events.get(i));
+                        delete.setOnClickListener(listener);
+                        eventLayout.addView(delete);
 
 
                         //TODO aprire schermata con dettagli evento e mappa

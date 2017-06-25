@@ -162,7 +162,7 @@ public class HomeFragment extends Fragment {
                     follow.setTextSize(getResources().getDimension(R.dimen.checkBox_textSize));
                     follow.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
                     //TODO allineare al centro il tasto
-                    OnChangeFollowing follower = new OnChangeFollowing(this, events.get(i));
+                    OnChangeFollowing follower = new OnChangeFollowing(parent, this, events.get(i));
                     follow.setOnCheckedChangeListener(follower);
                     eventLayout.addView(follow);
 

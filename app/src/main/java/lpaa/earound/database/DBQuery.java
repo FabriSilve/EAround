@@ -4,7 +4,7 @@ package lpaa.earound.database;
 class DBQuery {
 
     static final String DB_NAME = "earound.db";
-    static final int DB_VERSION = 9;
+    static final int DB_VERSION = 10;
 
     static final String EVENTS = "Events";
     static final String EVENTS_ID = "id";
@@ -77,14 +77,15 @@ class DBQuery {
 
     static final String CREATE_FOLLOWEDEVENTS_TABLE =
             "CREATE TABLE "+FOLLOWEDEVENTS + " ( " +
-                    FOLLOWEDEVENTS_ID + " INTEGER PRIMARY KEY, "+
+                    FOLLOWEDEVENTS_ID + " INTEGER, "+
                     FOLLOWEDEVENTS_NAME + " TEXT," +
                     FOLLOWEDEVENTS_DESCRIPTION + " TEXT, " +
                     FOLLOWEDEVENTS_DAY + " TEXT, "+
                     FOLLOWEDEVENTS_ADDRESS + " TEXT, " +
                     FOLLOWEDEVENTS_LAT + " REAL," +
                     FOLLOWEDEVENTS_LON + " REAL," +
-                    FOLLOWEDEVENTS_OWNER + " TEXT" +
+                    FOLLOWEDEVENTS_OWNER + " TEXT," +
+                    "PRIMARY KEY("+FOLLOWEDEVENTS_DAY+","+FOLLOWEDEVENTS_LAT+","+FOLLOWEDEVENTS_LON+")"+
                     ");";
 
     static final String DROP_FOLLOWEDEVENTS_TABLE =
