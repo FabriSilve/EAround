@@ -71,4 +71,6 @@
     <string name="follow">Follow</string>
     <string name="unfollow">Unfollow</string>
     <string name="delete">delete</string>
+    <string name="signal">signal</string>
+    <string name="done">done</string>
 </resources>

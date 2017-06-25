@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import lpaa.earound.home.worker.EventListListener;
 import lpaa.earound.home.worker.MapDrawer;
 import lpaa.earound.home.worker.OnChangeFollowing;
+import lpaa.earound.home.worker.OnChangeSignal;
 import lpaa.earound.type.Event;
 import lpaa.earound.R;
 import lpaa.earound.database.DBTask;
@@ -151,20 +152,48 @@ public class HomeFragment extends Fragment {
                             LayoutParams.WRAP_CONTENT));
                     eventLayout.addView(owner);
 
+                    LinearLayout buttonsLayout = new LinearLayout(parent);
+                    buttonsLayout.setMinimumWidth(LayoutParams.MATCH_PARENT);
+                    buttonsLayout.setMinimumHeight(LayoutParams.WRAP_CONTENT);
+                    buttonsLayout.setOrientation(LinearLayout.HORIZONTAL);
+                    //TODO trovare modo per rimuovere metodo deprecato
+                    buttonsLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
+                    LayoutParams par = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+                    par.setMargins(
+                            0,
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            0,
+                            (int) getResources().getDimension(R.dimen.marginMin)
+                    );
+                    buttonsLayout.setLayoutParams(par);
 
-                    CheckBox follow = new CheckBox(parent);
-                    follow.setBackground(getResources().getDrawable(R.drawable.lightbg));
-                    follow.setLayoutParams(new LayoutParams(
-                            LayoutParams.MATCH_PARENT,
-                            LayoutParams.WRAP_CONTENT));
-                    follow.setTextColor(getResources().getColor(R.color.colorPrimary));
-                    follow.setText(R.string.follow);
-                    follow.setTextSize(getResources().getDimension(R.dimen.checkBox_textSize));
-                    follow.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
-                    //TODO allineare al centro il tasto
-                    OnChangeFollowing follower = new OnChangeFollowing(parent, this, events.get(i));
-                    follow.setOnCheckedChangeListener(follower);
-                    eventLayout.addView(follow);
+                        CheckBox follow = new CheckBox(parent);
+                        follow.setBackground(getResources().getDrawable(R.drawable.lightbg));
+                        follow.setLayoutParams(new LayoutParams(
+                                LayoutParams.WRAP_CONTENT,
+                                LayoutParams.WRAP_CONTENT));
+                        follow.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        follow.setText(R.string.follow);
+                        follow.setTextSize(getResources().getDimension(R.dimen.checkBox_textSize));
+                        follow.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
+                        OnChangeFollowing follower = new OnChangeFollowing(parent, this, events.get(i));
+                        follow.setOnCheckedChangeListener(follower);
+                        buttonsLayout.addView(follow);
+
+                        CheckBox signal = new CheckBox(parent);
+                        signal.setBackground(getResources().getDrawable(R.drawable.lightbg));
+                        signal.setLayoutParams(new LayoutParams(
+                                LayoutParams.WRAP_CONTENT,
+                                LayoutParams.WRAP_CONTENT));
+                        signal.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        signal.setText(R.string.signal);
+                        signal.setTextSize(getResources().getDimension(R.dimen.checkBox_textSize));
+                        signal.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
+                        OnChangeSignal signaler = new OnChangeSignal(parent, this, events.get(i));
+                        signal.setOnCheckedChangeListener(signaler);
+                        buttonsLayout.addView(signal);
+
+                    eventLayout.addView(buttonsLayout);
 
                     EventListListener listener = new EventListListener(events.get(i), this);
                     eventLayout.setOnClickListener(listener);
