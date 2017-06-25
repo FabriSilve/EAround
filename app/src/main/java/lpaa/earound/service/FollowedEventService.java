@@ -9,8 +9,6 @@ import android.util.Log;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import lpaa.earound.EAround;
-
 
 public class FollowedEventService extends Service {
 
