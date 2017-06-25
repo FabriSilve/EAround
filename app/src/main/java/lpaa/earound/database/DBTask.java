@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteException;
 import android.util.Log;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import lpaa.earound.type.Event;
 import lpaa.earound.type.LocalEvent;
@@ -290,7 +292,7 @@ public class DBTask {
     public ArrayList<Event> getFollowedEvents() {
         Log.d(TAG, "getFollowedEvents: ");
 
-        this.openReadableDatabase();
+        openReadableDatabase();
 
         ArrayList<Event> events = new ArrayList<>();
         try {
@@ -387,5 +389,18 @@ public class DBTask {
         db.delete(FOLLOWEDEVENTS, "lat = ? AND lon = ? AND DAY = ?", args );
         closeDB();
 
+    }
+
+    public boolean thereAreEventsToday() {
+        Log.d(TAG, "thereAreEventsToday: ");
+        openReadableDatabase();
+        Calendar calendar = Calendar.getInstance();
+        String today = calendar.get(Calendar.YEAR) + "-0" + (calendar.get(Calendar.MONTH)+1) + "-" + calendar.get(Calendar.DAY_OF_MONTH);
+        String[] args = {today};
+        Cursor cursor = db.rawQuery("SELECT * FROM " + FOLLOWEDEVENTS + " WHERE " + FOLLOWEDEVENTS_DAY + " = ?", args);
+        boolean result = cursor.getCount() > 0;
+        cursor.close();
+        closeDB();
+        return result;
     }
 }

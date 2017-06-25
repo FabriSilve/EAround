@@ -53,7 +53,7 @@ public class FollowedFragment extends Fragment {
 
     private void eventsDrawer() {
         Log.d(TAG, "eventsDrawer: ");
-        ArrayList<Event> events = new DBTask(getActivity()).getFollowedEvents();
+        ArrayList<Event> events = new DBTask(parent).getFollowedEvents();
         LinearLayout listevent = new LinearLayout(getActivity());
         listevent.setMinimumWidth(LinearLayout.LayoutParams.MATCH_PARENT);
         listevent.setMinimumHeight(LinearLayout.LayoutParams.MATCH_PARENT);
