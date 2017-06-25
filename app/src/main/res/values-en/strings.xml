@@ -66,4 +66,6 @@
     <string name="updated">Updated</string>
     <string name="import_from_server">Import From Server</string>
     <string name="imported">Imported</string>
+    <string name="followed">Followed</string>
+    <string name="followed_events">Followed Events</string>
 </resources>

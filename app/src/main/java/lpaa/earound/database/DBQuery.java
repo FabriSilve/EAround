@@ -4,7 +4,7 @@ package lpaa.earound.database;
 class DBQuery {
 
     static final String DB_NAME = "earound.db";
-    static final int DB_VERSION = 7;
+    static final int DB_VERSION = 9;
 
     static final String EVENTS = "Events";
     private static final String EVENTS_ID = "id";
@@ -25,6 +25,16 @@ class DBQuery {
     static final String MYEVENTS_DAY = "day";
     static final String MYEVENTS_ADDRESS = "address";
 
+    static final String FOLLOWEDEVENTS = "FollowedEvents";
+    private static final String FOLLOWEDEVENTS_ID = "id";
+    static final String FOLLOWEDEVENTS_NAME = "name";
+    static final String FOLLOWEDEVENTS_DESCRIPTION = "description";
+    static final String FOLLOWEDEVENTS_DAY = "day";
+    static final String FOLLOWEDEVENTS_ADDRESS = "address";
+    static final String FOLLOWEDEVENTS_LAT = "lat";
+    static final String FOLLOWEDEVENTS_LON = "lon";
+    static final String FOLLOWEDEVENTS_OWNER = "owner";
+
 
     static final String CREATE_EVENTS_TABLE =
             "CREATE TABLE "+EVENTS + " ( " +
@@ -38,8 +48,6 @@ class DBQuery {
                     EVENTS_OWNER + " TEXT" +
                     ");";
 
-    static final String DELETE_EVENTS =
-            "DELETE FROM " + EVENTS + ";";
 
     static final String DROP_EVENTS_TABLE =
             "DROP TABLE IF EXISTS " + EVENTS + ";";
@@ -64,9 +72,21 @@ class DBQuery {
                     "PRIMARY KEY ("+ MYEVENTS_DAY +", "+MYEVENTS_ADDRESS+")"+
                     ");";
 
-    static final String DELETE_MYEVENTS =
-            "DELETE FROM " + MYEVENTS + ";";
-
     static final String DROP_MYEVENTS_TABLE =
             "DROP TABLE IF EXISTS " + MYEVENTS + ";";
+
+    static final String CREATE_FOLLOWEDEVENTS_TABLE =
+            "CREATE TABLE "+FOLLOWEDEVENTS + " ( " +
+                    FOLLOWEDEVENTS_ID + " INTEGER PRIMARY KEY, "+
+                    FOLLOWEDEVENTS_NAME + " TEXT," +
+                    FOLLOWEDEVENTS_DESCRIPTION + " TEXT, " +
+                    FOLLOWEDEVENTS_DAY + " TEXT, "+
+                    FOLLOWEDEVENTS_ADDRESS + " TEXT, " +
+                    FOLLOWEDEVENTS_LAT + " REAL," +
+                    FOLLOWEDEVENTS_LON + " REAL," +
+                    FOLLOWEDEVENTS_OWNER + " TEXT" +
+                    ");";
+
+    static final String DROP_FOLLOWEDEVENTS_TABLE =
+            "DROP TABLE IF EXISTS " + FOLLOWEDEVENTS + ";";
 }

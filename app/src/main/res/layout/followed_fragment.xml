@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/followed_title"
+        android:layout_width="@dimen/title1_width"
+        android:layout_height="@dimen/title1_height"
+        android:text="@string/followed_events"
+        android:textSize="@dimen/title1_textSize"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/marginMiddle"
+        android:layout_marginEnd="@dimen/marginMiddle"
+        android:layout_marginTop="@dimen/marginMiddle"
+        android:layout_marginBottom="@dimen/marginMin"/>
+
+
+
+    <ScrollView
+        android:id="@+id/followed_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" />
+</LinearLayout>

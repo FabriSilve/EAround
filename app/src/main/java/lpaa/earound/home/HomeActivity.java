@@ -33,9 +33,10 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     private FragmentManager fragmentManager;
     private HomeFragment homeFragment;
     private SearchFragment searchFragment;
-    private PersonalFragment personalFragment;
+    private MenuFragment menuFragment;
     private AddEventFragment addEventFragment;
     private MyEventsFragment myEventsFragment;
+    private FollowedFragment followedFragment;
     private String currentFragment;
 
 
@@ -75,7 +76,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
                 currentFragment = "PERSONAL";
                 editor.putString("currentFragment", currentFragment);
                 editor.apply();
-                goTo(personalFragment);
+                goTo(menuFragment);
                 break;
         }
     }
@@ -105,6 +106,15 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         editor.putString("currentFragment", currentFragment);
         editor.apply();
         goTo(myEventsFragment);
+    }
+
+    public void goToFollowed() {
+        Log.d(TAG, "goToFollowed: ");
+        currentFragment = "FOLLOWED";
+        Editor editor = homeValues.edit();
+        editor.putString("currentFragment", currentFragment);
+        editor.apply();
+        goTo(followedFragment);
     }
 
     public void logoutUser() {
@@ -149,9 +159,10 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
         homeFragment = new HomeFragment();
         searchFragment = new SearchFragment();
-        personalFragment = new PersonalFragment();
+        menuFragment = new MenuFragment();
         addEventFragment = new AddEventFragment();
         myEventsFragment = new MyEventsFragment();
+        followedFragment = new FollowedFragment();
 
         fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -184,7 +195,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         currentFragment = homeValues.getString("currentFragment", "HOME");
         switch (currentFragment) {
             case "PERSONAL":
-                goTo(personalFragment);
+                goTo(menuFragment);
                 break;
             case "SEARCH":
                 goTo(searchFragment);
@@ -194,6 +205,9 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
                 break;
             case "MYEVENT":
                 goTo(myEventsFragment);
+                break;
+            case "FOLLOWED":
+                goTo(followedFragment);
                 break;
             default:
                 goTo(homeFragment);

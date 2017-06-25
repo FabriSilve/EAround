@@ -285,4 +285,52 @@ public class DBTask {
         deleteMyEvents();
         closeDB();
     }
+
+    public ArrayList<Event> getFollowedEvents() {
+        Log.d(TAG, "getFollowedEvents: ");
+
+        this.openReadableDatabase();
+
+        ArrayList<Event> events = new ArrayList<>();
+        try {
+            Cursor cursor = db.rawQuery("SELECT * FROM "+ FOLLOWEDEVENTS+";", null);
+            //TODO da sostituire con db.query()
+            int i = 0;
+            while(cursor.moveToNext()) {
+                events.add(getFollowedEventToCursor(cursor, i++));
+            }
+            Log.d(TAG, "getEvents: events added");
+            cursor.close();
+        } catch (SQLiteException e) {
+            Log.e(TAG, "getEvents: Exception: \n", e);
+        }
+
+        this.closeDB();
+
+        return events;
+    }
+
+    private Event getFollowedEventToCursor(Cursor cursor, int id) {
+        Log.d(TAG, "getFollowedEventToCursor: start");
+        if (cursor == null || cursor.getCount() == 0) {
+            return null;
+        } else {
+            try {
+                Log.d(TAG, "getEventToCursor: find event "+ cursor.getString(cursor.getColumnIndex(FOLLOWEDEVENTS_NAME)));
+                return new Event(
+                        id,
+                        cursor.getString(cursor.getColumnIndex(FOLLOWEDEVENTS_NAME)),
+                        cursor.getString(cursor.getColumnIndex(FOLLOWEDEVENTS_DESCRIPTION)),
+                        Date.valueOf(cursor.getString(cursor.getColumnIndex(FOLLOWEDEVENTS_DAY))),
+                        cursor.getString(cursor.getColumnIndex(FOLLOWEDEVENTS_ADDRESS)),
+                        cursor.getDouble(cursor.getColumnIndex(FOLLOWEDEVENTS_LAT)),
+                        cursor.getDouble(cursor.getColumnIndex(FOLLOWEDEVENTS_LON)),
+                        cursor.getString(cursor.getColumnIndex(FOLLOWEDEVENTS_OWNER))
+                );
+            } catch (Exception e) {
+                Log.e(TAG, "getEventToCursor: ",e );
+                return null;
+            }
+        }
+    }
 }

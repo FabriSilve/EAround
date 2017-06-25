@@ -12,15 +12,16 @@ import android.widget.Button;
 import lpaa.earound.R;
 
 
-public class PersonalFragment extends Fragment implements View.OnClickListener {
+public class MenuFragment extends Fragment implements View.OnClickListener {
 
-    private final String TAG = "PersonalFragment";
+    private final String TAG = "MenuFragment";
 
     private View view;
     private HomeActivity parent;
 
     private Button addEvent;
     private Button myEvent;
+    private Button followed;
     private Button logout;
 
     @Override
@@ -29,14 +30,16 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
 
         this.parent = (HomeActivity) this.getActivity();
 
-        view = inflater.inflate(R.layout.personal_fragment, container, false);
+        view = inflater.inflate(R.layout.menu_fragment, container, false);
 
         addEvent = (Button) view.findViewById(R.id.personal_addEvent);
         myEvent = (Button) view.findViewById(R.id.personal_myEvent);
+        followed = (Button) view.findViewById(R.id.personal_followed);
         logout = (Button) view.findViewById(R.id.personal_logout);
 
         addEvent.setOnClickListener(this);
         myEvent.setOnClickListener(this);
+        followed.setOnClickListener(this);
         logout.setOnClickListener(this);
 
         return view;
@@ -52,15 +55,13 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
             case R.id.personal_myEvent:
                 parent.goToMyEvent();
                 break;
+            case R.id.personal_followed:
+                parent.goToFollowed();
+                break;
             case R.id.personal_logout:
-                logout();
+                parent.logoutUser();
                 break;
         }
-    }
-
-    private void logout() {
-        Log.d(TAG, "logout: start");
-        parent.logoutUser();
     }
 
     @Override

@@ -48,6 +48,8 @@ public class Event {
         return day;
     }
 
+    public String getDayString() { return String.valueOf(day); }
+
     public String getAddress() { return address; }
 
     public double getLat() {

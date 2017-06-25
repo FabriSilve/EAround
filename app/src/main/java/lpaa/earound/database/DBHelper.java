@@ -25,6 +25,7 @@ class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_EVENTS_TABLE);
         db.execSQL(CREATE_USERDATA_TABLE);
         db.execSQL(CREATE_MYEVENTS_TABLE);
+        db.execSQL(CREATE_FOLLOWEDEVENTS_TABLE);
     }
 
     @Override
@@ -34,6 +35,7 @@ class DBHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_EVENTS_TABLE);
         db.execSQL(DROP_USERDATA_TABLE);
         db.execSQL(DROP_MYEVENTS_TABLE);
+        db.execSQL(DROP_FOLLOWEDEVENTS_TABLE);
         onCreate(db);
         /*TODO da sostituire con ALTERTABLE dopo fase di testing*/
     }
