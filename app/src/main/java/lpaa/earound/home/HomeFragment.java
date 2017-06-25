@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 
 import lpaa.earound.home.worker.EventListListener;
 import lpaa.earound.home.worker.MapDrawer;
+import lpaa.earound.home.worker.OnChangeFollowing;
 import lpaa.earound.type.Event;
 import lpaa.earound.R;
 import lpaa.earound.database.DBTask;
@@ -147,6 +150,21 @@ public class HomeFragment extends Fragment {
                             LayoutParams.MATCH_PARENT,
                             LayoutParams.WRAP_CONTENT));
                     eventLayout.addView(owner);
+
+
+                    CheckBox follow = new CheckBox(parent);
+                    follow.setBackground(getResources().getDrawable(R.drawable.lightbg));
+                    follow.setLayoutParams(new LayoutParams(
+                            LayoutParams.MATCH_PARENT,
+                            LayoutParams.WRAP_CONTENT));
+                    follow.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    follow.setText(R.string.follow);
+                    follow.setTextSize(getResources().getDimension(R.dimen.checkBox_textSize));
+                    follow.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
+                    //TODO allineare al centro il tasto
+                    OnChangeFollowing follower = new OnChangeFollowing(this, events.get(i));
+                    follow.setOnCheckedChangeListener(follower);
+                    eventLayout.addView(follow);
 
                     EventListListener listener = new EventListListener(events.get(i), this);
                     eventLayout.setOnClickListener(listener);

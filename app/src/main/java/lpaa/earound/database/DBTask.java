@@ -352,8 +352,38 @@ public class DBTask {
             cv.put(FOLLOWEDEVENTS_LON, event.getLon());
             cv.put(FOLLOWEDEVENTS_OWNER, event.getOwner());
 
-            db.insert(MYEVENTS, null, cv);
+            db.insert(FOLLOWEDEVENTS, null, cv);
         }
-        this.closeDB();
+        closeDB();
+    }
+
+    public void insertFollowedEvent(Event event) {
+        Log.d(TAG, "insertFollowedEvent: ");
+        openWritableDatabase();
+        String[] args = {String.valueOf(event.getLat()), String.valueOf(event.getLon()), event.getDayString()};
+        Cursor cursor = db.rawQuery("SELECT name FROM "+FOLLOWEDEVENTS+" WHERE "+FOLLOWEDEVENTS_LAT+" = ? AND "+FOLLOWEDEVENTS_LON +" = ? AND "+FOLLOWEDEVENTS_DAY+" = ?", args);
+        if(cursor.getCount()==0) {
+            ContentValues cv = new ContentValues();
+            cv.put(FOLLOWEDEVENTS_ID, event.getId());
+            cv.put(FOLLOWEDEVENTS_NAME, event.getName());
+            cv.put(FOLLOWEDEVENTS_DESCRIPTION, event.getDescription());
+            cv.put(FOLLOWEDEVENTS_DAY, String.valueOf(event.getDay()));
+            cv.put(FOLLOWEDEVENTS_ADDRESS, event.getAddress());
+            cv.put(FOLLOWEDEVENTS_LAT, event.getLat());
+            cv.put(FOLLOWEDEVENTS_LON, event.getLon());
+            cv.put(FOLLOWEDEVENTS_OWNER, event.getOwner());
+
+            db.insert(FOLLOWEDEVENTS, null, cv);
+        }
+        closeDB();
+    }
+
+    public void deleteFollowedEvent(Event event) {
+        Log.d(TAG, "deleteFollowedEvent: ");
+        openWritableDatabase();
+        String [] args = {String.valueOf(event.getLat()), String.valueOf(event.getLon()), event.getDayString()};
+        db.delete(FOLLOWEDEVENTS, "lat = ? AND lon = ? AND DAY = ?", args );
+        closeDB();
+
     }
 }

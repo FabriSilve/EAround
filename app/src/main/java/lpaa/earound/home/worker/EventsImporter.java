@@ -66,16 +66,20 @@ public class EventsImporter extends AsyncTask<Object, Object, ArrayList<LocalEve
         try {
             Log.d(TAG, "doInBackground: Event adding local");
             ArrayList<LocalEvent> result = new ArrayList<>();
-            JSONArray events = new JSONArray(line);
-            for(int i = 0; i<events.length()-1; i++) {
-                JSONObject event = events.getJSONObject(i);
-                Log.d(TAG, "doInBackground: add " + event.getString("name"));
-                result.add(new LocalEvent(
-                        event.getString("name"),
-                        event.getString("description"),
-                        Date.valueOf(event.getString("day")),
-                        event.getString("address")
-                ));
+            if(!line.equals("")) {
+                JSONArray events = new JSONArray(line);
+                if (events.length() > 1) {
+                    for (int i = 0; i < events.length() - 1; i++) {
+                        JSONObject event = events.getJSONObject(i);
+                        Log.d(TAG, "doInBackground: add " + event.getString("name"));
+                        result.add(new LocalEvent(
+                                event.getString("name"),
+                                event.getString("description"),
+                                Date.valueOf(event.getString("day")),
+                                event.getString("address")
+                        ));
+                    }
+                }
             }
             return result;
 

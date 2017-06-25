@@ -133,6 +133,9 @@ public class FollowedFragment extends Fragment {
                                 LinearLayout.LayoutParams.WRAP_CONTENT));
                         eventLayout.addView(desc);
 
+
+
+                        //TODO aprire schermata con dettagli evento e mappa
                         /*FollowedEventListener listener = new FollowedEventListener(events.get(i), this);
                         eventLayout.setOnClickListener(listener);*/
 

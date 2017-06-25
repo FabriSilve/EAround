@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -47,7 +48,7 @@ public class FollowedImporter extends AsyncTask<Object, Object, ArrayList<Event>
             Log.d(TAG, "doInBackground: connection out");
             java.net.URL url = new URL(URL);
             connection = url.openConnection();
-            dat = URLEncoder.encode("owner", "UTF-8") + "=" + URLEncoder.encode(user, "UTF-8");
+            dat = URLEncoder.encode("user", "UTF-8") + "=" + URLEncoder.encode(user, "UTF-8");
             connection.setDoOutput(true);
             wr = new OutputStreamWriter(connection.getOutputStream());
             wr.write(dat);
@@ -67,25 +68,28 @@ public class FollowedImporter extends AsyncTask<Object, Object, ArrayList<Event>
         try {
             Log.d(TAG, "doInBackground: Event adding local");
             ArrayList<Event> result = new ArrayList<>();
-            JSONArray events = new JSONArray(line);
-            for(int i = 0; i<events.length()-1; i++) {
-                JSONObject event = events.getJSONObject(i);
-                Log.d(TAG, "doInBackground: add " + event.getString("name"));
-                result.add(new Event(
-                        event.getInt("id"),
-                        event.getString("name"),
-                        event.getString("description"),
-                        Date.valueOf(event.getString("day")),
-                        event.getString("address"),
-                        event.getDouble("lat"),
-                        event.getDouble("lon"),
-                        event.getString("owner")
-                ));
+            if(!line.equals("")) {
+                JSONArray events = new JSONArray(line);
+                for (int i = 0; i < events.length() - 1; i++) {
+                    JSONObject event = events.getJSONObject(i);
+                    Log.d(TAG, "doInBackground: add " + event.getString("name"));
+                    result.add(new Event(
+                            event.getInt("id"),
+                            event.getString("name"),
+                            event.getString("description"),
+                            Date.valueOf(event.getString("day")),
+                            event.getString("address"),
+                            event.getDouble("lat"),
+                            event.getDouble("lon"),
+                            event.getString("owner")
+                    ));
+                }
             }
             return result;
 
         } catch (Exception e) {
-            Log.e(TAG, "doInBackground: Exception: " + e.getMessage());
+            Log.e(TAG, "doInBackground: Exception: " + e);
+            e.printStackTrace();
             isOk = false;
             return new ArrayList<>();
         }

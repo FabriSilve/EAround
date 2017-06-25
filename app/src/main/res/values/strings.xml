@@ -69,4 +69,5 @@
     <string name="imported">Imported</string>
     <string name="followed">Followed</string>
     <string name="followed_events">Followed Events</string>
+    <string name="follow">Follow</string>
 </resources>
