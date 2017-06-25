@@ -365,7 +365,7 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
 
     public void importedEvents() {
         Log.d(TAG, "importedEvents: ");
-        Toast.makeText(parent, R.string.imported, Toast.LENGTH_SHORT);
+        Toast.makeText(parent, R.string.imported, Toast.LENGTH_SHORT).show();
         initEdit();
         list.removeAllViews();
         eventDrawer();

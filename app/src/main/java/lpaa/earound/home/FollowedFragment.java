@@ -11,11 +11,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import lpaa.earound.R;
 import lpaa.earound.database.DBTask;
+import lpaa.earound.home.worker.FollowedImporterListener;
 import lpaa.earound.type.Event;
 
 
@@ -207,12 +209,23 @@ public class FollowedFragment extends Fragment {
                     LinearLayout.LayoutParams.WRAP_CONTENT));
             endButton.addView(importEvents);
 
-            /*FollowedImporterListener importer = new FollowedImportListener(this);
-            endButton.setOnClickListener(importer);*/
+            FollowedImporterListener importer = new FollowedImporterListener(this);
+            endButton.setOnClickListener(importer);
 
             listevent.addView(endButton);
 
             list.addView(listevent);
+        }
+    }
+
+    public void importedEvents(boolean result) {
+        Log.d(TAG, "importedEvents: ");
+        if(result) {
+            Toast.makeText(parent, R.string.imported, Toast.LENGTH_SHORT).show();
+            list.removeAllViews();
+            eventsDrawer();
+        } else {
+            Toast.makeText(parent, R.string.error, Toast.LENGTH_SHORT).show();
         }
     }
 

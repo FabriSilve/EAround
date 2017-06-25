@@ -7,7 +7,7 @@ class DBQuery {
     static final int DB_VERSION = 9;
 
     static final String EVENTS = "Events";
-    private static final String EVENTS_ID = "id";
+    static final String EVENTS_ID = "id";
     static final String EVENTS_NAME = "name";
     static final String EVENTS_DESCRIPTION = "description";
     static final String EVENTS_DAY = "day";
@@ -26,7 +26,7 @@ class DBQuery {
     static final String MYEVENTS_ADDRESS = "address";
 
     static final String FOLLOWEDEVENTS = "FollowedEvents";
-    private static final String FOLLOWEDEVENTS_ID = "id";
+    static final String FOLLOWEDEVENTS_ID = "id";
     static final String FOLLOWEDEVENTS_NAME = "name";
     static final String FOLLOWEDEVENTS_DESCRIPTION = "description";
     static final String FOLLOWEDEVENTS_DAY = "day";

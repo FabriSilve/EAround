@@ -54,6 +54,7 @@ public class DBTask {
         openWritableDatabase();
         for(Event event : events) {
             ContentValues cv = new ContentValues();
+            cv.put(EVENTS_ID, event.getId());
             cv.put(EVENTS_NAME, event.getName());
             cv.put(EVENTS_DESCRIPTION, event.getDescription());
             cv.put(EVENTS_DAY, String.valueOf(event.getDay()));
@@ -332,5 +333,27 @@ public class DBTask {
                 return null;
             }
         }
+    }
+
+    public void importFollowedEvents(ArrayList<Event> events) {
+        Log.d(TAG, "importEvents: ");
+        openWritableDatabase();
+        db.delete(FOLLOWEDEVENTS, null, null);
+
+        openWritableDatabase();
+        for(Event event : events) {
+            ContentValues cv = new ContentValues();
+            cv.put(FOLLOWEDEVENTS_ID, event.getId());
+            cv.put(FOLLOWEDEVENTS_NAME, event.getName());
+            cv.put(FOLLOWEDEVENTS_DESCRIPTION, event.getDescription());
+            cv.put(FOLLOWEDEVENTS_DAY, String.valueOf(event.getDay()));
+            cv.put(FOLLOWEDEVENTS_ADDRESS, event.getAddress());
+            cv.put(FOLLOWEDEVENTS_LAT, event.getLat());
+            cv.put(FOLLOWEDEVENTS_LON, event.getLon());
+            cv.put(FOLLOWEDEVENTS_OWNER, event.getOwner());
+
+            db.insert(MYEVENTS, null, cv);
+        }
+        this.closeDB();
     }
 }
