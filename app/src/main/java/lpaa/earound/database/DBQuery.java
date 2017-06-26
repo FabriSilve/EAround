@@ -4,7 +4,7 @@ package lpaa.earound.database;
 class DBQuery {
 
     static final String DB_NAME = "earound.db";
-    static final int DB_VERSION = 10;
+    static final int DB_VERSION = 12;
 
     static final String EVENTS = "Events";
     static final String EVENTS_ID = "id";
