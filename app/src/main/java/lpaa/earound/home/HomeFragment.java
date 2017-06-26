@@ -160,9 +160,9 @@ public class HomeFragment extends Fragment {
                     buttonsLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
                     LayoutParams par = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
                     par.setMargins(
-                            0,
                             (int) getResources().getDimension(R.dimen.marginMin),
-                            0,
+                            (int) getResources().getDimension(R.dimen.marginMin),
+                            (int) getResources().getDimension(R.dimen.marginMin),
                             (int) getResources().getDimension(R.dimen.marginMin)
                     );
                     buttonsLayout.setLayoutParams(par);
