@@ -54,7 +54,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
         homeValues = getSharedPreferences("homeValues", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
-        Search search = null;
+        Search search;
         if(locationViewer.getLat() != 0.0 && locationViewer.getLon() != 0.0) {
             search = new Search(
                     homeValues.getString("search_position", "myPosition"),
@@ -94,8 +94,8 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
                 editor.apply();
                 goTo(homeFragment);
                 break;
-            case R.id.home_personalButton:
-                currentFragment = "PERSONAL";
+            case R.id.home_menuButton:
+                currentFragment = "MENU";
                 editor.putString("currentFragment", currentFragment);
                 editor.apply();
                 goTo(menuFragment);
@@ -171,11 +171,11 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         Log.d(TAG, "onCreate: init UI");
         Button search = (Button) findViewById(R.id.home_searchButton);
         Button home = (Button) findViewById(R.id.home_homeButton);
-        Button personal = (Button) findViewById(R.id.home_personalButton);
+        Button menu = (Button) findViewById(R.id.home_menuButton);
 
         search.setOnClickListener(this);
         home.setOnClickListener(this);
-        personal.setOnClickListener(this);
+        menu.setOnClickListener(this);
 
         container = R.id.home_container;
 
@@ -216,7 +216,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
         currentFragment = homeValues.getString("currentFragment", "HOME");
         switch (currentFragment) {
-            case "PERSONAL":
+            case "MENU":
                 goTo(menuFragment);
                 break;
             case "SEARCH":

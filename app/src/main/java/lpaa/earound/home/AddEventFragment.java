@@ -1,8 +1,10 @@
 package lpaa.earound.home;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +47,9 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
         description = (EditText) view.findViewById(R.id.addevent_description);
         Button add = (Button) view.findViewById(R.id.addevent_add);
 
+        day.setInputType(InputType.TYPE_NULL);
+
+        day.setOnClickListener(this);
         add.setOnClickListener(this);
 
         return view;
@@ -74,6 +79,9 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
                     Toast toast = Toast.makeText(parent, R.string.eventNotValid, Toast.LENGTH_LONG);
                     toast.show();
                 }
+                break;
+            case R.id.addevent_day:
+                showDatePickerDialog(day);
                 break;
         }
     }
@@ -121,6 +129,12 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
         } else {
             Toast.makeText(parent, result, Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void showDatePickerDialog( EditText day) {
+        DatePickerFragment newFragment = new DatePickerFragment();
+        newFragment.setDay(day);
+        newFragment.show(parent.getFragmentManager(), "datePicker");
     }
 
     @Override

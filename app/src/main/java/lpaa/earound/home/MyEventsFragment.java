@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,9 +56,11 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
         name = (EditText) view.findViewById(R.id.myevent_edit_name);
         address = (EditText) view.findViewById(R.id.myevent_edit_address);
         day = (EditText) view.findViewById(R.id.myevent_edit_day);
+        day.setInputType(InputType.TYPE_NULL);
         description = (EditText) view.findViewById(R.id.myevent_edit_description);
         modify = (Button) view.findViewById(R.id.myevent_edit_modify);
         remove = (Button) view.findViewById(R.id.myevent_edit_remove);
+        day.setOnClickListener(this);
         modify.setOnClickListener(this);
         remove.setOnClickListener(this);
         eableButtons(false);
@@ -253,7 +256,16 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
             case R.id.myevent_edit_remove:
                 removeEvent();
                 break;
+            case R.id.myevent_edit_day:
+                showDatePickerDialog(day);
+                break;
         }
+    }
+
+    public void showDatePickerDialog( EditText day) {
+        DatePickerFragment newFragment = new DatePickerFragment();
+        newFragment.setDay(day);
+        newFragment.show(parent.getFragmentManager(), "datePicker");
     }
 
     private void updateEvent() {

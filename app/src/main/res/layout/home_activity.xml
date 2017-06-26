@@ -41,12 +41,12 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <Button
-            android:id="@+id/home_personalButton"
+            android:id="@+id/home_menuButton"
             android:layout_width="@dimen/button1_width"
             android:layout_height="@dimen/button1_height"
             android:layout_marginTop="@dimen/marginMiddle"
             android:background="@color/colorPrimary"
-            android:text="@string/personal"
+            android:text="@string/menu"
             android:textSize="@dimen/button1_textSize"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
