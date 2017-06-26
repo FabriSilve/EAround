@@ -4,16 +4,30 @@ import android.util.Log;
 
 public class Search {
 
-    private final String TAG = "Search";
+    private static final String TAG = "Search";
     private String position;
     private int distance;
     private int days;
+    private double lat;
+    private double lon;
+
 
     public Search(String position, int distance, int days) {
         Log.d(TAG, "Search: costructor");
         this.position = position;
         this.distance = distance;
         this.days = days;
+        this.lat = 0;
+        this.lon = 0;
+    }
+
+    public Search(String position, int distance, int days, double lat, double lon) {
+        Log.d(TAG, "Search: costructor");
+        this.position = position;
+        this.distance = distance;
+        this.days = days;
+        this.lat = lat;
+        this.lon = lon;
     }
 
     public String getPosition() {
@@ -28,4 +42,11 @@ public class Search {
         return String.valueOf(days);
     }
 
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
 }

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 
 import lpaa.earound.R;
+import lpaa.earound.service.LocationViewer;
 import lpaa.earound.type.Search;
 import lpaa.earound.database.DBTask;
 import lpaa.earound.home.worker.EventSearcher;
@@ -27,6 +28,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     private final String TAG = "HomeActivity";
     private SharedPreferences homeValues;
+    private LocationViewer locationViewer;
 
     private int container;
 
@@ -43,16 +45,36 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: start");
+        locationViewer = new LocationViewer(this);
+        /*try {
+            wait(2000L);
+        } catch (InterruptedException e) {
+            Log.e(TAG, "onCreate: wait error");
+        }*/
+
         homeValues = getSharedPreferences("homeValues", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
-
-        Search search = new Search(
-                homeValues.getString("search_position", "genova"),
-                Integer.valueOf(homeValues.getString("search_distance", "1")),
-                Integer.valueOf(homeValues.getString("search_days", "1"))
-        );
-
+        Search search = null;
+        if(locationViewer.getLat() != 0.0 && locationViewer.getLon() != 0.0) {
+            search = new Search(
+                    homeValues.getString("search_position", "myPosition"),
+                    Integer.valueOf(homeValues.getString("search_distance", "5")),
+                    Integer.valueOf(homeValues.getString("search_days", "5")),
+                    locationViewer.getLat(),
+                    locationViewer.getLon()
+            );
+        } else {
+            search = new Search(
+                    homeValues.getString("search_position", "genova"),
+                    Integer.valueOf(homeValues.getString("search_distance", "5")),
+                    Integer.valueOf(homeValues.getString("search_days", "5"))
+            );
+        }
         searchEvent(search);
+    }
+
+    public LocationViewer getLocationViewer() {
+        return locationViewer;
     }
 
     @Override
@@ -213,7 +235,20 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
                 goTo(homeFragment);
                 break;
         }
+        //TODO resumem va all'inizio?
         super.onResume();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        locationViewer.start();
+    }
+
+    @Override
+    protected void onStop() {
+        locationViewer.stop();
+        super.onStop();
     }
 
     protected void onPauseFragment(String key, String value) {

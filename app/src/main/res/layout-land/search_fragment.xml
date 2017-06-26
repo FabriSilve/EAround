@@ -35,7 +35,7 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:inputType="textPersonName"
-            android:hint="@string/position"
+            android:hint="@string/myPosition"
             android:layout_margin="@dimen/marginMin"
             android:textAlignment="center"
             android:textSize="@dimen/input1_textSize"

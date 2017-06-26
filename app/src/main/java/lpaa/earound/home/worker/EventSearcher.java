@@ -53,7 +53,10 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
                 dat = URLEncoder.encode("position", "UTF-8") + "=" + URLEncoder.encode(search.getPosition(), "UTF-8") +
                         "&" + URLEncoder.encode("distance", "UTF-8") + "=" + URLEncoder.encode(search.getDistance(), "UTF-8") +
                         "&" + URLEncoder.encode("days", "UTF-8") + "=" + URLEncoder.encode(search.getDays(), "UTF-8");
-
+                if(search.getLat() != 0.0 && search.getLon() != 0.0) {
+                    dat += "&" + URLEncoder.encode("lat", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(search.getLat()), "UTF-8") +
+                            "&" + URLEncoder.encode("lon", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(search.getLon()), "UTF-8");
+                }
             } else {
                 Log.d(TAG, "doInBackground: without search obj");
                 dat = URLEncoder.encode("position", "UTF-8") + "=" + URLEncoder.encode("default", "UTF-8");
@@ -81,7 +84,7 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
             JSONArray events = new JSONArray(line);
             for(int i = 0; i<events.length(); i++) {
                 JSONObject event = events.getJSONObject(i);
-                Log.d(TAG, "doInBackground: add " + event.getString("name"));
+                Log.d(TAG, "doInBackground: add " + event.getString("name") + event.getString("day"));
                 result.add(new Event(
                         event.getInt("id"),
                         event.getString("name"),

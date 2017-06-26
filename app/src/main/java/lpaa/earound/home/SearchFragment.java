@@ -69,11 +69,23 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
 
     private void startSearch() {
         Log.d(TAG, "startSearch: start");
-        Search search = new Search(
-                position.getText().toString(),
-                distance.getProgress(),
-                days.getProgress()
-        );
+        Search search;
+        if(position.getText().toString().equals("")) {
+            Log.e(TAG, "startSearch: myposition");
+            search = new Search(
+                    "myPosition",
+                    distance.getProgress(),
+                    days.getProgress(),
+                    parent.getLocationViewer().getLat(),
+                    parent.getLocationViewer().getLon()
+            );
+        } else {
+            search = new Search(
+                    position.getText().toString(),
+                    distance.getProgress(),
+                    days.getProgress()
+            );
+        }
 
         EventSearcher searcher = new EventSearcher(parent, search);
         searcher.execute();
