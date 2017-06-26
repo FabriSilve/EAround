@@ -178,6 +178,7 @@ public class HomeFragment extends Fragment {
                         follow.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
                         OnChangeFollowing follower = new OnChangeFollowing(parent, this, events.get(i));
                         follow.setOnCheckedChangeListener(follower);
+                        follow.setChecked(new DBTask(parent).isFollowed(events.get(i)));
                         buttonsLayout.addView(follow);
 
                         CheckBox signal = new CheckBox(parent);

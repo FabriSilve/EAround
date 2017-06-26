@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.CompoundButton;
 
+import lpaa.earound.R;
 import lpaa.earound.home.HomeFragment;
 import lpaa.earound.type.Event;
 
@@ -31,5 +32,7 @@ public class OnChangeSignal implements CompoundButton.OnCheckedChangeListener {
         Log.d(TAG, "onCheckedChanged: "+String.valueOf(isChecked));
         SignalSender sender = new SignalSender(parent, fragment, event, isChecked);
         sender.execute();
+        buttonView.setClickable(false);
+        buttonView.setText(R.string.signaled);
     }
 }

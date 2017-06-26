@@ -364,7 +364,10 @@ public class DBTask {
         openReadableDatabase();
         String[] args = {String.valueOf(event.getLat()), String.valueOf(event.getLon()), event.getDayString()};
         Cursor cursor = db.rawQuery("SELECT name FROM "+FOLLOWEDEVENTS+" WHERE "+FOLLOWEDEVENTS_LAT+" = ? AND "+FOLLOWEDEVENTS_LON +" = ? AND "+FOLLOWEDEVENTS_DAY+" = ?", args);
-        if(cursor.getCount()>0) return;
+        if(cursor.getCount()>0) {
+            closeDB();
+            return;
+        }
         closeDB();
         openWritableDatabase();
 
@@ -399,6 +402,19 @@ public class DBTask {
         String[] args = {today};
         Cursor cursor = db.rawQuery("SELECT * FROM " + FOLLOWEDEVENTS + " WHERE " + FOLLOWEDEVENTS_DAY + " = ?", args);
         boolean result = cursor.getCount() > 0;
+        cursor.close();
+        closeDB();
+        return result;
+    }
+
+    public boolean isFollowed(Event event) {
+        Log.d(TAG, "isFollowed: ");
+        openReadableDatabase();
+        boolean result = false;
+        String[] args = {String.valueOf(event.getLat()), String.valueOf(event.getLon()), event.getDayString()};
+        Cursor cursor = db.rawQuery("SELECT name FROM "+FOLLOWEDEVENTS+" WHERE "+FOLLOWEDEVENTS_LAT+" = ? AND "+FOLLOWEDEVENTS_LON +" = ? AND "+FOLLOWEDEVENTS_DAY+" = ?", args);
+        if(cursor.getCount()>0)
+            result = true;
         cursor.close();
         closeDB();
         return result;
