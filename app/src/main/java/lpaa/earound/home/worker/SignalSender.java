@@ -79,6 +79,8 @@ public class SignalSender extends AsyncTask<Object, Object, String> {
         Log.d(TAG, "onPostExecute: "+s);
         if(s.equals("true")) {
             Toast.makeText(parent, R.string.done, Toast.LENGTH_SHORT).show();
+        } else if(s.equals("delete")) {
+
         } else {
             Toast.makeText(parent, R.string.error, Toast.LENGTH_SHORT).show();
         }
