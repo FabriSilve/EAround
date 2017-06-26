@@ -31,7 +31,6 @@ public class EventUpdater extends AsyncTask<Object, Object, String> {
         this.newEvent = newEvent;
         this.oldEvent = fragment.getOldEvent();
         this.owner = owner;
-        Log.d(TAG, "EventUpdater: old name= "+oldEvent.getName());
     }
 
     @Override

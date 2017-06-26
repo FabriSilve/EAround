@@ -361,7 +361,7 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
         Log.d(TAG, "updatedEvent: ");
         if (result.equals("true")) {
             Toast.makeText(parent, R.string.updated, Toast.LENGTH_SHORT);
-            //initEdit();
+            initEdit();
             list.removeAllViews();
             eventDrawer();
         } else {

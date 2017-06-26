@@ -9,7 +9,6 @@ import android.util.Log;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import lpaa.earound.type.Event;
 import lpaa.earound.type.LocalEvent;
@@ -25,22 +24,18 @@ public class DBTask {
     private DBHelper dbHelper;
 
     public DBTask(Context context) {
-        Log.d(TAG, "DBTask: costructor");
         dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
     }
 
     private void openReadableDatabase() {
-        Log.d(TAG, "openReadableDatabase: start");
         db = dbHelper.getReadableDatabase();
     }
 
     private void openWritableDatabase() {
-        Log.d(TAG, "openWritableDatabase: start");
         db = dbHelper.getWritableDatabase();
     }
 
     private void closeDB() {
-        Log.d(TAG, "closeDB: start");
         if (db != null)
             db.close();
     }
@@ -51,8 +46,6 @@ public class DBTask {
     }
 
     private void insertEvents(ArrayList<Event> events) {
-        Log.d(TAG, "insertEvents: start");
-
         openWritableDatabase();
         for(Event event : events) {
             ContentValues cv = new ContentValues();
@@ -71,17 +64,13 @@ public class DBTask {
     }
 
     private void deleteEvents() {
-        Log.d(TAG, "deleteEvents: start");
         openWritableDatabase();
         db.delete(EVENTS, null, null);
         closeDB();
     }
 
     public ArrayList<Event> getEvents() {
-        Log.d(TAG, "getEvents: ");
-
         this.openReadableDatabase();
-
         ArrayList<Event> events = new ArrayList<>();
         try {
             Cursor cursor = db.rawQuery("SELECT * FROM "+ EVENTS+";", null);
@@ -90,24 +79,20 @@ public class DBTask {
             while(cursor.moveToNext()) {
                 events.add(getEventToCursor(cursor, i++));
             }
-            Log.d(TAG, "getEvents: events added");
             cursor.close();
         } catch (SQLiteException e) {
             Log.e(TAG, "getEvents: Exception: \n", e);
         }
-
         this.closeDB();
 
         return events;
     }
 
     private Event getEventToCursor(Cursor cursor, int id) {
-        Log.d(TAG, "getEventToCursor: start");
         if (cursor == null || cursor.getCount() == 0) {
             return null;
         } else {
             try {
-                Log.d(TAG, "getEventToCursor: find event "+ cursor.getString(cursor.getColumnIndex(EVENTS_NAME)));
                 return new Event(
                         id,
                         cursor.getString(cursor.getColumnIndex(EVENTS_NAME)),
@@ -126,8 +111,6 @@ public class DBTask {
     }
 
     public void insertUser(String username) {
-        Log.d(TAG, "insertUser: start");
-
         openWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(USERDATA_USERNAME, username);
@@ -136,8 +119,6 @@ public class DBTask {
     }
 
     public String getUser() {
-        Log.d(TAG, "getUser: start");
-
         openReadableDatabase();
         String user = "";
         try {
@@ -150,39 +131,30 @@ public class DBTask {
             }
         } catch (NullPointerException e) {
             Log.e(TAG, "getUser: Exception: \n", e);
-            user = "";
         }
-
         this.closeDB();
         return user;
     }
 
     public void deleteUser() {
-        Log.d(TAG, "deleteUser: start");
         openWritableDatabase();
-        db.execSQL(DELETE_USERDATA);
-        //TODO sostituire con db.delete(USERDATA, null, null)
+        db.delete(USERDATA, null, null);
         closeDB();
     }
 
     public void insertLocalEvent(LocalEvent event) {
-        Log.d(TAG, "insertLocalEvent: ");
-
         openWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(MYEVENTS_NAME, event.getName());
         cv.put(MYEVENTS_DESCRIPTION, event.getDescription());
         cv.put(MYEVENTS_DAY, event.getDayString());
         cv.put(MYEVENTS_ADDRESS, event.getAddress());
-
         db.insert(MYEVENTS, null, cv);
 
         this.closeDB();
     }
 
     public ArrayList<LocalEvent> getLocalEvents() {
-        Log.d(TAG, "getLocalEvents: ");
-
         this.openReadableDatabase();
         ArrayList<LocalEvent> events = new ArrayList<>();
         try {
@@ -192,24 +164,20 @@ public class DBTask {
             while(cursor.moveToNext()) {
                 events.add(getLocalEventToCursor(cursor));
             }
-            Log.d(TAG, "getEvents: events added");
             cursor.close();
         } catch (SQLiteException e) {
             Log.e(TAG, "getEvents: Exception: \n", e);
         }
-
         this.closeDB();
 
         return events;
     }
 
     private LocalEvent getLocalEventToCursor(Cursor cursor) {
-        Log.d(TAG, "getLocalEventToCursor: start");
         if (cursor == null || cursor.getCount() == 0) {
             return null;
         } else {
             try {
-                Log.d(TAG, "getLocalEventToCursor: find event "+ cursor.getString(cursor.getColumnIndex(MYEVENTS_NAME)));
                 return new LocalEvent(
                         cursor.getString(cursor.getColumnIndex(MYEVENTS_NAME)),
                         cursor.getString(cursor.getColumnIndex(MYEVENTS_DESCRIPTION)),
@@ -224,8 +192,6 @@ public class DBTask {
     }
 
     public void removeEvent(LocalEvent event) {
-        Log.d(TAG, "removeEvent: ");
-
         openWritableDatabase();
 
         String where = MYEVENTS_ADDRESS + " = ? AND "+ MYEVENTS_DAY + " = ?";
@@ -236,10 +202,7 @@ public class DBTask {
     }
 
     public void updateLocalEvent(LocalEvent oldEvent, LocalEvent newEvent) {
-        Log.d(TAG, "updateLocalEvent: ");
-
         openWritableDatabase();
-
         ContentValues cv = new ContentValues();
         cv.put(MYEVENTS_NAME, newEvent.getName());
         cv.put(MYEVENTS_DESCRIPTION, newEvent.getDescription());
@@ -254,13 +217,10 @@ public class DBTask {
         closeDB();
     }
 
-
     public void importEvents(ArrayList<LocalEvent> events) {
-        Log.d(TAG, "importEvents: ");
         openWritableDatabase();
         db.delete(MYEVENTS, null, null);
 
-        openWritableDatabase();
         for(LocalEvent event : events) {
             ContentValues cv = new ContentValues();
             cv.put(MYEVENTS_NAME, event.getName());
@@ -274,26 +234,31 @@ public class DBTask {
     }
 
     public void deleteMyEvents() {
-        Log.d(TAG, "deleteMyEvents: ");
         openWritableDatabase();
         db.delete(MYEVENTS, null,null);
+        closeDB();
+    }
+
+    public void deleteFollowedEvents() {
+        openWritableDatabase();
+        db.delete(FOLLOWEDEVENTS, null,null);
         closeDB();
     }
 
     public void clearDB() {
         Log.d(TAG, "clearDB: ");
         openWritableDatabase();
+
         deleteEvents();
         deleteUser();
         deleteMyEvents();
+        deleteFollowedEvents();
+
         closeDB();
     }
 
     public ArrayList<Event> getFollowedEvents() {
-        Log.d(TAG, "getFollowedEvents: ");
-
         openReadableDatabase();
-
         ArrayList<Event> events = new ArrayList<>();
         try {
             Cursor cursor = db.rawQuery("SELECT * FROM "+ FOLLOWEDEVENTS+";", null);
@@ -302,24 +267,20 @@ public class DBTask {
             while(cursor.moveToNext()) {
                 events.add(getFollowedEventToCursor(cursor, i++));
             }
-            Log.d(TAG, "getEvents: events added");
             cursor.close();
         } catch (SQLiteException e) {
             Log.e(TAG, "getEvents: Exception: \n", e);
         }
-
         this.closeDB();
 
         return events;
     }
 
     private Event getFollowedEventToCursor(Cursor cursor, int id) {
-        Log.d(TAG, "getFollowedEventToCursor: start");
         if (cursor == null || cursor.getCount() == 0) {
             return null;
         } else {
             try {
-                Log.d(TAG, "getEventToCursor: find event "+ cursor.getString(cursor.getColumnIndex(FOLLOWEDEVENTS_NAME)));
                 return new Event(
                         id,
                         cursor.getString(cursor.getColumnIndex(FOLLOWEDEVENTS_NAME)),
@@ -338,11 +299,9 @@ public class DBTask {
     }
 
     public void importFollowedEvents(ArrayList<Event> events) {
-        Log.d(TAG, "importEvents: ");
         openWritableDatabase();
         db.delete(FOLLOWEDEVENTS, null, null);
 
-        openWritableDatabase();
         for(Event event : events) {
             ContentValues cv = new ContentValues();
             cv.put(FOLLOWEDEVENTS_ID, event.getId());
@@ -360,16 +319,13 @@ public class DBTask {
     }
 
     public void insertFollowedEvent(Event event) {
-        Log.d(TAG, "insertFollowedEvent: ");
-        openReadableDatabase();
+        openWritableDatabase();
         String[] args = {String.valueOf(event.getLat()), String.valueOf(event.getLon()), event.getDayString()};
         Cursor cursor = db.rawQuery("SELECT name FROM "+FOLLOWEDEVENTS+" WHERE "+FOLLOWEDEVENTS_LAT+" = ? AND "+FOLLOWEDEVENTS_LON +" = ? AND "+FOLLOWEDEVENTS_DAY+" = ?", args);
         if(cursor.getCount()>0) {
             closeDB();
             return;
         }
-        closeDB();
-        openWritableDatabase();
 
         ContentValues cv = new ContentValues();
         cv.put(FOLLOWEDEVENTS_ID, event.getId());
@@ -386,19 +342,23 @@ public class DBTask {
     }
 
     public void deleteFollowedEvent(Event event) {
-        Log.d(TAG, "deleteFollowedEvent: ");
         openWritableDatabase();
+        String where = FOLLOWEDEVENTS_LAT+" = ? AND "+FOLLOWEDEVENTS_LON+" = ? AND "+FOLLOWEDEVENTS_DAY+" = ?";
         String [] args = {String.valueOf(event.getLat()), String.valueOf(event.getLon()), event.getDayString()};
-        db.delete(FOLLOWEDEVENTS, "lat = ? AND lon = ? AND DAY = ?", args );
+        db.delete(FOLLOWEDEVENTS, where, args );
         closeDB();
-
     }
 
     public boolean thereAreEventsToday() {
-        Log.d(TAG, "thereAreEventsToday: ");
         openReadableDatabase();
         Calendar calendar = Calendar.getInstance();
-        String today = calendar.get(Calendar.YEAR) + "-0" + (calendar.get(Calendar.MONTH)+1) + "-" + calendar.get(Calendar.DAY_OF_MONTH);
+        String month;
+        if(calendar.get(Calendar.MONTH)+1<10) {
+            month = "0" + calendar.get(Calendar.MONTH) + 1;
+        } else {
+            month = String.valueOf(calendar.get(Calendar.MONTH)+1);
+        }
+        String today = calendar.get(Calendar.YEAR) + "-" + month + "-" + calendar.get(Calendar.DAY_OF_MONTH);
         String[] args = {today};
         Cursor cursor = db.rawQuery("SELECT * FROM " + FOLLOWEDEVENTS + " WHERE " + FOLLOWEDEVENTS_DAY + " = ?", args);
         boolean result = cursor.getCount() > 0;
@@ -408,7 +368,6 @@ public class DBTask {
     }
 
     public boolean isFollowed(Event event) {
-        Log.d(TAG, "isFollowed: ");
         openReadableDatabase();
         boolean result = false;
         String[] args = {String.valueOf(event.getLat()), String.valueOf(event.getLon()), event.getDayString()};

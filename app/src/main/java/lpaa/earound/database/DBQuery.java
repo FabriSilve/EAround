@@ -48,7 +48,6 @@ class DBQuery {
                     EVENTS_OWNER + " TEXT" +
                     ");";
 
-
     static final String DROP_EVENTS_TABLE =
             "DROP TABLE IF EXISTS " + EVENTS + ";";
 
@@ -74,6 +73,7 @@ class DBQuery {
 
     static final String DROP_MYEVENTS_TABLE =
             "DROP TABLE IF EXISTS " + MYEVENTS + ";";
+
 
     static final String CREATE_FOLLOWEDEVENTS_TABLE =
             "CREATE TABLE "+FOLLOWEDEVENTS + " ( " +
