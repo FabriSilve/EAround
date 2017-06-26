@@ -29,16 +29,13 @@ public class MainActivity extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: start");
         mainValues = getSharedPreferences("MainValues", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
 
-        Log.d(TAG, "onCreate: user access control");
         String user = new DBTask(this).getUser();
         if(!user.equals(""))
             goToHomeActivity();
 
-        Log.d(TAG, "onCreate: init UI");
         setContentView(R.layout.main_activity);
 
         loginFragment = new LoginFragment();
@@ -54,9 +51,7 @@ public class MainActivity extends Activity{
 
     }
 
-    //TODO Ragrupare in un unico metodo
     public void goToRegister() {
-        Log.d(TAG, "goToRegister: start");
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(container, registerFragment);
         fragmentTransaction.commit();
@@ -64,7 +59,6 @@ public class MainActivity extends Activity{
     }
 
     public void goToLogin() {
-        Log.d(TAG, "goToLogin: start");
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(container, loginFragment);
         fragmentTransaction.commit();
@@ -72,29 +66,26 @@ public class MainActivity extends Activity{
     }
 
     public void correctlyLogged(boolean keep, String username) {
-        Log.d(TAG, "correctlyLogged: start");
         if(keep) {
             new DBTask(this).insertUser(username);
         }
+        //TODO sostituire gli argomenti con un array
         clearFragment("register_username", "register_password1", "register_password2", "register_email1", "register_email2");
         goToHomeActivity();
     }
 
     private void goToHomeActivity() {
-        Log.d(TAG, "goToHomeActivity: start");
         startActivity(new Intent(getApplicationContext(), HomeActivity.class));
         this.finish();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        Log.d(TAG, "onConfigurationChanged: start");
         super.onConfigurationChanged(newConfig);
     }
 
     @Override
     protected void onPause() {
-        Log.d(TAG, "onPause: start");
         Editor editor = mainValues.edit();
         editor.putString("currentFragment", currentFragment);
         editor.apply();
@@ -103,7 +94,6 @@ public class MainActivity extends Activity{
 
     @Override
     protected void onResume() {
-        Log.d(TAG, "onResume: start");
         currentFragment = mainValues.getString("currentFragment", "LOG");
         switch (currentFragment) {
             case "REG":
@@ -118,19 +108,16 @@ public class MainActivity extends Activity{
 
 
     protected void onPauseFragment(String key, String value) {
-        Log.d(TAG, "onPauseFragment: ");
         Editor editor = mainValues.edit();
         editor.putString(key, value);
         editor.apply();
     }
 
     protected String onResumeFragment(String key, String valueDefault) {
-        Log.d(TAG, "onResumeFragment: ");
         return mainValues.getString(key, valueDefault);
     }
 
     protected void clearFragment(String... ids) {
-        Log.d(TAG, "clearLogin: ");
         Editor editor = mainValues.edit();
         for(String id : ids) {
             editor.putString(id, "");

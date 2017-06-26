@@ -1,6 +1,5 @@
 package lpaa.earound.home;
 
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -36,7 +35,6 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: start");
         this.parent = (HomeActivity) this.getActivity();
 
         View view = inflater.inflate(R.layout.addevent_fragment, container, false);
@@ -57,7 +55,6 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "onClick: start");
         switch(v.getId()) {
             case R.id.addevent_add:
                 if (checkEvent()) {
@@ -87,7 +84,6 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
     }
 
     private boolean checkEvent() {
-        Log.d(TAG, "checkEvent: start");
         if(name.getText().toString().trim().isEmpty()) {
             name.setError(getText(R.string.empty_field));
             name.requestFocus();
@@ -111,8 +107,6 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
             description.requestFocus();
             return false;
         }
-
-        //TODO inserire input per data come data piker
         return true;
     }
 
@@ -139,13 +133,11 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        Log.d(TAG, "onConfigurationChanged: start");
         super.onConfigurationChanged(newConfig);
     }
 
     @Override
     public void onPause() {
-        Log.d(TAG, "onPause: ");
         parent.onPauseFragment("addevent_name", name.getText().toString());
         parent.onPauseFragment("addevent_address", String.valueOf(address.getText().toString()));
         parent.onPauseFragment("addevent_day", String.valueOf(day.getText().toString()));
@@ -156,7 +148,6 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onResume() {
-        Log.d(TAG, "onResume: ");
         name.setText(parent.onResumeFragment("addevent_name", ""));
         address.setText(parent.onResumeFragment("addevent_address", ""));
         day.setText(parent.onResumeFragment("addevent_day", ""));

@@ -26,7 +26,6 @@ public class EventUpdater extends AsyncTask<Object, Object, String> {
     private String owner;
 
     public EventUpdater(MyEventsFragment fragment, LocalEvent newEvent, String owner) {
-        Log.d(TAG, "EventUpdater: ");
         this.fragment = fragment;
         this.newEvent = newEvent;
         this.oldEvent = fragment.getOldEvent();
@@ -35,12 +34,10 @@ public class EventUpdater extends AsyncTask<Object, Object, String> {
 
     @Override
     protected String doInBackground(Object... params) {
-        Log.d(TAG, "doInBackground: start");
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
         try{
-            Log.d(TAG, "doInBackground: connection out");
             java.net.URL url = new URL(URL);
             connection = url.openConnection();
             dat = URLEncoder.encode("newName", "UTF-8") + "=" + URLEncoder.encode(newEvent.getName(), "UTF-8") +
@@ -74,10 +71,8 @@ public class EventUpdater extends AsyncTask<Object, Object, String> {
     }
 
     protected void onPostExecute(String result) {
-        Log.d(TAG, "onPostExecute: start ");
         Log.d(TAG, "onPostExecute: "+result);
 
-        //TODO Aggiornare eventi in locale
         if (result.equals("true"))
             new DBTask(fragment.getActivity()).updateLocalEvent(oldEvent, newEvent);
 

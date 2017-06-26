@@ -10,15 +10,14 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
-import lpaa.earound.database.DBTask;
 import lpaa.earound.home.AddEventFragment;
 import lpaa.earound.type.LocalEvent;
 
 
 public class EventAdder extends AsyncTask<Object, Object, String> {
 
-    private final String TAG = "EventAdder";
-    private final String URL = "http://wwww.lpaa17.altervista.org/eventAdder.php";
+    private static final String TAG = "EventAdder";
+    private static final String URL = "http://wwww.lpaa17.altervista.org/eventAdder.php";
 
     private AddEventFragment fragment;
     private LocalEvent event;
@@ -28,19 +27,14 @@ public class EventAdder extends AsyncTask<Object, Object, String> {
         this.fragment = fragment;
         this.event = event;
         this.owner = owner;
-
     }
-
-    //TODO tenere traccia dell'utente che crea l'evento
 
     @Override
     protected String doInBackground(Object... params) {
-        Log.d(TAG, "doInBackground: start");
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
         try{
-            Log.d(TAG, "doInBackground: connection out");
             URL url = new URL(URL);
             connection = url.openConnection();
             Log.d(TAG, event.getName() + "; " + event.getAddress() + "; " + event.getDayString());
@@ -55,7 +49,6 @@ public class EventAdder extends AsyncTask<Object, Object, String> {
             wr.flush();
             String line;
             StringBuilder stringBuilder = new StringBuilder();
-            Log.d(TAG, "doInBackground: connection in");
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String nextLine;
             while ((nextLine = reader.readLine()) != null) {
@@ -72,9 +65,7 @@ public class EventAdder extends AsyncTask<Object, Object, String> {
     }
 
     protected void onPostExecute(String result) {
-        Log.d(TAG, "onPostExecute: start ");
-        Log.d(TAG, "onPostExecute: "+result);
-
+        Log.i(TAG, "onPostExecute: "+result);
 
         //TODO tradurre messaggi server in messaggi per utente
         fragment.checkResult(result);

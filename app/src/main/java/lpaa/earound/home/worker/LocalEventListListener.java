@@ -15,14 +15,12 @@ public class LocalEventListListener implements OnClickListener {
     private MyEventsFragment fragment;
 
     public LocalEventListListener(LocalEvent event, MyEventsFragment fragment) {
-        Log.d(TAG, "LocalEventListListener: ");
         this.event = event;
         this.fragment = fragment;
     }
 
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "onClick: onclick");
         fragment.setName(event.getName());
         fragment.setDay(event.getDayString());
         fragment.setDescription(event.getDescription());

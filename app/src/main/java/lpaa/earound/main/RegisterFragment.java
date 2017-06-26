@@ -33,8 +33,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: init UI");
-
         this.parent = (MainActivity) this.getActivity();
 
         View view = inflater.inflate(R.layout.register_fragment, container, false);
@@ -59,7 +57,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "onClick: start");
         switch(v.getId()) {
             case R.id.register_back:
                 backClick();
@@ -71,13 +68,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void backClick() {
-        Log.d(TAG, "backClick: start");
         parent.goToLogin();
     }
 
     private void registerClick() {
-        Log.d(TAG, "registerClick: start");
-
         if(username.getText().toString().trim().isEmpty()) {
             username.setError(getText(R.string.empty_field));
             username.requestFocus();
@@ -132,7 +126,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
     }
 
     private boolean mailChecker(EditText email) {
-        Log.d(TAG, "mailChecker: start");
         if(!Pattern.matches("[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}",email.getText().toString())) {
             email.setError(getText(R.string.not_valid));
             email.requestFocus();
@@ -143,8 +136,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
-        Log.d(TAG, "onFocusChange: start");
-        /*TODO su username e email per controllare se gia presenti nel sistema*/
         switch(v.getId()) {
             case R.id.register_username:
                 usernameCheck(username);
@@ -163,7 +154,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
 
     public void checkResult(boolean result) {
-        Log.d(TAG, "checkResult: start");
         if(result) {
             Log.d(TAG, "checkResult: registred and logged");
             Toast toast = Toast.makeText(parent, getText(R.string.logged), Toast.LENGTH_SHORT);
@@ -178,13 +168,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        Log.d(TAG, "onConfigurationChanged: start");
         super.onConfigurationChanged(newConfig);
     }
 
     @Override
     public void onPause() {
-        Log.d(TAG, "onPause: ");
         parent.onPauseFragment("register_username", username.getText().toString());
         parent.onPauseFragment("register_password1", password1.getText().toString());
         parent.onPauseFragment("register_password2", password2.getText().toString());

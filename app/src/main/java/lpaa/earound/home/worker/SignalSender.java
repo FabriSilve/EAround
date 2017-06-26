@@ -15,15 +15,13 @@ import java.net.URLEncoder;
 
 import lpaa.earound.R;
 import lpaa.earound.database.DBTask;
-import lpaa.earound.home.FollowedFragment;
 import lpaa.earound.type.Event;
 
 
 public class SignalSender extends AsyncTask<Object, Object, String> {
 
     private final String TAG = "SignalSender";
-    //TODO CREARE FILE SERVER
-    private final String URL = "http://wwww.lpaa17.altervista.org/signalReciver.php";
+    private static final String URL = "http://wwww.lpaa17.altervista.org/signalReciver.php";
 
     private Activity parent;
     private Fragment fragment;
@@ -31,7 +29,6 @@ public class SignalSender extends AsyncTask<Object, Object, String> {
     private boolean isChecked;
 
     public SignalSender(Activity parent, Fragment fragment, Event event, boolean isChecked) {
-        Log.d(TAG, "SignalSender: ");
         this.parent = parent;
         this.fragment = fragment;
         this.event = event;
@@ -40,13 +37,11 @@ public class SignalSender extends AsyncTask<Object, Object, String> {
 
     @Override
     protected String doInBackground(Object... params) {
-        Log.d(TAG, "doInBackground: start");
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
         String user = new DBTask(fragment.getActivity()).getUser();
         try{
-            Log.d(TAG, "doInBackground: connection out");
             java.net.URL url = new URL(URL);
             connection = url.openConnection();
             dat = URLEncoder.encode("lat", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(event.getLat()), "UTF-8") +

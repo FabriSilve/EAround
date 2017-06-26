@@ -24,22 +24,16 @@ public class MapDrawer implements OnMapReadyCallback {
     private HomeActivity parent;
 
     public MapDrawer(HomeFragment homeFragment, GoogleMap map, HomeActivity parent) {
-        Log.d(TAG, "MapDrawer: costructor");
-        this.homeFragment = homeFragment;
+         this.homeFragment = homeFragment;
         this.map = map;
         this.parent = parent;
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.d(TAG, "onMapReady: start");
-        //TODO utilizzare posizione dispositivo
-
         map = googleMap;
         homeFragment.setMap(map);
         ArrayList<Event> events = new DBTask(parent).getEvents();
-
-        Log.d(TAG, "onMapReady: eventi acquisiti");
 
         if(events != null && events.size() > 0) {
             LatLng center = new LatLng(events.get(0).getLat(), events.get(0).getLon());

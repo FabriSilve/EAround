@@ -20,21 +20,18 @@ public class FollowedEventDateChecker extends AsyncTask<Object, Object, Boolean>
     private Context context;
 
     public FollowedEventDateChecker(Context context) {
-        Log.d(TAG, "FollowedEventDateChecker: ");
         this.context = context;
     }
 
     @Override
     protected Boolean doInBackground(Object... params) {
-        Log.d(TAG, "doInBackground: ");
         return new DBTask(context).thereAreEventsToday();
     }
 
     @Override
     protected void onPostExecute(Boolean result) {
-        Log.d(TAG, "onPostExecute: ");
         if(result) {
-            Log.d(TAG, "onPostExecute: notifica");
+            Log.i(TAG, "onPostExecute: notifica");
             Intent notificationInten = new Intent(context, HomeActivity.class)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             int flags = PendingIntent.FLAG_UPDATE_CURRENT;
@@ -59,7 +56,7 @@ public class FollowedEventDateChecker extends AsyncTask<Object, Object, Boolean>
             manager.notify(NOTIFICATION_ID, notification);
 
         } else {
-            Log.d(TAG, "onPostExecute: niente notifica");
+            Log.i(TAG, "onPostExecute: niente notifica");
         }
     }
 }

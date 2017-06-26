@@ -29,7 +29,6 @@ public class FollowedEventService extends Service {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                Log.d(TAG, "run: ");
                 FollowedEventDateChecker checker = new FollowedEventDateChecker(context);
                 checker.execute();
             }

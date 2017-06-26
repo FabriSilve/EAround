@@ -35,7 +35,6 @@ public class LocationViewer implements ConnectionCallbacks, OnConnectionFailedLi
     private double lon = 0.0;
 
     public LocationViewer(Activity parent) {
-        Log.d(TAG, "LocationViewer: ");
         this.parent = parent;
         goolGoogleApiClient = new GoogleApiClient.Builder(parent)
                 .addApi(LocationServices.API)
@@ -49,23 +48,19 @@ public class LocationViewer implements ConnectionCallbacks, OnConnectionFailedLi
     }
 
     public void start() {
-        Log.d(TAG, "start: ");
         goolGoogleApiClient.connect();
     }
 
     public void stop() {
-        Log.d(TAG, "stop: ");
         goolGoogleApiClient.disconnect();
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-        Log.d(TAG, "onConnected: ");
         if (ActivityCompat.checkSelfPermission(parent, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(parent, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.e(TAG, "onConnected: permission request");
             return;
         }
-        Log.d(TAG, "onConnected: have permission");
         Location location = LocationServices.FusedLocationApi
                 .getLastLocation(goolGoogleApiClient);
         if(location != null) {
@@ -79,7 +74,6 @@ public class LocationViewer implements ConnectionCallbacks, OnConnectionFailedLi
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.d(TAG, "onConnectionSuspended: ");
         if(goolGoogleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(goolGoogleApiClient, this);
         }
@@ -87,7 +81,6 @@ public class LocationViewer implements ConnectionCallbacks, OnConnectionFailedLi
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "onConnectionFailed: ");
         if(connectionResult.hasResolution()) {
             try {
                 connectionResult.startResolutionForResult(parent, CONNECTION_FAILURE_RESOLUTION_REQUEST);
@@ -102,7 +95,6 @@ public class LocationViewer implements ConnectionCallbacks, OnConnectionFailedLi
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d(TAG, "onLocationChanged: ");
         lat = location.getLatitude();
         lon = location.getLongitude();
     }

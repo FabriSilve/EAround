@@ -46,7 +46,6 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
         this.parent = (HomeActivity) this.getActivity();
 
         View view = inflater.inflate(R.layout.myevents_fragment, container, false);
@@ -72,7 +71,6 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void eventDrawer() {
-        Log.d(TAG, "eventDrawer: start");
         ArrayList<LocalEvent> events = new DBTask(getActivity()).getLocalEvents();
         LinearLayout listevent = new LinearLayout(getActivity());
         listevent.setMinimumWidth(LinearLayout.LayoutParams.MATCH_PARENT);
@@ -86,7 +84,6 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
                         eventLayout.setMinimumWidth(LinearLayout.LayoutParams.MATCH_PARENT);
                         eventLayout.setMinimumHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
                         eventLayout.setOrientation(LinearLayout.VERTICAL);
-                        //TODO trovare modo per rimuovere metodo deprecato
                         eventLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.setMargins(
@@ -148,7 +145,6 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
                         TextView desc = new TextView(getActivity());
                         desc.setText(events.get(i).getDescription());
                         desc.setTextSize(getResources().getDimension(R.dimen.par_textSize));
-                        //desc.setTypeface(data.getTypeface(), Typeface.DEFAULT);
                         desc.setTextColor(Color.BLACK);
                         desc.setPadding(
                                 (int) getResources().getDimension(R.dimen.marginMin),
@@ -171,7 +167,6 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
                     noEventLayout.setOrientation(LinearLayout.VERTICAL);
                     noEventLayout.setMinimumWidth(LinearLayout.LayoutParams.MATCH_PARENT);
                     noEventLayout.setMinimumHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-                    //TODO rimuovere metodo deprecato
                     noEventLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     params.setMargins(
@@ -208,7 +203,6 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
             endButton.setOrientation(LinearLayout.VERTICAL);
             endButton.setMinimumWidth(LinearLayout.LayoutParams.MATCH_PARENT);
             endButton.setMinimumHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-            //TODO rimuovere metodo deprecato
             endButton.setBackground(getResources().getDrawable(R.drawable.lightbg));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(
@@ -248,7 +242,6 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "onClick: ");
         switch(v.getId()) {
             case R.id.myevent_edit_modify:
                 updateEvent();
@@ -269,7 +262,6 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void updateEvent() {
-        Log.d(TAG, "modifyEvent: ");
         eableButtons(false);
 
         LocalEvent newEvent = new LocalEvent(
@@ -286,7 +278,6 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void removeEvent() {
-        Log.d(TAG, "removeEvent: ");
         eableButtons(false);
         LocalEvent event = new LocalEvent(
                 name.getText().toString(),
@@ -309,27 +300,22 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
     }
 
     public void setName(String name) {
-        Log.d(TAG, "setName: ");
         this.name.setText(name);
     }
 
     public void setAddress(String address) {
-        Log.d(TAG, "setAddress: ");
         this.address.setText(address);
     }
 
     public void setDay(String day) {
-        Log.d(TAG, "setDay: ");
         this.day.setText(day);
     }
 
     public void setDescription(String description) {
-        Log.d(TAG, "setDescription: ");
         this.description.setText(description);
     }
 
     public void eableButtons(boolean value) {
-        Log.d(TAG, "eableButtons: ");
         modify.setClickable(value);
         remove.setClickable(value);
     }
@@ -343,7 +329,6 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
     }
     
     public void removedEvent(String result) {
-        Log.d(TAG, "removedEvent: ");
         if(result.equals("true")) {
             Toast toast = Toast.makeText(parent, R.string.removed, Toast.LENGTH_SHORT);
             toast.show();
@@ -358,7 +343,6 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
     }
 
     public void updatedEvent(String result) {
-        Log.d(TAG, "updatedEvent: ");
         if (result.equals("true")) {
             Toast.makeText(parent, R.string.updated, Toast.LENGTH_SHORT);
             initEdit();
@@ -376,14 +360,12 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
     }
 
     public void importedEvents() {
-        Log.d(TAG, "importedEvents: ");
         Toast.makeText(parent, R.string.imported, Toast.LENGTH_SHORT).show();
         initEdit();
         list.removeAllViews();
         eventDrawer();
     }
 
-    //TODO inserire "Importa eventi da server"
     @Override
     public void onPause() {
         Log.d(TAG, "onPause: ");

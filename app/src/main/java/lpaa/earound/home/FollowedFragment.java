@@ -32,27 +32,22 @@ public class FollowedFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
         this.parent = (HomeActivity) this.getActivity();
 
         View view = inflater.inflate(R.layout.followed_fragment, container, false);
-
         list = (ScrollView) view.findViewById(R.id.followed_list);
 
         eventsDrawer();
 
         return view;
-
     }
 
     public void initUI() {
-        Log.d(TAG, "initUI: ");
         list.removeAllViews();
         eventsDrawer();
     }
 
     private void eventsDrawer() {
-        Log.d(TAG, "eventsDrawer: ");
         ArrayList<Event> events = new DBTask(parent).getFollowedEvents();
         LinearLayout listevent = new LinearLayout(getActivity());
         listevent.setMinimumWidth(LinearLayout.LayoutParams.MATCH_PARENT);
@@ -66,7 +61,6 @@ public class FollowedFragment extends Fragment {
                         eventLayout.setMinimumWidth(LinearLayout.LayoutParams.MATCH_PARENT);
                         eventLayout.setMinimumHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
                         eventLayout.setOrientation(LinearLayout.VERTICAL);
-                        //TODO trovare modo per rimuovere metodo deprecato
                         eventLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.setMargins(
@@ -143,7 +137,6 @@ public class FollowedFragment extends Fragment {
                         TextView owner = new TextView(parent);
                         owner.setText(events.get(i).getOwner());
                         owner.setTextSize(getResources().getDimension(R.dimen.par_textSize));
-                        //desc.setTypeface(data.getTypeface(), Typeface.DEFAULT);
                         owner.setTextColor(Color.DKGRAY);
                         owner.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
                         owner.setPadding(
@@ -188,7 +181,6 @@ public class FollowedFragment extends Fragment {
                     noEventLayout.setOrientation(LinearLayout.VERTICAL);
                     noEventLayout.setMinimumWidth(LinearLayout.LayoutParams.MATCH_PARENT);
                     noEventLayout.setMinimumHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-                    //TODO rimuovere metodo deprecato
                     noEventLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     params.setMargins(
@@ -226,7 +218,6 @@ public class FollowedFragment extends Fragment {
             endButton.setOrientation(LinearLayout.VERTICAL);
             endButton.setMinimumWidth(LinearLayout.LayoutParams.MATCH_PARENT);
             endButton.setMinimumHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-            //TODO rimuovere metodo deprecato
             endButton.setBackground(getResources().getDrawable(R.drawable.lightbg));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(
@@ -258,13 +249,11 @@ public class FollowedFragment extends Fragment {
             endButton.setOnClickListener(importer);
 
             listevent.addView(endButton);
-
             list.addView(listevent);
         }
     }
 
     public void importedEvents(boolean result) {
-        Log.d(TAG, "importedEvents: ");
         if(result) {
             Toast.makeText(parent, R.string.imported, Toast.LENGTH_SHORT).show();
             list.removeAllViews();
@@ -276,13 +265,11 @@ public class FollowedFragment extends Fragment {
 
     @Override
     public void onPause() {
-        Log.d(TAG, "onPause: ");
         super.onPause();
     }
 
     @Override
     public void onResume() {
-        Log.d(TAG, "onResume: ");
         super.onResume();
     }
 }

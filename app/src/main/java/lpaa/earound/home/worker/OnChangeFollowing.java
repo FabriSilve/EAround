@@ -17,7 +17,6 @@ public class OnChangeFollowing implements CompoundButton.OnCheckedChangeListener
     private Event event;
 
     public OnChangeFollowing(Activity parent, HomeFragment fragment, Event event) {
-        Log.d(TAG, "OnChangeFollowing: ");
         this.parent = parent;
         this.fragment = fragment;
         this.event = event;
@@ -25,7 +24,6 @@ public class OnChangeFollowing implements CompoundButton.OnCheckedChangeListener
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Log.d(TAG, "onCheckedChanged: "+String.valueOf(isChecked));
         FollowUpdater updater = new FollowUpdater(parent, fragment, event, isChecked);
         updater.execute();
     }

@@ -20,11 +20,9 @@ public class CheckLogin extends AsyncTask<Object, Object, Boolean> {
     private String username;
     private String password;
 
-    private static final String checkLoginUrl = "http://wwww.lpaa17.altervista.org/checkLogin.php"; //"http://webdev.disi.unige.it/~S4110217/Lab3.1/login_success.php";
+    private static final String checkLoginUrl = "http://wwww.lpaa17.altervista.org/checkLogin.php";
 
-    public CheckLogin(LoginFragment fragment, String username, String password)
-    {
-        Log.d(TAG, "CheckLogin: costructor");
+    public CheckLogin(LoginFragment fragment, String username, String password) {
         this.fragment = fragment;
         this.username = username;
         this.password = password;
@@ -32,13 +30,11 @@ public class CheckLogin extends AsyncTask<Object, Object, Boolean> {
 
     @Override
     protected Boolean doInBackground(Object... params) {
-        Log.d(TAG, "doInBackground: start");
         String dati;
         try {
             URLConnection connection;
             OutputStreamWriter wr;
 
-            Log.d(TAG, "doInBackground: URL connection output");
             URL url = new URL(checkLoginUrl);
             connection = url.openConnection();
             dati = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") +
@@ -48,7 +44,6 @@ public class CheckLogin extends AsyncTask<Object, Object, Boolean> {
             wr.write(dati);
             wr.flush();
 
-            Log.d(TAG, "doInBackground: URL connection input");
             String line;
             StringBuilder stringBuilder = new StringBuilder();
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -68,7 +63,6 @@ public class CheckLogin extends AsyncTask<Object, Object, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean result){
-        Log.d(TAG, "onPostExecute: start");
         fragment.checkResult(result);
     }
 }

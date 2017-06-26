@@ -8,9 +8,6 @@ import lpaa.earound.R;
 import lpaa.earound.home.HomeFragment;
 import lpaa.earound.type.Event;
 
-/**
- * Created by Fabrizio on 25/06/2017.
- */
 
 public class OnChangeSignal implements CompoundButton.OnCheckedChangeListener {
 
@@ -21,7 +18,6 @@ public class OnChangeSignal implements CompoundButton.OnCheckedChangeListener {
     private Event event;
 
     public OnChangeSignal(Activity parent, HomeFragment fragment, Event event) {
-        Log.d(TAG, "OnChangeSignal: ");
         this.parent = parent;
         this.fragment = fragment;
         this.event = event;
@@ -29,7 +25,6 @@ public class OnChangeSignal implements CompoundButton.OnCheckedChangeListener {
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Log.d(TAG, "onCheckedChanged: "+String.valueOf(isChecked));
         SignalSender sender = new SignalSender(parent, fragment, event, isChecked);
         sender.execute();
         buttonView.setClickable(false);

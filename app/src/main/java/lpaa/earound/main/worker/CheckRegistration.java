@@ -23,9 +23,7 @@ public class CheckRegistration extends AsyncTask<Object, Object, Boolean> {
     private static final String checkRegistrationUrl = "http://wwww.lpaa17.altervista.org/checkRegistration.php";
 
 
-    public CheckRegistration(RegisterFragment fragment, String username, String password, String email)
-    {
-        Log.d(TAG, "CheckRegistration: costructor");
+    public CheckRegistration(RegisterFragment fragment, String username, String password, String email) {
         this.fragment = fragment;
         this.username = username;
         this.password = password;
@@ -35,15 +33,12 @@ public class CheckRegistration extends AsyncTask<Object, Object, Boolean> {
 
     @Override
     protected Boolean doInBackground(Object... params) {
-        Log.d(TAG, "doInBackground: start");
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
         try{
-            Log.d(TAG, "doInBackground: connection out");
             URL url = new URL(checkRegistrationUrl);
             connection = url.openConnection();
-            Log.d("RegistrationCheck", username + "; " + email + "; " + password);
             dat = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8") +
                     "&"+ URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") +
                     "&"+ URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
@@ -54,7 +49,6 @@ public class CheckRegistration extends AsyncTask<Object, Object, Boolean> {
             String line;
             StringBuilder stringBuilder = new StringBuilder();
 
-            Log.d(TAG, "doInBackground: connection in");
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String nextLine;
             while ((nextLine = reader.readLine()) != null) {
@@ -72,7 +66,6 @@ public class CheckRegistration extends AsyncTask<Object, Object, Boolean> {
     }
 
     protected void onPostExecute(Boolean result) {
-        Log.d(TAG, "onPostExecute: start");
         fragment.checkResult(result);
     }
 }

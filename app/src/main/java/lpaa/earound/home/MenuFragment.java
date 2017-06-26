@@ -26,7 +26,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: init UI");
 
         this.parent = (HomeActivity) this.getActivity();
 
@@ -47,7 +46,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "onClick: start");
         switch(v.getId()) {
             case R.id.personal_addEvent:
                 parent.goToAddEvent();
@@ -66,7 +64,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        Log.d(TAG, "onConfigurationChanged: start");
         super.onConfigurationChanged(newConfig);
     }
 }

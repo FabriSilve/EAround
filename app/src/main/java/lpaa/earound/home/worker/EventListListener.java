@@ -27,6 +27,5 @@ public class EventListListener implements OnClickListener {
         CameraPosition cameraPosition = new CameraPosition.Builder().target(event.getPosition()).zoom(18).build();
         if(homeFragment.getMap() != null)
             homeFragment.getMap().animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        Log.d(TAG, "onClick: onclick");
     }
 }

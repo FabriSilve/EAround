@@ -31,20 +31,17 @@ public class EventsImporter extends AsyncTask<Object, Object, ArrayList<LocalEve
 
 
     public EventsImporter(MyEventsFragment fragment) {
-        Log.d(TAG, "EventImporter: ");
         this.fragment = fragment;
     }
 
     @Override
     protected ArrayList<LocalEvent> doInBackground(Object... params) {
-        Log.d(TAG, "doInBackground: start");
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
         String line = "";
         String owner = new DBTask(fragment.getActivity()).getUser();
         try {
-            Log.d(TAG, "doInBackground: connection out");
             java.net.URL url = new URL(URL);
             connection = url.openConnection();
             dat = URLEncoder.encode("owner", "UTF-8") + "=" + URLEncoder.encode(owner, "UTF-8");
@@ -64,14 +61,12 @@ public class EventsImporter extends AsyncTask<Object, Object, ArrayList<LocalEve
             Log.e(TAG, "doInBackground: " + e);
         }
         try {
-            Log.d(TAG, "doInBackground: Event adding local");
             ArrayList<LocalEvent> result = new ArrayList<>();
             if(!line.equals("")) {
                 JSONArray events = new JSONArray(line);
                 if (events.length() > 1) {
                     for (int i = 0; i < events.length() - 1; i++) {
                         JSONObject event = events.getJSONObject(i);
-                        Log.d(TAG, "doInBackground: add " + event.getString("name"));
                         result.add(new LocalEvent(
                                 event.getString("name"),
                                 event.getString("description"),
@@ -90,8 +85,6 @@ public class EventsImporter extends AsyncTask<Object, Object, ArrayList<LocalEve
     }
 
     protected void onPostExecute(ArrayList<LocalEvent> result) {
-        Log.d(TAG, "onPostExecute: start ");
-
         new DBTask(fragment.getActivity()).importEvents(result);
         fragment.importedEvents();
     }

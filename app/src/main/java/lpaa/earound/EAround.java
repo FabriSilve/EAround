@@ -14,7 +14,6 @@ public class EAround extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "onCreate: ");
 
         Intent followedService = new Intent (this, FollowedEventService.class);
         startService(followedService);

@@ -44,32 +44,15 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: start");
         locationViewer = new LocationViewer(this);
-        /*try {
-            wait(2000L);
-        } catch (InterruptedException e) {
-            Log.e(TAG, "onCreate: wait error");
-        }*/
 
         homeValues = getSharedPreferences("homeValues", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
-        Search search;
-        if(locationViewer.getLat() != 0.0 && locationViewer.getLon() != 0.0) {
-            search = new Search(
-                    homeValues.getString("search_position", "myPosition"),
-                    Integer.valueOf(homeValues.getString("search_distance", "5")),
-                    Integer.valueOf(homeValues.getString("search_days", "5")),
-                    locationViewer.getLat(),
-                    locationViewer.getLon()
-            );
-        } else {
-            search = new Search(
+        Search search = new Search(
                     homeValues.getString("search_position", "genova"),
                     Integer.valueOf(homeValues.getString("search_distance", "5")),
                     Integer.valueOf(homeValues.getString("search_days", "5"))
             );
-        }
         searchEvent(search);
     }
 
@@ -79,7 +62,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "onClick: start");
         Editor editor = homeValues.edit();
         switch(v.getId()) {
             case R.id.home_searchButton:
@@ -104,7 +86,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     }
 
     private void goTo(Fragment fragment) {
-        Log.d(TAG, "goTo: start");
         if(fragmentManager != null) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(container, fragment);
@@ -113,7 +94,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     }
 
     public void goToAddEvent() {
-        Log.d(TAG, "goToAddEvent: ");
         currentFragment = "ADDEVENT";
         Editor editor = homeValues.edit();
         editor.putString("currentFragment", currentFragment);
@@ -122,7 +102,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     }
 
     public void goToMyEvent() {
-        Log.d(TAG, "goToMyEvent: ");
         currentFragment = "MYEVENT";
         Editor editor = homeValues.edit();
         editor.putString("currentFragment", currentFragment);
@@ -131,7 +110,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     }
 
     public void goToFollowed() {
-        Log.d(TAG, "goToFollowed: ");
         currentFragment = "FOLLOWED";
         Editor editor = homeValues.edit();
         editor.putString("currentFragment", currentFragment);
@@ -140,7 +118,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     }
 
     public void logoutUser() {
-        Log.d(TAG, "logoutUser: start");
         new DBTask(this).clearDB();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         currentFragment = "HOME";
@@ -149,13 +126,11 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     }
 
     public void searchEvent( Search search) {
-        Log.d(TAG, "searchEvent: start");
         EventSearcher eventSearcher = new EventSearcher(this, search);
         eventSearcher.execute();
     }
 
     public void searchDone() {
-        Log.d(TAG, "searchDone: start");
         onResume();
     }
 
@@ -168,7 +143,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     private void initUI() {
         setContentView(R.layout.home_activity);
 
-        Log.d(TAG, "onCreate: init UI");
         Button search = (Button) findViewById(R.id.home_searchButton);
         Button home = (Button) findViewById(R.id.home_homeButton);
         Button menu = (Button) findViewById(R.id.home_menuButton);
@@ -196,13 +170,11 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        Log.d(TAG, "onConfigurationChanged: start");
         super.onConfigurationChanged(newConfig);
     }
 
     @Override
     protected void onPause() {
-        Log.d(TAG, "onPause: start");
         Editor editor = homeValues.edit();
         editor.putString("currentFragment", currentFragment);
         editor.apply();
@@ -211,7 +183,6 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
 
     @Override
     protected void onResume() {
-        Log.d(TAG, "onResume: start");
         initUI();
 
         currentFragment = homeValues.getString("currentFragment", "HOME");
@@ -252,14 +223,12 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     }
 
     protected void onPauseFragment(String key, String value) {
-        Log.d(TAG, "onPauseFragment: ");
         Editor editor = homeValues.edit();
         editor.putString(key, value);
         editor.apply();
     }
 
     protected String onResumeFragment(String key, String valueDefault) {
-        Log.d(TAG, "onResumeFragment: ");
         return homeValues.getString(key, valueDefault);
     }
 }

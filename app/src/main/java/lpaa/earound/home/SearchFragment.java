@@ -33,7 +33,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: init UI");
 
         this.parent = (HomeActivity) this.getActivity();
         View view = inflater.inflate(R.layout.search_fragment, container, false);
@@ -58,7 +57,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
 
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "onClick: start");
         switch(v.getId()) {
             case R.id.search_find:
                 find.setClickable(false);
@@ -68,10 +66,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
     }
 
     private void startSearch() {
-        Log.d(TAG, "startSearch: start");
         Search search;
         if(position.getText().toString().equals("")) {
-            Log.e(TAG, "startSearch: myposition");
             search = new Search(
                     "myPosition",
                     distance.getProgress(),
@@ -99,22 +95,18 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        Log.d(TAG, "onProgressChanged: start");
         seekBarUpdate(seekBar);
     }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-        Log.d(TAG, "onStartTrackingTouch: start");
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        Log.d(TAG, "onStopTrackingTouch: start");
     }
 
     private void seekBarUpdate(SeekBar seekBar) {
-        Log.d(TAG, "seekBarUpdate: ");
         String text;
         switch (seekBar.getId()) {
             case R.id.search_distanceBar:
@@ -130,7 +122,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        Log.d(TAG, "onConfigurationChanged: start");
         super.onConfigurationChanged(newConfig);
     }
 

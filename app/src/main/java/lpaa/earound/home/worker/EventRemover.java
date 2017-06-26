@@ -11,7 +11,6 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import lpaa.earound.database.DBTask;
-import lpaa.earound.home.AddEventFragment;
 import lpaa.earound.home.MyEventsFragment;
 import lpaa.earound.type.LocalEvent;
 
@@ -19,7 +18,7 @@ import lpaa.earound.type.LocalEvent;
 public class EventRemover extends AsyncTask<Object, Object, String> {
 
     private final String TAG = "EventRemover";
-    private final String URL = "http://wwww.lpaa17.altervista.org/eventRemover.php";
+    private static final String URL = "http://wwww.lpaa17.altervista.org/eventRemover.php";
 
     private MyEventsFragment fragment;
     private LocalEvent event;
@@ -32,16 +31,12 @@ public class EventRemover extends AsyncTask<Object, Object, String> {
 
     }
 
-    //TODO tenere traccia dell'utente che crea l'evento
-
     @Override
     protected String doInBackground(Object... params) {
-        Log.d(TAG, "doInBackground: start");
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
         try{
-            Log.d(TAG, "doInBackground: connection out");
             java.net.URL url = new URL(URL);
             connection = url.openConnection();
             Log.d(TAG, event.getName() + "; " + event.getAddress() + "; " + event.getDayString());
@@ -54,7 +49,6 @@ public class EventRemover extends AsyncTask<Object, Object, String> {
             wr.flush();
             String line;
             StringBuilder stringBuilder = new StringBuilder();
-            Log.d(TAG, "doInBackground: connection in");
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String nextLine;
             while ((nextLine = reader.readLine()) != null) {
@@ -71,7 +65,6 @@ public class EventRemover extends AsyncTask<Object, Object, String> {
     }
 
     protected void onPostExecute(String result) {
-        Log.d(TAG, "onPostExecute: start ");
         Log.d(TAG, "onPostExecute: "+result);
 
         if (result.equals("true"))

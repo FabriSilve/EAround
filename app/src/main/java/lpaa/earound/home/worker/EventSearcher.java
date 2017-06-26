@@ -29,27 +29,20 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
     private Search search;
 
     public EventSearcher(HomeActivity main, Search search) {
-        Log.d(TAG, "EventSearcher: costructor");
         this.main = main;
         this.search = search;
     }
 
     @Override
     public ArrayList<Event> doInBackground(Object... params) {
-        Log.d(TAG, "doInBackground: start");
-
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
-        String line = "" +
-                "";
+        String line = "";
         try {
-            //TODO Strutturare ricerca con filtri del search
-            Log.d(TAG, "doInBackground: connection output");
             URL url = new URL(eventsSearcherUrl);
             connection = url.openConnection();
             if (search != null) {
-                Log.d(TAG, "doInBackground: with search obj");
                 dat = URLEncoder.encode("position", "UTF-8") + "=" + URLEncoder.encode(search.getPosition(), "UTF-8") +
                         "&" + URLEncoder.encode("distance", "UTF-8") + "=" + URLEncoder.encode(search.getDistance(), "UTF-8") +
                         "&" + URLEncoder.encode("days", "UTF-8") + "=" + URLEncoder.encode(search.getDays(), "UTF-8");
@@ -58,7 +51,6 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
                             "&" + URLEncoder.encode("lon", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(search.getLon()), "UTF-8");
                 }
             } else {
-                Log.d(TAG, "doInBackground: without search obj");
                 dat = URLEncoder.encode("position", "UTF-8") + "=" + URLEncoder.encode("default", "UTF-8");
             }
             connection.setDoOutput(true);
@@ -67,7 +59,6 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
             wr.flush();
             StringBuilder stringBuilder = new StringBuilder();
 
-            Log.d(TAG, "doInBackground: connection in");
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String nextLine;
             while ((nextLine = reader.readLine()) != null) {
@@ -79,12 +70,10 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
             Log.e(TAG, "doInBackground: Exception \n",e );
         }
         try {
-            Log.d(TAG, "doInBackground: Event adding local");
             ArrayList<Event> result = new ArrayList<>();
             JSONArray events = new JSONArray(line);
             for(int i = 0; i<events.length(); i++) {
                 JSONObject event = events.getJSONObject(i);
-                Log.d(TAG, "doInBackground: add " + event.getString("name") + event.getString("day"));
                 result.add(new Event(
                         event.getInt("id"),
                         event.getString("name"),
@@ -105,7 +94,6 @@ public class EventSearcher extends AsyncTask<Object, Object, ArrayList<Event>>{
 
     @Override
     protected void onPostExecute(ArrayList<Event> events) {
-        Log.d(TAG, "onPostExecute: start");
         new DBTask(main).updateEvents(events);
         main.searchDone();
     }

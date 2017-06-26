@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
@@ -40,13 +39,10 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: start");
-
         this.parent = (HomeActivity) this.getActivity();
 
         View view = inflater.inflate(R.layout.home_fragment, container, false);
 
-        Log.d(TAG, "onCreateView: init UI");
         MapView mapView = (MapView) view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
@@ -65,18 +61,15 @@ public class HomeFragment extends Fragment {
     }
 
     public void eventDrawer() {
-        Log.d(TAG, "eventDrawer: start");
         ArrayList<Event> events = new DBTask(parent).getEvents();
         if (events != null && events.size() > 1) {
             for (int i =1; i < events.size(); i++) {
                 try {
                     LinearLayout eventLayout = new LinearLayout(parent);
                     eventLayout.setId(i-1);
-                    //eventLayout.setTag(events.get(i).getId());
                     eventLayout.setMinimumWidth(LayoutParams.MATCH_PARENT);
                     eventLayout.setMinimumHeight(LayoutParams.WRAP_CONTENT);
                     eventLayout.setOrientation(LinearLayout.VERTICAL);
-                    //TODO trovare modo per rimuovere metodo deprecato
                     eventLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
                     LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
                     params.setMargins(
@@ -122,7 +115,6 @@ public class HomeFragment extends Fragment {
                     TextView desc = new TextView(parent);
                     desc.setText(events.get(i).getDescription());
                     desc.setTextSize(getResources().getDimension(R.dimen.par_textSize));
-                    //desc.setTypeface(data.getTypeface(), Typeface.DEFAULT);
                     desc.setTextColor(Color.BLACK);
                     desc.setPadding(
                             (int) getResources().getDimension(R.dimen.marginMin),
@@ -138,7 +130,6 @@ public class HomeFragment extends Fragment {
                     TextView owner = new TextView(parent);
                     owner.setText(events.get(i).getOwner());
                     owner.setTextSize(getResources().getDimension(R.dimen.par_textSize));
-                    //desc.setTypeface(data.getTypeface(), Typeface.DEFAULT);
                     owner.setTextColor(Color.DKGRAY);
                     owner.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
                     owner.setPadding(
@@ -156,7 +147,6 @@ public class HomeFragment extends Fragment {
                     buttonsLayout.setMinimumWidth(LayoutParams.MATCH_PARENT);
                     buttonsLayout.setMinimumHeight(LayoutParams.WRAP_CONTENT);
                     buttonsLayout.setOrientation(LinearLayout.HORIZONTAL);
-                    //TODO trovare modo per rimuovere metodo deprecato
                     buttonsLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
                     LayoutParams par = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
                     par.setMargins(
@@ -209,7 +199,6 @@ public class HomeFragment extends Fragment {
             noEventLayout.setOrientation(LinearLayout.VERTICAL);
             noEventLayout.setMinimumWidth(LayoutParams.MATCH_PARENT);
             noEventLayout.setMinimumHeight(LayoutParams.WRAP_CONTENT);
-            //TODO rimuovere metodo deprecato
             noEventLayout.setBackground(getResources().getDrawable(R.drawable.lightbg));
             LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
             params.setMargins(
@@ -249,7 +238,6 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        Log.d(TAG, "onConfigurationChanged: start");
         super.onConfigurationChanged(newConfig);
     }
 }

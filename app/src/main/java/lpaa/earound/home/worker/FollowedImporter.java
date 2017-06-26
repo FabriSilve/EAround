@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -25,27 +24,24 @@ import lpaa.earound.type.Event;
 public class FollowedImporter extends AsyncTask<Object, Object, ArrayList<Event>> {
 
     private final String TAG = "FollowedImporter";
-    private final String URL = "http://wwww.lpaa17.altervista.org/followedImporter.php";
+    private static final String URL = "http://wwww.lpaa17.altervista.org/followedImporter.php";
 
     private FollowedFragment fragment;
     private boolean isOk = true;
 
 
     public FollowedImporter(FollowedFragment fragment) {
-        Log.d(TAG, "FollowedImporter: ");
         this.fragment = fragment;
     }
 
     @Override
     protected ArrayList<Event> doInBackground(Object... params) {
-        Log.d(TAG, "doInBackground: start");
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
         String line = "";
         String user = new DBTask(fragment.getActivity()).getUser();
         try {
-            Log.d(TAG, "doInBackground: connection out");
             java.net.URL url = new URL(URL);
             connection = url.openConnection();
             dat = URLEncoder.encode("user", "UTF-8") + "=" + URLEncoder.encode(user, "UTF-8");
@@ -66,13 +62,11 @@ public class FollowedImporter extends AsyncTask<Object, Object, ArrayList<Event>
             isOk = false;
         }
         try {
-            Log.d(TAG, "doInBackground: Event adding local");
             ArrayList<Event> result = new ArrayList<>();
             if(!line.equals("")) {
                 JSONArray events = new JSONArray(line);
                 for (int i = 0; i < events.length() - 1; i++) {
                     JSONObject event = events.getJSONObject(i);
-                    Log.d(TAG, "doInBackground: add " + event.getString("name"));
                     result.add(new Event(
                             event.getInt("id"),
                             event.getString("name"),
@@ -96,8 +90,6 @@ public class FollowedImporter extends AsyncTask<Object, Object, ArrayList<Event>
     }
 
     protected void onPostExecute(ArrayList<Event> result) {
-        Log.d(TAG, "onPostExecute: start ");
-
         if (isOk) {
             new DBTask(fragment.getActivity()).importFollowedEvents(result);
         }

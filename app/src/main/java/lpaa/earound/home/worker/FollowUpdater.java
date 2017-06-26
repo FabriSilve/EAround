@@ -16,8 +16,6 @@ import java.net.URLEncoder;
 import lpaa.earound.R;
 import lpaa.earound.database.DBTask;
 import lpaa.earound.home.FollowedFragment;
-import lpaa.earound.home.HomeActivity;
-import lpaa.earound.home.HomeFragment;
 import lpaa.earound.type.Event;
 
 public class FollowUpdater extends AsyncTask<Object, Object, String> {
@@ -31,7 +29,6 @@ public class FollowUpdater extends AsyncTask<Object, Object, String> {
     private boolean isChecked;
 
     public FollowUpdater(Activity parent, Fragment fragment, Event event, boolean isChecked) {
-        Log.d(TAG, "FollowUpdater: ");
         this.parent = parent;
         this.fragment = fragment;
         this.event = event;
@@ -40,13 +37,11 @@ public class FollowUpdater extends AsyncTask<Object, Object, String> {
 
     @Override
     protected String doInBackground(Object... params) {
-        Log.d(TAG, "doInBackground: start");
         URLConnection connection;
         OutputStreamWriter wr;
         String dat;
         String user = new DBTask(fragment.getActivity()).getUser();
         try{
-            Log.d(TAG, "doInBackground: connection out");
             java.net.URL url = new URL(URL);
             connection = url.openConnection();
             dat = URLEncoder.encode("lat", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(event.getLat()), "UTF-8") +
