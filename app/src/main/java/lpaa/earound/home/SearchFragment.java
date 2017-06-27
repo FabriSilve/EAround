@@ -127,7 +127,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
 
     @Override
     public void onPause() {
-        Log.d(TAG, "onPause: ");
         parent.onPauseFragment("search_position", position.getText().toString());
         parent.onPauseFragment("search_distance", String.valueOf(distance.getProgress()));
         parent.onPauseFragment("search_days", String.valueOf(days.getProgress()));
@@ -137,7 +136,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener, Se
 
     @Override
     public void onResume() {
-        Log.d(TAG, "onResume: ");
         position.setText(parent.onResumeFragment("search_position", ""));
         distance.setProgress(Integer.valueOf(parent.onResumeFragment("search_distance", "1")));
         days.setProgress(Integer.valueOf(parent.onResumeFragment("search_days", "1")));

@@ -13,7 +13,6 @@ public class Search {
 
 
     public Search(String position, int distance, int days) {
-        Log.d(TAG, "Search: costructor");
         this.position = position;
         this.distance = distance;
         this.days = days;
@@ -22,7 +21,6 @@ public class Search {
     }
 
     public Search(String position, int distance, int days, double lat, double lon) {
-        Log.d(TAG, "Search: costructor");
         this.position = position;
         this.distance = distance;
         this.days = days;

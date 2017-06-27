@@ -368,7 +368,6 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onPause() {
-        Log.d(TAG, "onPause: ");
         /*TODO migliore con o senza?
         parent.onPauseFragment("myevent_name", name.getText().toString());
         parent.onPauseFragment("myevent_address", address.getText().toString());
@@ -380,7 +379,6 @@ public class MyEventsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onResume() {
-        Log.d(TAG, "onResume: ");
         /*TODO migliore con o senza?
         name.setText(parent.onResumeFragment("myevent_name", ""));
         address.setText(parent.onResumeFragment("myevent_address", ""));

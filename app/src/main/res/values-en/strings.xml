@@ -75,4 +75,5 @@
     <string name="done">done</string>
     <string name="signaled">signaled</string>
     <string name="myPosition">myPosition</string>
+    <string name="imageicon">imageicon</string>
 </resources>

@@ -58,6 +58,8 @@ public class LocationViewer implements ConnectionCallbacks, OnConnectionFailedLi
     @Override
     public void onConnected(Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(parent, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(parent, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+
             Log.e(TAG, "onConnected: permission request");
             return;
         }

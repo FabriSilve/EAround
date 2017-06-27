@@ -9,12 +9,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import lpaa.earound.R;
+import lpaa.earound.addevent.AddEvent;
 import lpaa.earound.service.LocationViewer;
 import lpaa.earound.type.Search;
 import lpaa.earound.database.DBTask;
@@ -29,6 +35,8 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     private final String TAG = "HomeActivity";
     private SharedPreferences homeValues;
     private LocationViewer locationViewer;
+    private final static int RESULT_LOAD_IMAGE = 1;
+    private String imagepath;
 
     private int container;
 
@@ -36,7 +44,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     private HomeFragment homeFragment;
     private SearchFragment searchFragment;
     private MenuFragment menuFragment;
-    private AddEventFragment addEventFragment;
+    //private AddEventFragment addEventFragment;
     private MyEventsFragment myEventsFragment;
     private FollowedFragment followedFragment;
     private String currentFragment;
@@ -94,11 +102,14 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
     }
 
     public void goToAddEvent() {
-        currentFragment = "ADDEVENT";
+        Intent openMain= new Intent(HomeActivity.this,AddEvent.class);
+        startActivity(openMain);
+        this.finish();
+        /*currentFragment = "ADDEVENT";
         Editor editor = homeValues.edit();
         editor.putString("currentFragment", currentFragment);
         editor.apply();
-        goTo(addEventFragment);
+        goTo(addEventFragment);*/
     }
 
     public void goToMyEvent() {
@@ -156,7 +167,7 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         homeFragment = new HomeFragment();
         searchFragment = new SearchFragment();
         menuFragment = new MenuFragment();
-        addEventFragment = new AddEventFragment();
+       // addEventFragment = new AddEventFragment();
         myEventsFragment = new MyEventsFragment();
         followedFragment = new FollowedFragment();
 
@@ -167,6 +178,33 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
         currentFragment = "HOME";
     }
 
+   /* public void openGallery() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, 1);
+        //TODO estrarre 1 come final string
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK)
+            switch (requestCode) {
+                case 1:
+                    Uri selectedImage = data.getData();
+                    imagepath = getPath(selectedImage);
+                    addEventFragment.setPhoto(imagepath);
+                    Log.e(TAG, "onActivityResult: "+imagepath);
+                    break;
+            }
+    }
+
+    public String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }*/
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -193,9 +231,9 @@ public class HomeActivity  extends Activity implements View.OnClickListener {
             case "SEARCH":
                 goTo(searchFragment);
                 break;
-            case "ADDEVENT":
+            /*case "ADDEVENT":
                 goTo(addEventFragment);
-                break;
+                break;*/
             case "MYEVENT":
                 goTo(myEventsFragment);
                 break;

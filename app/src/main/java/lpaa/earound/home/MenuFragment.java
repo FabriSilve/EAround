@@ -1,6 +1,7 @@
 package lpaa.earound.home;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import lpaa.earound.R;
+import lpaa.earound.addevent.AddEvent;
 
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
@@ -49,6 +51,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         switch(v.getId()) {
             case R.id.personal_addEvent:
                 parent.goToAddEvent();
+                //parent.goToAddEvent();
                 break;
             case R.id.personal_myEvent:
                 parent.goToMyEvent();

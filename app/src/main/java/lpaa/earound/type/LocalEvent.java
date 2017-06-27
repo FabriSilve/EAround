@@ -14,7 +14,6 @@ public class LocalEvent {
 
 
     public LocalEvent(String name, String description, Date day, String address) {
-        Log.d(TAG, "LocalEvent: costructor");
         this.name = name;
         this.description = description;
         this.day = day;

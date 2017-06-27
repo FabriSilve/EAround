@@ -1,8 +1,21 @@
 package lpaa.earound.home;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,8 +23,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 
 import lpaa.earound.R;
@@ -19,10 +35,14 @@ import lpaa.earound.database.DBTask;
 import lpaa.earound.home.worker.EventAdder;
 import lpaa.earound.type.LocalEvent;
 
+import static android.app.Activity.RESULT_OK;
+
 
 public class AddEventFragment extends Fragment implements View.OnClickListener {
 
     private final String TAG = "AddEventFragment";
+    private final static int RESULT_LOAD_IMAGE = 1;
+    private Intent data;
 
     private HomeActivity parent;
     private LocalEvent newEvent;
@@ -31,6 +51,7 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
     private EditText address;
     private EditText day;
     private EditText description;
+    private ImageView photo;
 
 
     @Override
@@ -43,10 +64,12 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
         address = (EditText) view.findViewById(R.id.addevent_address);
         day = (EditText) view.findViewById(R.id.addevent_day);
         description = (EditText) view.findViewById(R.id.addevent_description);
+        photo = (ImageView) view.findViewById(R.id.addevent_photo);
         Button add = (Button) view.findViewById(R.id.addevent_add);
 
         day.setInputType(InputType.TYPE_NULL);
 
+        photo.setOnClickListener(this);
         day.setOnClickListener(this);
         add.setOnClickListener(this);
 
@@ -57,29 +80,36 @@ public class AddEventFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.addevent_add:
-                if (checkEvent()) {
-                    newEvent = new LocalEvent(
-                        name.getText().toString(),
-                        description.getText().toString(),
-                        Date.valueOf(day.getText().toString()),
-                        address.getText().toString()
-                    );
-                    EventAdder eventAdder = new EventAdder(
-                        this,
-                        newEvent,
-                        new DBTask(parent).getUser()
-                    );
-                    eventAdder.execute();
-                    Toast toast = Toast.makeText(parent, R.string.sending, Toast.LENGTH_SHORT);
-                    toast.show();
-                } else {
-                    Toast toast = Toast.makeText(parent, R.string.eventNotValid, Toast.LENGTH_LONG);
-                    toast.show();
-                }
+                addClick();
                 break;
             case R.id.addevent_day:
                 showDatePickerDialog(day);
                 break;
+            case R.id.addevent_photo:
+
+                break;
+        }
+    }
+
+    private void addClick() {
+        if (checkEvent()) {
+            newEvent = new LocalEvent(
+                    name.getText().toString(),
+                    description.getText().toString(),
+                    Date.valueOf(day.getText().toString()),
+                    address.getText().toString()
+            );
+            EventAdder eventAdder = new EventAdder(
+                    this,
+                    newEvent,
+                    new DBTask(parent).getUser()
+            );
+            eventAdder.execute();
+            Toast toast = Toast.makeText(parent, R.string.sending, Toast.LENGTH_SHORT);
+            toast.show();
+        } else {
+            Toast toast = Toast.makeText(parent, R.string.eventNotValid, Toast.LENGTH_LONG);
+            toast.show();
         }
     }
 

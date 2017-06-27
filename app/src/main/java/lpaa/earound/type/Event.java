@@ -20,7 +20,6 @@ public class Event {
 
 
     public Event(int id, String name, String description, Date day, String address, double lat, double lon, String owner) {
-        Log.d(TAG, "Event: costructor");
         this.id = id;
         this.name = name;
         this.description = description;
